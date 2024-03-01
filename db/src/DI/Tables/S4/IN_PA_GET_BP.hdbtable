@@ -1,0 +1,6 @@
+COLUMN TABLE "BL.DI.Tables.S4::IN_PA_GET_BP" (
+    "BU_GROUP" NVARCHAR (4)   COMMENT 'Business Partner Grouping',
+    "PARTNER"  NVARCHAR (10)  COMMENT 'Business Partner Number',
+    "BP_NAME"  NVARCHAR (100) COMMENT 'Business Partner Name'
+)
+COMMENT 'Import Structure - Business Partner'
