@@ -1,4 +1,4 @@
-VIRTUAL TABLE "BL.DI.VirtualTable.S4::VA_VBAK" AT "DS4_ABAP"."<NULL>"."<NULL>"."VBAK"
+VIRTUAL TABLE "BL.DI.VirtualTable.S4::V_ZFIR003" AT "DS4_HANA"."<NULL>"."<NULL>"."ZFIR003"
 REMOTE PROPERTY 'dataprovisioning_parameters'='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Parameters>
 <Parameter name="FORMAT">CSV</Parameter>

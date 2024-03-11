@@ -1,0 +1,7 @@
+COLUMN TABLE "BL.DI.Tables.S4::CompanyCodeList" (
+    SIGN     NVARCHAR (1) COMMENT 'Sign',
+    OPTION   NVARCHAR (2) COMMENT 'Option',
+    LOW      NVARCHAR (4) COMMENT 'Company Code',
+    HIGH     NVARCHAR (4) COMMENT 'Company Code'
+)
+COMMENT 'Company Code'

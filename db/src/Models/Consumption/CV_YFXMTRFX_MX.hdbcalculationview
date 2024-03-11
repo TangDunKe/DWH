@@ -1,0 +1,1071 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="BL.Models.Consumption::CV_YFXMTRFX_MX" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="CV_XSFYFX_MX"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="BL.DI.Tables.S4::T_ZFIR021">
+    <resourceUri>BL.DI.Tables.S4::T_ZFIR021</resourceUri>
+  </DataSource>
+  <DataSource id="BL.DI.VirtualTable.S4::VA_T001">
+    <resourceUri>BL.DI.VirtualTable.S4::VA_T001</resourceUri>
+  </DataSource>
+  <DataSource id="BL.DI.Tables.S4::T_PZB_LJS">
+    <resourceUri>BL.DI.Tables.S4::T_PZB_LJS</resourceUri>
+  </DataSource>
+  <DataSource id="Projection_7$$$$BL.DI.Tables.S4::T_ZFIR021$$">
+    <resourceUri>BL.DI.Tables.S4::T_ZFIR021</resourceUri>
+  </DataSource>
+  <DataSource id="BL.Models.Common::CV_KMYS">
+    <resourceUri>BL.Models.Common::CV_KMYS</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <descriptions>
+      <comment text="科目为研发费用类的数据"/>
+    </descriptions>
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="MONAT"/>
+      <viewAttribute id="HKONT"/>
+      <viewAttribute id="HKONT_TXT"/>
+      <viewAttribute id="ZZBXZD1"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="PRCTR_TXT"/>
+      <viewAttribute id="KOSTL"/>
+      <viewAttribute id="LTEXT"/>
+      <viewAttribute id="FKBER"/>
+      <viewAttribute id="FKBTX"/>
+      <viewAttribute id="HBKID"/>
+      <viewAttribute id="HKTID"/>
+      <viewAttribute id="BANKN"/>
+      <viewAttribute id="TEXT1"/>
+      <viewAttribute id="PARTNER"/>
+      <viewAttribute id="NAME_ORG1"/>
+      <viewAttribute id="WAERS"/>
+      <viewAttribute id="QC_DMBTR"/>
+      <viewAttribute id="JF_DMBTR"/>
+      <viewAttribute id="DF_DMBTR"/>
+      <viewAttribute id="QM_DMBTR"/>
+      <viewAttribute id="LJ_DMBTR"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="FXKJ" datatype="NVARCHAR" length="30" expressionLanguage="SQL">
+        <formula>CASE &quot;HKONT&quot;
+	 WHEN '5301010101' then '材料' 
+     WHEN '5301010102' then '燃料动力'
+     WHEN '5301010103' then '燃料动力'
+     WHEN '5301010104' then '人工'
+     WHEN '5301010105' then '人工'
+     WHEN '5301010106' then '人工'
+     WHEN '5301010107' then '人工'
+     WHEN '5301010108' then '人工'
+     WHEN '5301010301' then '人工'
+     WHEN '5301010302' then '人工'
+     WHEN '5301010303' then '人工'
+     WHEN '5301010304' then '人工'
+     WHEN '5301010401' then '人工'
+     WHEN '5301010402' then '人工'
+     WHEN '5301010403' then '人工'
+     WHEN '5301010501' then '人工'
+     WHEN '5301010502' then '人工'
+     WHEN '5301010503' then '人工'
+     WHEN '5301010600' then '人工'
+     WHEN '5301010700' then '人工'
+     WHEN '5301010201' then '其他'
+     WHEN '5301010202' then '其他'
+     WHEN '5301010203' then '其他'
+     WHEN '5301010204' then '其他'
+     WHEN '5301010205' then '其他'
+	 ELSE ''
+ END</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="BL.DI.Tables.S4::T_ZFIR021">
+      <mapping xsi:type="Calculation:AttributeMapping" target="HKONT_TXT" source="TXT20"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR_TXT" source="KTEXT"/>
+    </input>
+    <filter>&quot;HKONT&quot; IN('5301010101','5301010102','5301010103','5301010104','5301010105',
+'5301010106','5301010107','5301010108','5301010301','5301010302','5301010303',
+'5301010304','5301010401','5301010402','5301010403','5301010501','5301010502',
+'5301010503','5301010600','5301010700','5301010201','5301010202','5301010203',
+'5301010204','5301010205')</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_5">
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="BUTXT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="BL.DI.VirtualTable.S4::VA_T001"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_6">
+    <viewAttributes>
+      <viewAttribute id="YQJ"/>
+      <viewAttribute id="MBQJ"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="BL.DI.Tables.S4::T_PZB_LJS"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_7" filterExpressionLanguage="SQL">
+    <descriptions>
+      <comment text="取销售收入科目数据"/>
+    </descriptions>
+    <viewAttributes>
+      <viewAttribute id="TXT20"/>
+      <viewAttribute id="KTEXT"/>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="MONAT"/>
+      <viewAttribute id="HKONT"/>
+      <viewAttribute id="ZZBXZD1"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="KOSTL"/>
+      <viewAttribute id="LTEXT"/>
+      <viewAttribute id="FKBER"/>
+      <viewAttribute id="FKBTX"/>
+      <viewAttribute id="HBKID"/>
+      <viewAttribute id="HKTID"/>
+      <viewAttribute id="BANKN"/>
+      <viewAttribute id="TEXT1"/>
+      <viewAttribute id="PARTNER"/>
+      <viewAttribute id="NAME_ORG1"/>
+      <viewAttribute id="WAERS"/>
+      <viewAttribute id="QC_DMBTR"/>
+      <viewAttribute id="JF_DMBTR"/>
+      <viewAttribute id="DF_DMBTR"/>
+      <viewAttribute id="QM_DMBTR"/>
+      <viewAttribute id="LJ_DMBTR"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_7$$$$BL.DI.Tables.S4::T_ZFIR021$$"/>
+    <filter>&quot;HKONT&quot;IN('6001010100', '6001010200','6001020100','6001020200',
+'6051010100','6051010200','6051010300','6051010400','6051010500',
+'6051010600','6051010700','6051020100','6051020200','6051020300',
+'6051020400','6051020500','6051020600','6051020700','6051020800')</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_8" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="FXKJ"/>
+      <viewAttribute id="HKONT"/>
+      <viewAttribute id="FXKJ_TXT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="BL.Models.Common::CV_KMYS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ" source="SETNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HKONT" source="VALFROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ_TXT" source="DESCRIPT"/>
+    </input>
+    <filter>&quot;FXKJ&quot; LIKE 'ZSAC_03%'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_5">
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="MONAT"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="QM_DMBTR" aggregationType="sum"/>
+      <viewAttribute id="LJ_DMBTR" aggregationType="sum"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_7"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_11" cardinality="C1_1" joinType="leftOuter">
+    <descriptions>
+      <comment text="根据科目获取分析口径"/>
+    </descriptions>
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="MONAT"/>
+      <viewAttribute id="HKONT"/>
+      <viewAttribute id="HKONT_TXT"/>
+      <viewAttribute id="ZZBXZD1"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="PRCTR_TXT"/>
+      <viewAttribute id="KOSTL"/>
+      <viewAttribute id="LTEXT"/>
+      <viewAttribute id="FKBER"/>
+      <viewAttribute id="FKBTX"/>
+      <viewAttribute id="HBKID"/>
+      <viewAttribute id="HKTID"/>
+      <viewAttribute id="BANKN"/>
+      <viewAttribute id="TEXT1"/>
+      <viewAttribute id="PARTNER"/>
+      <viewAttribute id="NAME_ORG1"/>
+      <viewAttribute id="WAERS"/>
+      <viewAttribute id="QC_DMBTR" aggregationType="sum"/>
+      <viewAttribute id="JF_DMBTR" aggregationType="sum"/>
+      <viewAttribute id="DF_DMBTR" aggregationType="sum"/>
+      <viewAttribute id="QM_DMBTR" aggregationType="sum"/>
+      <viewAttribute id="LJ_DMBTR" aggregationType="sum"/>
+      <viewAttribute id="FXKJ"/>
+      <viewAttribute id="FXKJ_TXT"/>
+      <viewAttribute hidden="true" id="JOIN$HKONT$HKONT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONAT" source="MONAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HKONT" source="HKONT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HKONT_TXT" source="HKONT_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZZBXZD1" source="ZZBXZD1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR_TXT" source="PRCTR_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="KOSTL" source="KOSTL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LTEXT" source="LTEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FKBER" source="FKBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FKBTX" source="FKBTX"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HBKID" source="HBKID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HKTID" source="HKTID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BANKN" source="BANKN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TEXT1" source="TEXT1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER" source="PARTNER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_ORG1" source="NAME_ORG1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QC_DMBTR" source="QC_DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JF_DMBTR" source="JF_DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DF_DMBTR" source="DF_DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QM_DMBTR" source="QM_DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LJ_DMBTR" source="LJ_DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$HKONT$HKONT" source="HKONT"/>
+    </input>
+    <input node="Projection_8">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ" source="FXKJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ_TXT" source="FXKJ_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$HKONT$HKONT" source="HKONT"/>
+    </input>
+    <joinAttribute name="JOIN$HKONT$HKONT"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_6">
+    <descriptions>
+      <comment text="聚合数据，本月数"/>
+    </descriptions>
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="MONAT"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="PRCTR_TXT"/>
+      <viewAttribute id="WAERS"/>
+      <viewAttribute id="JF_DMBTR" aggregationType="sum"/>
+      <viewAttribute id="FXKJ"/>
+      <viewAttribute id="FXKJ_TXT"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="TIME" datatype="NVARCHAR" length="6" expressionLanguage="SQL">
+        <formula>CONCAT(&quot;GJAHR&quot;, &quot;MONAT&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="Join_11"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_12" cardinality="C1_N" joinType="inner">
+    <descriptions>
+      <comment text="当月数转累计数"/>
+    </descriptions>
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="MONAT"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="PRCTR_TXT"/>
+      <viewAttribute id="WAERS"/>
+      <viewAttribute id="JF_DMBTR" aggregationType="sum"/>
+      <viewAttribute id="FXKJ"/>
+      <viewAttribute id="FXKJ_TXT"/>
+      <viewAttribute id="MBQJ"/>
+      <viewAttribute hidden="true" id="JOIN$MONAT$YQJ"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Aggregation_6">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONAT" source="MONAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR_TXT" source="PRCTR_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JF_DMBTR" source="JF_DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ" source="FXKJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ_TXT" source="FXKJ_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MONAT$YQJ" source="MONAT"/>
+    </input>
+    <input node="Projection_6">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MBQJ" source="MBQJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MONAT$YQJ" source="YQJ"/>
+    </input>
+    <joinAttribute name="JOIN$MONAT$YQJ"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_8">
+    <descriptions>
+      <comment text="研发投入总数，本月数"/>
+    </descriptions>
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="MONAT"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="PRCTR_TXT"/>
+      <viewAttribute id="WAERS"/>
+      <viewAttribute id="JF_DMBTR" aggregationType="sum"/>
+      <viewAttribute id="TIME"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="FXKJ" datatype="NVARCHAR" length="30" expressionLanguage="SQL">
+        <formula>'ZSAC_03_99'</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="FXKJ_TXT" datatype="NVARCHAR" length="30" expressionLanguage="SQL">
+        <formula>'研发投入合计'</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="Aggregation_6"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_7">
+    <descriptions>
+      <comment text="聚合数据，累计数"/>
+    </descriptions>
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="MONAT"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="PRCTR_TXT"/>
+      <viewAttribute id="WAERS"/>
+      <viewAttribute id="JF_DMBTR_LJ" aggregationType="sum"/>
+      <viewAttribute id="FXKJ"/>
+      <viewAttribute id="FXKJ_TXT"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="TIME" datatype="NVARCHAR" length="6" expressionLanguage="SQL">
+        <formula>CONCAT(&quot;GJAHR&quot;, &quot;MONAT&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="Join_12">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONAT" source="MBQJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JF_DMBTR_LJ" source="JF_DMBTR"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_7" cardinality="C1_1" joinType="leftOuter">
+    <descriptions>
+      <comment text="研发投入占收入比-当月数"/>
+    </descriptions>
+    <viewAttributes>
+      <viewAttribute id="QM_DMBTR_XSSR" aggregationType="sum"/>
+      <viewAttribute id="LJ_DMBTR" aggregationType="sum"/>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="MONAT"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="PRCTR_TXT"/>
+      <viewAttribute id="WAERS"/>
+      <viewAttribute id="JF_DMBTR" aggregationType="sum"/>
+      <viewAttribute id="TIME"/>
+      <viewAttribute hidden="true" id="JOIN$BUKRS$BUKRS"/>
+      <viewAttribute hidden="true" id="JOIN$PRCTR$PRCTR"/>
+      <viewAttribute hidden="true" id="JOIN$GJAHR$GJAHR"/>
+      <viewAttribute hidden="true" id="JOIN$MONAT$MONAT"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="FXKJ" datatype="NVARCHAR" length="30" expressionLanguage="SQL">
+        <formula>'ZSAC_03_100'</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="YSB_DY" datatype="DECIMAL" length="23" scale="2" expressionLanguage="SQL">
+        <formula>CASE &quot;QM_DMBTR_XSSR&quot; 
+	 WHEN 0 then 0
+	 ELSE &quot;JF_DMBTR&quot;/&quot;QM_DMBTR_XSSR&quot;
+ END</formula>
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="FXKJ_TXT" datatype="NVARCHAR" length="30" expressionLanguage="SQL">
+        <formula>'研发投入占收入比'</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="Aggregation_8">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONAT" source="MONAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR_TXT" source="PRCTR_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JF_DMBTR" source="JF_DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BUKRS$BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PRCTR$PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$GJAHR$GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MONAT$MONAT" source="MONAT"/>
+    </input>
+    <input node="Aggregation_5">
+      <mapping xsi:type="Calculation:AttributeMapping" target="QM_DMBTR_XSSR" source="QM_DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LJ_DMBTR" source="LJ_DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BUKRS$BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PRCTR$PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$GJAHR$GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MONAT$MONAT" source="MONAT"/>
+    </input>
+    <joinAttribute name="JOIN$BUKRS$BUKRS"/>
+    <joinAttribute name="JOIN$PRCTR$PRCTR"/>
+    <joinAttribute name="JOIN$GJAHR$GJAHR"/>
+    <joinAttribute name="JOIN$MONAT$MONAT"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_9">
+    <descriptions>
+      <comment text="研发总投入累计值"/>
+    </descriptions>
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="MONAT"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="PRCTR_TXT"/>
+      <viewAttribute id="WAERS"/>
+      <viewAttribute id="JF_DMBTR_LJ" aggregationType="sum"/>
+      <viewAttribute id="TIME"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="FXKJ" datatype="NVARCHAR" length="30" expressionLanguage="SQL">
+        <formula>'ZSAC_03_99'</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="FXKJ_TXT" datatype="NVARCHAR" length="30" expressionLanguage="SQL">
+        <formula>'研发投入合计'</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="Aggregation_7"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_8" cardinality="C1_1" joinType="leftOuter">
+    <descriptions>
+      <comment text="研发投入占收入比-累计"/>
+    </descriptions>
+    <viewAttributes>
+      <viewAttribute id="FXKJ"/>
+      <viewAttribute id="YSB_DY" aggregationType="sum"/>
+      <viewAttribute id="LJ_DMBTR_XSSR" aggregationType="sum"/>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="MONAT"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="PRCTR_TXT"/>
+      <viewAttribute id="WAERS"/>
+      <viewAttribute id="TIME"/>
+      <viewAttribute id="JF_DMBTR_LJ" aggregationType="sum"/>
+      <viewAttribute id="FXKJ_TXT"/>
+      <viewAttribute hidden="true" id="JOIN$BUKRS$BUKRS"/>
+      <viewAttribute hidden="true" id="JOIN$GJAHR$GJAHR"/>
+      <viewAttribute hidden="true" id="JOIN$MONAT$MONAT"/>
+      <viewAttribute hidden="true" id="JOIN$PRCTR$PRCTR"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="YSB_LJ" datatype="DECIMAL" length="23" scale="2" expressionLanguage="SQL">
+        <formula>CASE &quot;LJ_DMBTR_XSSR&quot;
+	 WHEN 0 then 0
+	 ELSE &quot;JF_DMBTR_LJ&quot;/&quot;LJ_DMBTR_XSSR&quot; 
+ END</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="Join_7">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ" source="FXKJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YSB_DY" source="YSB_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LJ_DMBTR_XSSR" source="LJ_DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONAT" source="MONAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR_TXT" source="PRCTR_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ_TXT" source="FXKJ_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BUKRS$BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$GJAHR$GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MONAT$MONAT" source="MONAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PRCTR$PRCTR" source="PRCTR"/>
+    </input>
+    <input node="Aggregation_9">
+      <mapping xsi:type="Calculation:AttributeMapping" target="JF_DMBTR_LJ" source="JF_DMBTR_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BUKRS$BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$GJAHR$GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MONAT$MONAT" source="MONAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PRCTR$PRCTR" source="PRCTR"/>
+    </input>
+    <joinAttribute name="JOIN$BUKRS$BUKRS"/>
+    <joinAttribute name="JOIN$GJAHR$GJAHR"/>
+    <joinAttribute name="JOIN$MONAT$MONAT"/>
+    <joinAttribute name="JOIN$PRCTR$PRCTR"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:UnionView" id="Union_2">
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="MONAT"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="PRCTR_TXT"/>
+      <viewAttribute id="WAERS"/>
+      <viewAttribute id="FXKJ"/>
+      <viewAttribute id="FXKJ_TXT"/>
+      <viewAttribute id="JF_DMBTR" aggregationType="sum"/>
+      <viewAttribute id="JF_DMBTR_LJ" aggregationType="sum"/>
+      <viewAttribute id="TIME"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Aggregation_6">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONAT" source="MONAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR_TXT" source="PRCTR_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ" source="FXKJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ_TXT" source="FXKJ_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JF_DMBTR" source="JF_DMBTR"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="JF_DMBTR_LJ" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+    </input>
+    <input node="Aggregation_7">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONAT" source="MONAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR_TXT" source="PRCTR_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ" source="FXKJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ_TXT" source="FXKJ_TXT"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="JF_DMBTR" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JF_DMBTR_LJ" source="JF_DMBTR_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+    </input>
+    <input node="Aggregation_8">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONAT" source="MONAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR_TXT" source="PRCTR_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ" source="FXKJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ_TXT" source="FXKJ_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JF_DMBTR" source="JF_DMBTR"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="JF_DMBTR_LJ" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+    </input>
+    <input node="Aggregation_9">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONAT" source="MONAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR_TXT" source="PRCTR_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ" source="FXKJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ_TXT" source="FXKJ_TXT"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="JF_DMBTR" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JF_DMBTR_LJ" source="JF_DMBTR_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_10">
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="MONAT"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="PRCTR_TXT"/>
+      <viewAttribute id="WAERS"/>
+      <viewAttribute id="FXKJ"/>
+      <viewAttribute id="FXKJ_TXT"/>
+      <viewAttribute id="JF_DMBTR" aggregationType="sum"/>
+      <viewAttribute id="JF_DMBTR_LJ" aggregationType="sum"/>
+      <viewAttribute id="TIME"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Union_2"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_13" cardinality="C1_1" joinType="leftOuter">
+    <descriptions>
+      <comment text="获取总研发投入，计算各指标月度分析_占总投入比"/>
+    </descriptions>
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="MONAT"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="PRCTR_TXT"/>
+      <viewAttribute id="WAERS"/>
+      <viewAttribute id="FXKJ"/>
+      <viewAttribute id="FXKJ_TXT"/>
+      <viewAttribute id="JF_DMBTR" aggregationType="sum"/>
+      <viewAttribute id="JF_DMBTR_LJ" aggregationType="sum"/>
+      <viewAttribute id="JF_DMBTR_ZJ_JSY" aggregationType="sum"/>
+      <viewAttribute hidden="true" id="JOIN$BUKRS$BUKRS"/>
+      <viewAttribute hidden="true" id="JOIN$PRCTR$PRCTR"/>
+      <viewAttribute hidden="true" id="JOIN$TIME$TIME"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="YDFX_ZZTRB" datatype="DECIMAL" length="20" scale="7" expressionLanguage="SQL">
+        <formula>CASE &quot;JF_DMBTR_ZJ_JSY&quot;
+	 WHEN 0 then 0 
+	 ELSE &quot;JF_DMBTR&quot;/&quot;JF_DMBTR_ZJ_JSY&quot;
+ END</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="Aggregation_10">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONAT" source="MONAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR_TXT" source="PRCTR_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ" source="FXKJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ_TXT" source="FXKJ_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JF_DMBTR" source="JF_DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JF_DMBTR_LJ" source="JF_DMBTR_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BUKRS$BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PRCTR$PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TIME$TIME" source="TIME"/>
+    </input>
+    <input node="Aggregation_8">
+      <mapping xsi:type="Calculation:AttributeMapping" target="JF_DMBTR_ZJ_JSY" source="JF_DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BUKRS$BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PRCTR$PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TIME$TIME" source="TIME"/>
+    </input>
+    <joinAttribute name="JOIN$BUKRS$BUKRS"/>
+    <joinAttribute name="JOIN$PRCTR$PRCTR"/>
+    <joinAttribute name="JOIN$TIME$TIME"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_14" cardinality="C1_1" joinType="leftOuter">
+    <descriptions>
+      <comment text="获取总研发投入累计数，计算各指标累计分析_占总投入比"/>
+    </descriptions>
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="MONAT"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="PRCTR_TXT"/>
+      <viewAttribute id="WAERS"/>
+      <viewAttribute id="FXKJ"/>
+      <viewAttribute id="FXKJ_TXT"/>
+      <viewAttribute id="JF_DMBTR" aggregationType="sum"/>
+      <viewAttribute id="JF_DMBTR_LJ" aggregationType="sum"/>
+      <viewAttribute id="YDFX_ZZTRB" aggregationType="sum"/>
+      <viewAttribute id="JF_DMBTR_LJ_ZJ_JSY" aggregationType="sum"/>
+      <viewAttribute id="TIME"/>
+      <viewAttribute hidden="true" id="JOIN$BUKRS$BUKRS"/>
+      <viewAttribute hidden="true" id="JOIN$PRCTR$PRCTR"/>
+      <viewAttribute hidden="true" id="JOIN$GJAHR$GJAHR"/>
+      <viewAttribute hidden="true" id="JOIN$MONAT$MONAT"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="LJFX_ZZTRB" datatype="DECIMAL" length="20" scale="7" expressionLanguage="SQL">
+        <formula>CASE &quot;JF_DMBTR_LJ_ZJ_JSY&quot; 
+	 WHEN 0 then 0 
+	 ELSE &quot;JF_DMBTR_LJ&quot;/&quot;JF_DMBTR_LJ_ZJ_JSY&quot;
+ END</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="Join_13">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONAT" source="MONAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR_TXT" source="PRCTR_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ" source="FXKJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ_TXT" source="FXKJ_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JF_DMBTR" source="JF_DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JF_DMBTR_LJ" source="JF_DMBTR_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YDFX_ZZTRB" source="YDFX_ZZTRB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BUKRS$BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PRCTR$PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$GJAHR$GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MONAT$MONAT" source="MONAT"/>
+    </input>
+    <input node="Aggregation_9">
+      <mapping xsi:type="Calculation:AttributeMapping" target="JF_DMBTR_LJ_ZJ_JSY" source="JF_DMBTR_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BUKRS$BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PRCTR$PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$GJAHR$GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MONAT$MONAT" source="MONAT"/>
+    </input>
+    <joinAttribute name="JOIN$BUKRS$BUKRS"/>
+    <joinAttribute name="JOIN$PRCTR$PRCTR"/>
+    <joinAttribute name="JOIN$GJAHR$GJAHR"/>
+    <joinAttribute name="JOIN$MONAT$MONAT"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:UnionView" id="Union_1">
+    <viewAttributes>
+      <viewAttribute id="BUKRS" datatype="NVARCHAR" length="4"/>
+      <viewAttribute id="GJAHR" datatype="NVARCHAR" length="4"/>
+      <viewAttribute id="MONAT" datatype="NVARCHAR" length="2"/>
+      <viewAttribute id="PRCTR" datatype="NVARCHAR" length="10"/>
+      <viewAttribute id="PRCTR_TXT" datatype="NVARCHAR" length="20"/>
+      <viewAttribute id="WAERS" datatype="NVARCHAR" length="5"/>
+      <viewAttribute id="JF_DMBTR" aggregationType="sum" datatype="DECIMAL" length="23" scale="2"/>
+      <viewAttribute id="FXKJ" datatype="NVARCHAR" length="30"/>
+      <viewAttribute id="JF_DMBTR_DNLJ" aggregationType="sum" datatype="DECIMAL" length="23" scale="2"/>
+    
+      <viewAttribute id="YSB_DY" aggregationType="sum" datatype="DECIMAL" length="23" scale="2"/>
+      <viewAttribute id="YSB_LJ" aggregationType="sum" datatype="DECIMAL" length="23" scale="2"/>
+    
+      <viewAttribute id="LJFX_ZZTRB" aggregationType="sum" datatype="DECIMAL" length="20" scale="7"/>
+      <viewAttribute id="YDFX_ZZTRB" aggregationType="sum" datatype="DECIMAL" length="20" scale="7"/>
+    
+      <viewAttribute id="FXKJ_TXT"/>
+      <viewAttribute id="TIME"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_14">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONAT" source="MONAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR_TXT" source="PRCTR_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JF_DMBTR" source="JF_DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ" source="FXKJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JF_DMBTR_DNLJ" source="JF_DMBTR_LJ"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="YSB_DY" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="YSB_LJ" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LJFX_ZZTRB" source="LJFX_ZZTRB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YDFX_ZZTRB" source="YDFX_ZZTRB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ_TXT" source="FXKJ_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+    </input>
+    <input node="Join_8">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONAT" source="MONAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRCTR_TXT" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JF_DMBTR" source="YSB_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ" source="FXKJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JF_DMBTR_DNLJ" source="YSB_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YSB_DY" source="YSB_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YSB_LJ" source="YSB_LJ"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LJFX_ZZTRB" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="YDFX_ZZTRB" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ_TXT" source="FXKJ_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_4" cardinality="C1_1" joinType="leftOuter">
+    <descriptions>
+      <comment text="取公司代码描述"/>
+    </descriptions>
+    <viewAttributes>
+      <viewAttribute id="BUTXT"/>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="MONAT"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="PRCTR_TXT"/>
+      <viewAttribute id="WAERS"/>
+      <viewAttribute id="JF_DMBTR" aggregationType="sum"/>
+      <viewAttribute id="FXKJ"/>
+      <viewAttribute id="JF_DMBTR_DNLJ" aggregationType="sum"/>
+      <viewAttribute id="YSB_DY" aggregationType="sum"/>
+      <viewAttribute id="YSB_LJ" aggregationType="sum"/>
+      <viewAttribute id="LJFX_ZZTRB" aggregationType="sum"/>
+      <viewAttribute id="YDFX_ZZTRB" aggregationType="sum"/>
+      <viewAttribute id="FXKJ_TXT"/>
+      <viewAttribute id="TIME"/>
+      <viewAttribute hidden="true" id="JOIN$BUKRS$BUKRS"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Union_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONAT" source="MONAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR_TXT" source="PRCTR_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JF_DMBTR" source="JF_DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ" source="FXKJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JF_DMBTR_DNLJ" source="JF_DMBTR_DNLJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YSB_DY" source="YSB_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YSB_LJ" source="YSB_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LJFX_ZZTRB" source="LJFX_ZZTRB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YDFX_ZZTRB" source="YDFX_ZZTRB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ_TXT" source="FXKJ_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BUKRS$BUKRS" source="BUKRS"/>
+    </input>
+    <input node="Projection_5">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUTXT" source="BUTXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BUKRS$BUKRS" source="BUKRS"/>
+    </input>
+    <joinAttribute name="JOIN$BUKRS$BUKRS"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_4">
+    <viewAttributes>
+      <viewAttribute id="BUTXT"/>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="MONAT"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="PRCTR_TXT"/>
+      <viewAttribute id="WAERS"/>
+      <viewAttribute id="JF_DMBTR"/>
+      <viewAttribute id="FXKJ"/>
+      <viewAttribute id="JF_DMBTR_DNLJ"/>
+    
+      <viewAttribute id="YSB_DY"/>
+      <viewAttribute id="YSB_LJ"/>
+    
+      <viewAttribute id="LJFX_ZZTRB"/>
+      <viewAttribute id="YDFX_ZZTRB"/>
+    
+      <viewAttribute id="FXKJ_TXT"/>
+      <viewAttribute id="TIME"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_4"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Projection_4">
+  <attributes>
+    <attribute id="BUTXT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="公司名称"/>
+      <keyMapping columnObjectName="Projection_4" columnName="BUTXT"/>
+    </attribute>
+    <attribute id="BUKRS" order="2" descriptionColumnName="BUTXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="公司代码"/>
+      <keyMapping columnObjectName="Projection_4" columnName="BUKRS"/>
+    </attribute>
+    <attribute id="GJAHR" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="年度"/>
+      <keyMapping columnObjectName="Projection_4" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="MONAT" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="月份"/>
+      <keyMapping columnObjectName="Projection_4" columnName="MONAT"/>
+    </attribute>
+    <attribute id="PRCTR" order="5" descriptionColumnName="PRCTR_TXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="利润中心"/>
+      <keyMapping columnObjectName="Projection_4" columnName="PRCTR"/>
+    </attribute>
+    <attribute id="PRCTR_TXT" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="利润中心描述"/>
+      <keyMapping columnObjectName="Projection_4" columnName="PRCTR_TXT"/>
+    </attribute>
+    <attribute id="WAERS" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="货币码"/>
+      <keyMapping columnObjectName="Projection_4" columnName="WAERS"/>
+    </attribute>
+    <attribute id="FXKJ" order="9" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="FXKJ_TXT">
+      <descriptions defaultDescription="分析指标"/>
+      <keyMapping columnObjectName="Projection_4" columnName="FXKJ"/>
+    </attribute>
+    <attribute id="FXKJ_TXT" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="指标描述"/>
+      <keyMapping columnObjectName="Projection_4" columnName="FXKJ_TXT"/>
+    </attribute>
+    <attribute id="TIME" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TIME"/>
+      <keyMapping columnObjectName="Projection_4" columnName="TIME"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="JF_DMBTR" order="8" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="当月"/>
+      <measureMapping columnObjectName="Projection_4" columnName="JF_DMBTR"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="JF_DMBTR_DNLJ" order="10" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="当年累计"/>
+      <measureMapping columnObjectName="Projection_4" columnName="JF_DMBTR_DNLJ"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  
+    <measure id="YSB_DY" order="11" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="研收比_当月"/>
+      <measureMapping columnObjectName="Projection_4" columnName="YSB_DY"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="YSB_LJ" order="12" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="研收比_当年累计"/>
+      <measureMapping columnObjectName="Projection_4" columnName="YSB_LJ"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  
+    <measure id="LJFX_ZZTRB" order="13" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="累计分析_占总研发投入比"/>
+      <measureMapping columnObjectName="Projection_4" columnName="LJFX_ZZTRB"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="YDFX_ZZTRB" order="14" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="月度分析_占总研发投入比"/>
+      <measureMapping columnObjectName="Projection_4" columnName="YDFX_ZZTRB"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="475.89209674055763" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="307.3140436623659" y="2086.999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_5" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="480.1868098664141" y="501.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_6" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="119.29690737592318" y="1801.999989271164"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_7" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="398.10880692697265" y="1496.9999904632568"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_5" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="381.95298554267146" y="1361.9999916553497"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_7" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="446.02377923132644" y="1148.6666595141091"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Aggregation_8" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="148"/>
+    </shape>
+    <shape modelObjectName="Aggregation_5" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="620" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_8" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="204.52238487437967" y="961.9999940395355"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_7" modelObjectNameSpace="Join_8" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="185"/>
+    </shape>
+    <shape modelObjectName="Aggregation_9" modelObjectNameSpace="Join_8" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  
+  
+  
+  
+    <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="264.19683931769146" y="501.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="450.1342215279437" y="341.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Union_1" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="185"/>
+    </shape>
+    <shape modelObjectName="Projection_5" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="136"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="450.1342215279436" y="236.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_8" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="517.3140436623659" y="2086.999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_11" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="349.829939320294" y="1926.999989271164"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_11" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="155.072265625"/>
+    </shape>
+    <shape modelObjectName="Projection_8" modelObjectNameSpace="Join_11" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="139.7861328125"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_6" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="349.829939320294" y="1801.999989271164"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_12" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="145.9635740425898" y="1621.9999904632568"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Aggregation_6" modelObjectNameSpace="Join_12" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="150.78076171875"/>
+    </shape>
+    <shape modelObjectName="Projection_6" modelObjectNameSpace="Join_12" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="136.0234375"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_7" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="145.9635740425898" y="1496.9999904632568"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_8" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="591.9529855426715" y="1351.9999916553497"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_9" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="1351.9999916553497"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Union_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="236.02377923132644" y="1141.9999928474426"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_10" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="414.52238487437967" y="979.4999940395355"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_13" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="441.1890515410464" y="801.9999952316284"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Aggregation_10" modelObjectNameSpace="Join_13" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="161.17919921875"/>
+    </shape>
+    <shape modelObjectName="Aggregation_8" modelObjectNameSpace="Join_13" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="150.78076171875"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_14" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="112.77349141317927" y="641.9999964237213"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_13" modelObjectNameSpace="Join_14" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="188.072265625"/>
+    </shape>
+    <shape modelObjectName="Aggregation_9" modelObjectNameSpace="Join_14" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="161.17919921875"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
