@@ -1,0 +1,7 @@
+COLUMN TABLE "BL.DI.Tables.S4::T_BUKRS" (
+    SIGN     NVARCHAR (1) COMMENT '标识',
+    OPTION   NVARCHAR (2) COMMENT '操作类型',
+    LOW      NVARCHAR (4) COMMENT '公司代码',
+    HIGH     NVARCHAR (4) COMMENT '公司代码'
+)
+COMMENT '公司代码'

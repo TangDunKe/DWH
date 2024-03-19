@@ -116,6 +116,7 @@
       </calculatedViewAttribute>
     
       <calculatedViewAttribute id="FXKJ_TXT" datatype="NVARCHAR" length="30" expressionLanguage="SQL">
+    
         <formula>CASE &quot;HKONT&quot;
 	 WHEN '6603010100' then '利息收入'
 	 WHEN '6603010200' then '利息收入'
@@ -135,6 +136,7 @@
 	 WHEN '6603990000' then '其他财务费用'
 	 ELSE ''
  END</formula>
+    
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <input node="Projection_1">
@@ -167,8 +169,6 @@
       <viewAttribute id="MONAT"/>
       <viewAttribute id="PRCTR"/>
       <viewAttribute id="PRCTR_TXT"/>
-      <viewAttribute id="FKBER"/>
-      <viewAttribute id="FKBTX"/>
       <viewAttribute id="WAERS"/>
       <viewAttribute id="QM_DMBTR" aggregationType="sum"/>
       <viewAttribute id="LJ_DMBTR" aggregationType="sum"/>
@@ -204,8 +204,6 @@
       <viewAttribute id="MONAT"/>
       <viewAttribute id="PRCTR"/>
       <viewAttribute id="PRCTR_TXT"/>
-      <viewAttribute id="FKBER"/>
-      <viewAttribute id="FKBTX"/>
       <viewAttribute id="WAERS"/>
       <viewAttribute id="QM_DMBTR"/>
       <viewAttribute id="LJ_DMBTR"/>
@@ -245,8 +243,6 @@
       <viewAttribute id="BUKRS"/>
       <viewAttribute id="PRCTR"/>
       <viewAttribute id="PRCTR_TXT"/>
-      <viewAttribute id="FKBER"/>
-      <viewAttribute id="FKBTX"/>
       <viewAttribute id="WAERS"/>
       <viewAttribute id="QM_DMBTR_SNTQ" aggregationType="sum"/>
       <viewAttribute id="LJ_DMBTR_SNTQ" aggregationType="sum"/>
@@ -262,8 +258,6 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR_TXT" source="PRCTR_TXT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FKBER" source="FKBER"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FKBTX" source="FKBTX"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="QM_DMBTR_SNTQ" source="QM_DMBTR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="LJ_DMBTR_SNTQ" source="LJ_DMBTR"/>
@@ -290,8 +284,6 @@
       <viewAttribute id="BUKRS"/>
       <viewAttribute id="PRCTR"/>
       <viewAttribute id="PRCTR_TXT"/>
-      <viewAttribute id="FKBER"/>
-      <viewAttribute id="FKBTX"/>
       <viewAttribute id="WAERS"/>
       <viewAttribute id="QM_DMBTR_SY" aggregationType="sum"/>
       <viewAttribute id="LJ_DMBTR_SY" aggregationType="sum"/>
@@ -304,8 +296,6 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR_TXT" source="PRCTR_TXT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FKBER" source="FKBER"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FKBTX" source="FKBTX"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="QM_DMBTR_SY" source="QM_DMBTR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="LJ_DMBTR_SY" source="LJ_DMBTR"/>
@@ -326,8 +316,6 @@
       <viewAttribute id="BUKRS"/>
       <viewAttribute id="PRCTR"/>
       <viewAttribute id="PRCTR_TXT"/>
-      <viewAttribute id="FKBER"/>
-      <viewAttribute id="FKBTX"/>
       <viewAttribute id="WAERS"/>
       <viewAttribute id="QM_DMBTR_SNTQ" aggregationType="sum"/>
       <viewAttribute id="LJ_DMBTR_SNTQ" aggregationType="sum"/>
@@ -342,12 +330,10 @@
       <viewAttribute id="LJ_DMBTR_SY" aggregationType="sum"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="Join_5">
+    <input node="Join_5" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR_TXT" source="PRCTR_TXT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FKBER" source="FKBER"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FKBTX" source="FKBTX"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="QM_DMBTR_SNTQ" source="QM_DMBTR_SNTQ"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="LJ_DMBTR_SNTQ" source="LJ_DMBTR_SNTQ"/>
@@ -361,12 +347,10 @@
       <mapping xsi:type="Calculation:ConstantAttributeMapping" target="QM_DMBTR_SY" null="true" value=""/>
       <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LJ_DMBTR_SY" null="true" value=""/>
     </input>
-    <input node="Join_6">
+    <input node="Join_6" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR_TXT" source="PRCTR_TXT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FKBER" source="FKBER"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FKBTX" source="FKBTX"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
       <mapping xsi:type="Calculation:ConstantAttributeMapping" target="QM_DMBTR_SNTQ" null="true" value=""/>
       <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LJ_DMBTR_SNTQ" null="true" value=""/>
@@ -380,12 +364,10 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="QM_DMBTR_SY" source="QM_DMBTR_SY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="LJ_DMBTR_SY" source="LJ_DMBTR_SY"/>
     </input>
-    <input node="Projection_3">
+    <input node="Projection_3" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR_TXT" source="PRCTR_TXT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FKBER" source="FKBER"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FKBTX" source="FKBTX"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
       <mapping xsi:type="Calculation:ConstantAttributeMapping" target="QM_DMBTR_SNTQ" null="true" value=""/>
       <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LJ_DMBTR_SNTQ" null="true" value=""/>
@@ -408,8 +390,6 @@
       <viewAttribute id="BUKRS"/>
       <viewAttribute id="PRCTR"/>
       <viewAttribute id="PRCTR_TXT"/>
-      <viewAttribute id="FKBER"/>
-      <viewAttribute id="FKBTX"/>
       <viewAttribute id="WAERS"/>
       <viewAttribute id="QM_DMBTR_SNTQ_Y" aggregationType="sum"/>
       <viewAttribute id="LJ_DMBTR_SNTQ_Y" aggregationType="sum"/>
@@ -485,8 +465,6 @@
       <viewAttribute id="BUKRS"/>
       <viewAttribute id="PRCTR"/>
       <viewAttribute id="PRCTR_TXT"/>
-      <viewAttribute id="FKBER"/>
-      <viewAttribute id="FKBTX"/>
       <viewAttribute id="WAERS"/>
       <viewAttribute id="QM_DMBTR_SNTQ_Y" aggregationType="sum"/>
       <viewAttribute id="LJ_DMBTR_SNTQ_Y" aggregationType="sum"/>
@@ -499,46 +477,46 @@
       <viewAttribute id="LJ_DMBTR_SY_Y" aggregationType="sum"/>
     </viewAttributes>
     <calculatedViewAttributes>
-      <calculatedViewAttribute id="YDFX_TB" datatype="DECIMAL" length="20" expressionLanguage="SQL">
+      <calculatedViewAttribute id="YDFX_TB" datatype="DECIMAL" length="20" expressionLanguage="SQL" scale="7">
         <formula>CASE &quot;QM_DMBTR_SNTQ&quot;
 	 WHEN 0 then 0 
 	 ELSE (&quot;QM_DMBTR&quot;-&quot;QM_DMBTR_SNTQ&quot;)/&quot;QM_DMBTR_SNTQ&quot;
  END</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="LJFX_TB" datatype="DECIMAL" length="20" expressionLanguage="SQL">
+      <calculatedViewAttribute id="LJFX_TB" datatype="DECIMAL" length="20" expressionLanguage="SQL" scale="7">
         <formula>CASE &quot;LJ_DMBTR_SNTQ&quot;
 	 WHEN 0 then 0
 	 ELSE (&quot;LJ_DMBTR&quot;-&quot;LJ_DMBTR_SNTQ&quot;)/&quot;LJ_DMBTR_SNTQ&quot;
  END</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="YDFX_HB" datatype="DECIMAL" length="20" expressionLanguage="SQL">
+      <calculatedViewAttribute id="YDFX_HB" datatype="DECIMAL" length="20" expressionLanguage="SQL" scale="7">
         <formula>CASE &quot;QM_DMBTR_SY&quot; 
 	 WHEN 0 then 0
 	 ELSE (&quot;QM_DMBTR&quot;-&quot;QM_DMBTR_SY&quot;)/&quot;QM_DMBTR_SY&quot;
  END</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="LJFX_HB" datatype="DECIMAL" length="20" expressionLanguage="SQL">
+      <calculatedViewAttribute id="LJFX_HB" datatype="DECIMAL" length="20" expressionLanguage="SQL" scale="7">
         <formula>CASE &quot;LJ_DMBTR_SY&quot;
 	 WHEN 0 then 0
 	 ELSE (&quot;LJ_DMBTR&quot;-&quot;LJ_DMBTR_SY&quot;)/&quot;LJ_DMBTR_SY&quot;
  END</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="QM_DMBTR" datatype="DECIMAL" length="23" expressionLanguage="SQL">
+      <calculatedViewAttribute id="QM_DMBTR" datatype="DECIMAL" length="23" expressionLanguage="SQL" scale="2">
         <formula>IFNULL(&quot;QM_DMBTR_Y&quot;,0)</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="LJ_DMBTR" datatype="DECIMAL" length="23" expressionLanguage="SQL">
+      <calculatedViewAttribute id="LJ_DMBTR" datatype="DECIMAL" length="23" expressionLanguage="SQL" scale="2">
         <formula>IFNULL(&quot;LJ_DMBTR_Y&quot;,0)</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="QM_DMBTR_SY" datatype="DECIMAL" length="23" expressionLanguage="SQL">
+      <calculatedViewAttribute id="QM_DMBTR_SY" datatype="DECIMAL" length="23" expressionLanguage="SQL" scale="2">
         <formula>IFNULL(&quot;QM_DMBTR_SY_Y&quot;,0)</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="LJ_DMBTR_SY" datatype="DECIMAL" length="23" expressionLanguage="SQL">
+      <calculatedViewAttribute id="LJ_DMBTR_SY" datatype="DECIMAL" length="23" expressionLanguage="SQL" scale="2">
         <formula>IFNULL(&quot;LJ_DMBTR_SY_Y&quot;,0)</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="QM_DMBTR_SNTQ" datatype="DECIMAL" length="23" expressionLanguage="SQL">
+      <calculatedViewAttribute id="QM_DMBTR_SNTQ" datatype="DECIMAL" length="23" expressionLanguage="SQL" scale="2">
         <formula>IFNULL(&quot;QM_DMBTR_SNTQ_Y&quot;,0)</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="LJ_DMBTR_SNTQ" datatype="DECIMAL" length="23" expressionLanguage="SQL">
+      <calculatedViewAttribute id="LJ_DMBTR_SNTQ" datatype="DECIMAL" length="23" expressionLanguage="SQL" scale="2">
         <formula>IFNULL(&quot;LJ_DMBTR_SNTQ_Y&quot;,0)</formula>
       </calculatedViewAttribute>
       <calculatedViewAttribute id="FXKJ" datatype="NVARCHAR" length="30" expressionLanguage="SQL">
@@ -565,32 +543,28 @@
       <viewAttribute id="MONAT" datatype="NVARCHAR" length="2"/>
       <viewAttribute id="PRCTR" datatype="NVARCHAR" length="10"/>
       <viewAttribute id="PRCTR_TXT" datatype="NVARCHAR" length="20"/>
-      <viewAttribute id="FKBER" datatype="NVARCHAR" length="4"/>
-      <viewAttribute id="FKBTX" datatype="NVARCHAR" length="25"/>
       <viewAttribute id="WAERS" datatype="NVARCHAR" length="5"/>
-      <viewAttribute id="QM_DMBTR" aggregationType="sum" datatype="DECIMAL" length="23" scale="2"/>
-      <viewAttribute id="LJ_DMBTR" aggregationType="sum" datatype="DECIMAL" length="23" scale="2"/>
+      <viewAttribute id="QM_DMBTR" aggregationType="sum" datatype="DECIMAL" length="23"/>
+      <viewAttribute id="LJ_DMBTR" aggregationType="sum" datatype="DECIMAL" length="23"/>
       <viewAttribute id="TIME" datatype="NVARCHAR" length="6"/>
-      <viewAttribute id="QM_DMBTR_SNTQ" aggregationType="sum" datatype="DECIMAL" length="23" scale="2"/>
-      <viewAttribute id="LJ_DMBTR_SNTQ" aggregationType="sum" datatype="DECIMAL" length="23" scale="2"/>
-      <viewAttribute id="YDFX_TB" aggregationType="sum" datatype="DECIMAL" length="20" scale="7"/>
-      <viewAttribute id="LJFX_TB" aggregationType="sum" datatype="DECIMAL" length="20" scale="7"/>
-      <viewAttribute id="YDFX_HB" aggregationType="sum" datatype="DECIMAL" length="20" scale="7"/>
-      <viewAttribute id="LJFX_HB" aggregationType="sum" datatype="DECIMAL" length="20" scale="7"/>
+      <viewAttribute id="QM_DMBTR_SNTQ" aggregationType="sum" datatype="DECIMAL" length="23"/>
+      <viewAttribute id="LJ_DMBTR_SNTQ" aggregationType="sum" datatype="DECIMAL" length="23"/>
+      <viewAttribute id="YDFX_TB" aggregationType="sum" datatype="DECIMAL" length="20"/>
+      <viewAttribute id="LJFX_TB" aggregationType="sum" datatype="DECIMAL" length="20"/>
+      <viewAttribute id="YDFX_HB" aggregationType="sum" datatype="DECIMAL" length="20"/>
+      <viewAttribute id="LJFX_HB" aggregationType="sum" datatype="DECIMAL" length="20"/>
     
       <viewAttribute id="FXKJ" datatype="NVARCHAR" length="30"/>
     
       <viewAttribute id="FXKJ_TXT"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="Aggregation_4">
+    <input node="Aggregation_4" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="MONAT" source="MONAT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR_TXT" source="PRCTR_TXT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FKBER" source="FKBER"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FKBTX" source="FKBTX"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="QM_DMBTR" source="QM_DMBTR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="LJ_DMBTR" source="LJ_DMBTR"/>
@@ -604,14 +578,12 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ" source="FXKJ"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ_TXT" source="FXKJ_TXT"/>
     </input>
-    <input node="Aggregation_2">
+    <input node="Aggregation_2" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="MONAT" source="MONAT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR_TXT" source="PRCTR_TXT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FKBER" source="FKBER"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FKBTX" source="FKBTX"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="QM_DMBTR" source="QM_DMBTR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="LJ_DMBTR" source="LJ_DMBTR"/>
@@ -636,8 +608,6 @@
       <viewAttribute id="MONAT"/>
       <viewAttribute id="PRCTR"/>
       <viewAttribute id="PRCTR_TXT"/>
-      <viewAttribute id="FKBER"/>
-      <viewAttribute id="FKBTX"/>
       <viewAttribute id="WAERS"/>
       <viewAttribute id="QM_DMBTR" aggregationType="sum"/>
       <viewAttribute id="LJ_DMBTR" aggregationType="sum"/>
@@ -660,8 +630,6 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="MONAT" source="MONAT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR_TXT" source="PRCTR_TXT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FKBER" source="FKBER"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FKBTX" source="FKBTX"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="QM_DMBTR" source="QM_DMBTR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="LJ_DMBTR" source="LJ_DMBTR"/>
@@ -689,8 +657,6 @@
       <viewAttribute id="MONAT"/>
       <viewAttribute id="PRCTR"/>
       <viewAttribute id="PRCTR_TXT"/>
-      <viewAttribute id="FKBER"/>
-      <viewAttribute id="FKBTX"/>
       <viewAttribute id="WAERS"/>
       <viewAttribute id="QM_DMBTR"/>
       <viewAttribute id="LJ_DMBTR"/>
@@ -753,37 +719,31 @@
       <descriptions defaultDescription="利润中心描述"/>
       <keyMapping columnObjectName="Projection_4" columnName="PRCTR_TXT"/>
     </attribute>
-    <attribute id="FKBER" order="7" descriptionColumnName="FKBTX" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="功能范围"/>
-      <keyMapping columnObjectName="Projection_4" columnName="FKBER"/>
-    </attribute>
-    <attribute id="FKBTX" order="8" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="功能范围描述"/>
-      <keyMapping columnObjectName="Projection_4" columnName="FKBTX"/>
-    </attribute>
-    <attribute id="WAERS" order="9" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="WAERS" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="货币码"/>
       <keyMapping columnObjectName="Projection_4" columnName="WAERS"/>
     </attribute>
-    <attribute id="TIME" order="12" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="TIME" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TIME"/>
       <keyMapping columnObjectName="Projection_4" columnName="TIME"/>
     </attribute>
-    <attribute id="BUTXT" order="19" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="BUTXT" order="17" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="公司名称"/>
       <keyMapping columnObjectName="Projection_4" columnName="BUTXT"/>
     </attribute>
   
-    <attribute id="FXKJ" order="20" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="FXKJ_TXT">
+    <attribute id="FXKJ" order="18" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="FXKJ_TXT">
       <descriptions defaultDescription="分析指标"/>
   
       <keyMapping columnObjectName="Projection_4" columnName="FXKJ"/>
   
     </attribute>
   
-    <attribute id="FXKJ_TXT" order="25" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="FXKJ_TXT" order="23" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="分析指标描述"/>
+  
       <keyMapping columnObjectName="Projection_4" columnName="FXKJ_TXT"/>
+  
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -793,63 +753,63 @@
       <measureMapping columnObjectName="Projection_4" columnName="LJFX_QNLJ"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="QM_DMBTR" order="10" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="QM_DMBTR" order="8" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="当月"/>
       <measureMapping columnObjectName="Projection_4" columnName="QM_DMBTR"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="LJ_DMBTR" order="11" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="LJ_DMBTR" order="9" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="当年累计"/>
       <measureMapping columnObjectName="Projection_4" columnName="LJ_DMBTR"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="QM_DMBTR_SNTQ" order="13" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="QM_DMBTR_SNTQ" order="11" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="上年同期当月"/>
       <measureMapping columnObjectName="Projection_4" columnName="QM_DMBTR_SNTQ"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="LJ_DMBTR_SNTQ" order="14" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="LJ_DMBTR_SNTQ" order="12" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="上年同期累计"/>
       <measureMapping columnObjectName="Projection_4" columnName="LJ_DMBTR_SNTQ"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="YDFX_TB" order="15" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="YDFX_TB" order="13" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="月度分析_同比"/>
       <measureMapping columnObjectName="Projection_4" columnName="YDFX_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="LJFX_TB" order="16" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="LJFX_TB" order="14" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="累计分析_同比"/>
       <measureMapping columnObjectName="Projection_4" columnName="LJFX_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="YDFX_HB" order="17" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="YDFX_HB" order="15" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="月度分析_环比"/>
       <measureMapping columnObjectName="Projection_4" columnName="YDFX_HB"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="LJFX_HB" order="18" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="LJFX_HB" order="16" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="累计分析_环比"/>
       <measureMapping columnObjectName="Projection_4" columnName="LJFX_HB"/>
       <exceptionAggregationMetadata/>
     </measure>
   
-    <measure id="YDFX_YDJH" order="21" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="YDFX_YDJH" order="19" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="月度分析_月度计划"/>
       <measureMapping columnObjectName="Projection_4" columnName="YDFX_YDJH"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="YDFX_JHWCL" order="22" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="YDFX_JHWCL" order="20" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="月度分析_月度计划完成率"/>
       <measureMapping columnObjectName="Projection_4" columnName="YDFX_JHWCL"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="LJFX_NDJH" order="23" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="LJFX_NDJH" order="21" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="累计分析_年度计划"/>
       <measureMapping columnObjectName="Projection_4" columnName="LJFX_NDJH"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="LJFX_NDJHWCL" order="24" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="LJFX_NDJHWCL" order="22" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="累计分析_年度计划完成率"/>
       <measureMapping columnObjectName="Projection_4" columnName="LJFX_NDJHWCL"/>
       <exceptionAggregationMetadata/>
@@ -862,26 +822,26 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="333.43282994934236" y="112"/>
+      <upperLeftCorner x="333" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
     
   
     <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="177.82511594066472" y="1551.9999904632568"/>
+      <upperLeftCorner x="177" y="1551"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="387.8251159406647" y="1551.9999904632568"/>
+      <upperLeftCorner x="387" y="1551"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="181.3418480625732" y="501.9999976158142"/>
+      <upperLeftCorner x="181" y="501"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="262.8235448987668" y="1391.9999916553497"/>
+      <upperLeftCorner x="262" y="1391"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
@@ -893,20 +853,61 @@
       <rectangleSize width="155"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="262.8235448987668" y="1266.9999916553497"/>
+      <upperLeftCorner x="262" y="1266"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="432.4274169780619" y="1101.9999928474426"/>
+      <upperLeftCorner x="432" y="1101"/>
       <rectangleSize height="30" width="160"/>
     </shape>
+    <shape expanded="true" modelObjectName="Aggregation_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="198" y="1101"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="941"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="183"/>
+    </shape>
+    <shape modelObjectName="Aggregation_3" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="183"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_6" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="941"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="183"/>
+    </shape>
+    <shape modelObjectName="Aggregation_3" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="183"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Union_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="786"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_4" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="435" y="641"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="225" y="641"/>
+      <rectangleSize width="160"/>
+    </shape>
+  
   
     <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="391.3418480625732" y="501.9999976158142"/>
+      <upperLeftCorner x="391" y="501"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="313.1940418653776" y="341.9999988079071"/>
+      <upperLeftCorner x="313" y="341"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Union_1" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
@@ -919,49 +920,8 @@
     </shape>
   
     <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="313.1940418653776" y="236.9999988079071"/>
+      <upperLeftCorner x="313" y="236"/>
       <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="Aggregation_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="198.82967247791305" y="1101.9999928474426"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="941.9999940395355"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="183.58740234375"/>
-    </shape>
-    <shape modelObjectName="Aggregation_3" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="183.58740234375"/>
-    </shape>
-    <shape expanded="true" modelObjectName="Join_6" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302.00000000000006" y="941.9999940395355"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="183.58740234375"/>
-    </shape>
-    <shape modelObjectName="Aggregation_3" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="183.58740234375"/>
-    </shape>
-    <shape expanded="true" modelObjectName="Union_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302.00000000000006" y="786.9999952316284"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="Aggregation_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="435.42163707925073" y="641.9999964237213"/>
-      <rectangleSize width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="Aggregation_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="225.4216370792508" y="641.9999964237213"/>
-      <rectangleSize width="160"/>
-    </shape>
-  </shapes>
+    </shape></shapes>
 </layout>
 </Calculation:scenario>

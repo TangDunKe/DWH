@@ -1,0 +1,9 @@
+COLUMN TABLE "BL.DI.Tables.S4::T_ZFIR002" (    
+BUKRS      NVARCHAR (4)   COMMENT '公司代码',
+GJAHR      NVARCHAR (4)   COMMENT '会计年度',
+POPER      NVARCHAR (3)   COMMENT '过账期间',
+PRCTR      NVARCHAR (10)  COMMENT '利润中心',
+HC         NVARCHAR (10)  COMMENT '行号',
+TXT50      NVARCHAR(50)   COMMENT '名称',
+BEG_AMT     DECIMAL(23,2)  COMMENT '期末金额',
+END_AMT     DECIMAL(23,2)  COMMENT '上年末期末金额')

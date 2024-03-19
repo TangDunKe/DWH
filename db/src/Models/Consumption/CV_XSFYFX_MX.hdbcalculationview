@@ -51,7 +51,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="HKONT_TXT" source="TXT20"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR_TXT" source="KTEXT"/>
     </input>
-    <filter>&quot;FKBER&quot; = 'LB02'</filter>
+    <filter>&quot;HKONT&quot;IN('6401030100','6401030200','6401030300') OR &quot;FKBER&quot; = 'LB02' </filter>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2" filterExpressionLanguage="SQL">
     <viewAttributes>
@@ -738,7 +738,9 @@
   
     <attribute id="FXKJ_TXT" order="25" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="分析指标描述"/>
+  
       <keyMapping columnObjectName="Projection_4" columnName="FXKJ_TXT"/>
+  
     </attribute>
   </attributes>
   <calculatedAttributes/>

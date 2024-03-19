@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="BL.Models.Consumption::CV_FYFX_HZ" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="AUTO" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
 <descriptions defaultDescription="CV_FYFX_HZ"/>
-<localVariables/>
+<localVariables>
+  <variable id="IP_VERSION" parameter="true">
+    <descriptions defaultDescription=""/>
+    <variableProperties datatype="NVARCHAR" length="6" mandatory="false">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="SingleValue"/>
+    </variableProperties>
+  </variable>
+</localVariables>
 <variableMappings/>
 <dataSources>
-  <DataSource id="BL.DI.Table.S4::T_ZFIR003">
-    <resourceUri>BL.DI.Table.S4::T_ZFIR003</resourceUri>
+  <DataSource id="BL.DI.Tables.S4::T_ZFIR003">
+    <resourceUri>BL.DI.Tables.S4::T_ZFIR003</resourceUri>
   </DataSource>
   <DataSource id="BL.DI.VirtualTable.S4::VA_T001">
     <resourceUri>BL.DI.VirtualTable.S4::VA_T001</resourceUri>
@@ -75,7 +83,7 @@
  END</formula>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
-    <input node="BL.DI.Table.S4::T_ZFIR003"/>
+    <input node="BL.DI.Tables.S4::T_ZFIR003"/>
     <filter>&quot;HC&quot;='00016' OR &quot;HC&quot; = '00017' OR &quot;HC&quot; = '00018' OR &quot;HC&quot; = '00019'</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_4">
@@ -496,30 +504,27 @@
       <viewAttribute id="TIME"/>
       <viewAttribute id="FXKJ"/>
       <viewAttribute id="FXKJ_TXT"/>
-      <viewAttribute id="LJ_JE_Y" aggregationType="sum"/>
+      <viewAttribute id="LJ_JE" aggregationType="sum"/>
       <viewAttribute id="SY_LJ_JE" aggregationType="sum"/>
-      <viewAttribute id="SNTQ_LJ_JE_Y" aggregationType="sum"/>
+      <viewAttribute id="SNTQ_LJ_JE" aggregationType="sum"/>
       <viewAttribute id="SNTQ_SY_LJ_JE" aggregationType="sum"/>
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="DY_JE" datatype="DECIMAL" length="23" scale="2" expressionLanguage="SQL">
         <formula>CASE &quot;POPER&quot; 
-	 WHEN '01' then &quot;LJ_JE_Y&quot;
-	 ELSE &quot;LJ_JE_Y&quot; - ifnull(&quot;SY_LJ_JE&quot;,0)
+	 WHEN '01' then &quot;LJ_JE&quot;
+	 ELSE &quot;LJ_JE&quot; - ifnull(&quot;SY_LJ_JE&quot;,0)
  END</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="SNTQ_LJ_JE" datatype="DECIMAL" length="23" scale="2" expressionLanguage="SQL">
+      <calculatedViewAttribute id="SNTQ_DY_JE" datatype="DECIMAL" length="23" scale="2" expressionLanguage="SQL">
         <formula>CASE &quot;POPER&quot; 
-	 WHEN '01' then &quot;SNTQ_LJ_JE_Y&quot;
-	 ELSE &quot;SNTQ_LJ_JE_Y&quot; - IFNULL(&quot;SNTQ_SY_LJ_JE&quot;,0)
+	 WHEN '01' then &quot;SNTQ_LJ_JE&quot;
+	 ELSE &quot;SNTQ_LJ_JE&quot; - IFNULL(&quot;SNTQ_SY_LJ_JE&quot;,0)
  END</formula>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <restrictedViewAttributes/>
-    <input node="Union_4">
-      <mapping xsi:type="Calculation:AttributeMapping" target="LJ_JE_Y" source="LJ_JE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="SNTQ_LJ_JE_Y" source="SNTQ_LJ_JE"/>
-    </input>
+    <input node="Union_4"/>
   </calculationView>
   <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_8">
     <viewAttributes>
@@ -573,11 +578,11 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="POPER" source="POPER"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DY_JE" source="DY_JE"/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LJ_JE" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LJ_JE" source="LJ_JE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ" source="FXKJ"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ_TXT" source="FXKJ_TXT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SNTQ_DY_JE" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SNTQ_DY_JE" source="SNTQ_DY_JE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="SNTQ_LJ_JE" source="SNTQ_LJ_JE"/>
     </input>
   </calculationView>
@@ -678,11 +683,11 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="POPER" source="POPER"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DY_JE" source="DY_JE"/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LJ_JE" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LJ_JE" source="LJ_JE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ" source="FXKJ"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ_TXT" source="FXKJ_TXT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SNTQ_DY_JE" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SNTQ_DY_JE" source="SNTQ_DY_JE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="SNTQ_LJ_JE" source="SNTQ_LJ_JE"/>
     
       <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SOURCE" null="false" value="2"/>
