@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Dimension="http://www.sap.com/ndb/BiModelDimension.ecore" id="BL.Models.ScriptModel::CA_001_Date" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="TIME" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="CA_001_Date"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="BL.DI.Tables.S4::T_TIME_DIMENSION_MONTH">
+    <resourceUri>BL.DI.Tables.S4::T_TIME_DIMENSION_MONTH</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews/>
+<inlineHierarchy xsi:type="Dimension:LeveledHierarchy" id="Gregorian_Hierarchy" aggregateAllNodes="false" orphanedNodesHandling="ROOT_NODES" nodeStyle="NAME_PATH" cacheEnabled="true" cycleHandling="BREAKUP" emptyValueIsNull="true">
+                                <descriptions defaultDescription="Gregorian_Hierarchy"/>
+  <levels>
+    <level levelAttribute="YEAR" levelType="MDLEVEL_TYPE_TIME_YEARS" order="1" orderAttribute="YEAR" sortDirection="ASC"/>
+    <level levelAttribute="HALFYEAR" levelType="MDLEVEL_TYPE_TIME_HALF_YEAR" order="2" orderAttribute="HALFYEAR" sortDirection="ASC"/>
+    <level levelAttribute="QUARTER" levelType="MDLEVEL_TYPE_TIME_QUARTERS" order="3" orderAttribute="QUARTER" sortDirection="ASC"/>
+    <level levelAttribute="MONTH" levelType="MDLEVEL_TYPE_TIME_MONTHS" order="4" orderAttribute="MONTH" sortDirection="ASC"/>
+  </levels>
+</inlineHierarchy>
+<logicalModel id="BL.DI.Tables.S4::T_TIME_DIMENSION_MONTH">
+  <attributes>
+                                <attribute id="YEAR" key="true" order="1" displayAttribute="false" attributeHierarchyActive="false">
+                                                        <descriptions defaultDescription="YEAR"/>
+                                  <keyMapping columnObjectName="T_TIME_DIMENSION_MONTH" columnName="YEAR"/>
+                                </attribute>
+                                                    <attribute id="HALFYEAR" order="2" displayAttribute="false" attributeHierarchyActive="false">
+                                                        <descriptions defaultDescription="HALFYEAR"/>
+                                                      <keyMapping columnObjectName="T_TIME_DIMENSION_MONTH" columnName="HALFYEAR"/>
+                                                    </attribute>
+                                                    <attribute id="QUARTER" order="3" displayAttribute="false" attributeHierarchyActive="false">
+                                                        <descriptions defaultDescription="QUARTER"/>
+                                                      <keyMapping columnObjectName="T_TIME_DIMENSION_MONTH" columnName="QUARTER"/>
+                                                    </attribute>
+                                                    <attribute id="MONTH" key="true" order="4" displayAttribute="false" attributeHierarchyActive="false">
+                                                        <descriptions defaultDescription="MONTH"/>
+                                                      <keyMapping columnObjectName="T_TIME_DIMENSION_MONTH" columnName="MONTH"/>
+                                                    </attribute>
+    <attribute id="CALMONTH" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CALMONTH"/>
+      <keyMapping columnObjectName="T_TIME_DIMENSION_MONTH" columnName="CALMONTH"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  </shapes>
+</layout>
+</Calculation:scenario>

@@ -68,7 +68,7 @@
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <input node="BL.DI.Tables.S4::T_ZFIR003"/>
-    <filter>&quot;HC&quot;='00016' OR &quot;HC&quot; = '00017' OR &quot;HC&quot; = '00018' OR &quot;HC&quot; = '00019'</filter>
+    <filter>&quot;HC&quot;IN('00002','00007','00020','00036','00037')</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_4">
     <viewAttributes>
@@ -154,6 +154,8 @@
     
       <viewAttribute id="HC"/>
       <viewAttribute id="HC_TXT"/>
+    
+      <viewAttribute id="TIME_DATE"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -209,7 +211,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="SNNM_JE" source="END_AMT"/>
     </input>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_7">
+  <calculationView xsi:type="Calculation:JoinView" id="Join_7" cardinality="C1_1" joinType="inner">
     <descriptions>
       <comment text="取上月累计金额，供后续计算本月数据使用"/>
     </descriptions>
@@ -220,18 +222,26 @@
       <viewAttribute id="BUKRS"/>
       <viewAttribute id="SY_LJ_JE" aggregationType="sum"/>
       <viewAttribute id="HC"/>
-      <viewAttribute id="HC_TXT"/></viewAttributes>
+      <viewAttribute id="HC_TXT"/>
+      <viewAttribute hidden="true" id="JOIN$TIME_DATE$TIME_SY"/>
+    </viewAttributes>
     <calculatedViewAttributes/>
     <input node="Aggregation_6">
       <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="SY_LJ_JE" source="LJ_JE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="HC" source="HC"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="HC_TXT" source="HC_TXT"/></input>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HC_TXT" source="HC_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TIME_DATE$TIME_SY" source="TIME_DATE"/>
+    </input>
     <input node="Aggregation_5">
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="POPER" source="POPER"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/></input></calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_8">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TIME_DATE$TIME_SY" source="TIME_SY"/>
+    </input>
+    <joinAttribute name="JOIN$TIME_DATE$TIME_SY"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_8" cardinality="C1_1" joinType="inner">
     <descriptions>
       <comment text="取上年同期累计金额"/>
     </descriptions>
@@ -242,18 +252,26 @@
       <viewAttribute id="BUKRS"/>
       <viewAttribute id="SNTQ_LJ_JE" aggregationType="sum"/>
       <viewAttribute id="HC"/>
-      <viewAttribute id="HC_TXT"/></viewAttributes>
+      <viewAttribute id="HC_TXT"/>
+      <viewAttribute hidden="true" id="JOIN$TIME_DATE$TIME_SN"/>
+    </viewAttributes>
     <calculatedViewAttributes/>
     <input node="Aggregation_6">
       <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="SNTQ_LJ_JE" source="LJ_JE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="HC" source="HC"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="HC_TXT" source="HC_TXT"/></input>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HC_TXT" source="HC_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TIME_DATE$TIME_SN" source="TIME_DATE"/>
+    </input>
     <input node="Aggregation_5">
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="POPER" source="POPER"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/></input></calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_9">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TIME_DATE$TIME_SN" source="TIME_SN"/>
+    </input>
+    <joinAttribute name="JOIN$TIME_DATE$TIME_SN"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_9" cardinality="C1_1" joinType="inner">
     <descriptions>
       <comment text="取上年同期上一个月的累计数据，供后续计算上年同期本月数据"/>
     </descriptions>
@@ -264,18 +282,26 @@
       <viewAttribute id="BUKRS"/>
       <viewAttribute id="SNTQ_SY_LJ_JE" aggregationType="sum"/>
       <viewAttribute id="HC"/>
-      <viewAttribute id="HC_TXT"/></viewAttributes>
+      <viewAttribute id="HC_TXT"/>
+      <viewAttribute hidden="true" id="JOIN$TIME_DATE$TIME_SNSY"/>
+    </viewAttributes>
     <calculatedViewAttributes/>
     <input node="Aggregation_6">
       <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="SNTQ_SY_LJ_JE" source="LJ_JE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="HC" source="HC"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="HC_TXT" source="HC_TXT"/></input>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HC_TXT" source="HC_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TIME_DATE$TIME_SNSY" source="TIME_DATE"/>
+    </input>
     <input node="Aggregation_5">
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="POPER" source="POPER"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/></input></calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_11">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TIME_DATE$TIME_SNSY" source="TIME_SNSY"/>
+    </input>
+    <joinAttribute name="JOIN$TIME_DATE$TIME_SNSY"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_11" cardinality="C1_1" joinType="inner">
     <descriptions>
       <comment text="取上两月数据，供后续计算环比"/>
     </descriptions>
@@ -286,17 +312,25 @@
       <viewAttribute id="BUKRS"/>
       <viewAttribute id="S2Y_LJ_JE" aggregationType="sum"/>
       <viewAttribute id="HC"/>
-      <viewAttribute id="HC_TXT"/></viewAttributes>
+      <viewAttribute id="HC_TXT"/>
+      <viewAttribute hidden="true" id="JOIN$TIME_DATE$TIME_S2Y"/>
+    </viewAttributes>
     <calculatedViewAttributes/>
     <input node="Aggregation_6">
       <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="S2Y_LJ_JE" source="LJ_JE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="HC" source="HC"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="HC_TXT" source="HC_TXT"/></input>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HC_TXT" source="HC_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TIME_DATE$TIME_S2Y" source="TIME_DATE"/>
+    </input>
     <input node="Aggregation_5">
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="POPER" source="POPER"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/></input></calculationView>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TIME_DATE$TIME_S2Y" source="TIME_S2Y"/>
+    </input>
+    <joinAttribute name="JOIN$TIME_DATE$TIME_S2Y"/>
+  </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_6" cardinality="C1_1" joinType="inner">
     <descriptions>
       <comment text="取上年同期数据"/>
@@ -1898,7 +1932,9 @@
       </calculatedViewAttribute>
     
       <calculatedViewAttribute id="YSZKZZL_DY" datatype="DECIMAL" length="20" scale="7" expressionLanguage="SQL">
+    
         <formula>&quot;YYSR_DY_JE&quot;/nullif((0.5*(&quot;YSZKYE_SY_JE&quot;+&quot;YSZKYE_DY_JE&quot;)),0)</formula>
+    
       </calculatedViewAttribute>
       <calculatedViewAttribute id="YSZKZZL_LJ" datatype="DECIMAL" length="20" scale="7" expressionLanguage="SQL">
         <formula>&quot;YYSR_LJ_JE&quot;/nullif((0.5*(&quot;YSZKYE_SNNM_JE&quot;+&quot;YSZKYE_DY_JE&quot;)),0)</formula>
@@ -2089,6 +2125,27 @@
       <calculatedViewAttribute id="CQBL_LJ_TB" datatype="DECIMAL" length="20" scale="7" expressionLanguage="SQL">
         <formula>(&quot;CQBL_LJ&quot;-&quot;CQBL_SNTQ_LJ&quot;)/nullif(&quot;CQBL_SNTQ_LJ&quot;,0)</formula>
       </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="YYSR_DY_TB" datatype="DECIMAL" length="20" scale="7" expressionLanguage="SQL">
+    
+        <formula>(&quot;YYSR_DY_JE&quot;- &quot;YYSR_SNTQ_DY_JE&quot;)/nullif(&quot;YYSR_SNTQ_DY_JE&quot;,0)</formula>
+    
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="YYSR_DY_HB" datatype="DECIMAL" length="20" scale="7" expressionLanguage="SQL">
+        <formula>(&quot;YYSR_DY_JE&quot;- &quot;YYSR_SY_JE&quot;)/nullif(&quot;YYSR_SY_JE&quot;,0)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="YYSR_LJ_TB" datatype="DECIMAL" length="20" scale="7" expressionLanguage="SQL">
+        <formula>(&quot;YYSR_LJ_JE&quot;- &quot;YYSR_SNTQ_LJ_JE&quot;)/nullif(&quot;YYSR_SNTQ_LJ_JE&quot;,0)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="JLR_DY_TB" datatype="DECIMAL" length="20" scale="7" expressionLanguage="SQL">
+        <formula>(&quot;JLR_DY_JE&quot;- &quot;JLR_SNTQ_DY_JE&quot;)/nullif(&quot;JLR_SNTQ_DY_JE&quot;,0)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="JLR_DY_HB" datatype="DECIMAL" length="20" scale="7" expressionLanguage="SQL">
+        <formula>(&quot;JLR_DY_JE&quot;- &quot;JLR_SY_JE&quot;)/nullif(&quot;JLR_SY_JE&quot;,0)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="JLR_LJ_TB" datatype="DECIMAL" length="20" scale="7" expressionLanguage="SQL">
+        <formula>(&quot;JLR_LJ_JE&quot;- &quot;JLR_SNTQ_LJ_JE&quot;)/nullif(&quot;JLR_SNTQ_LJ_JE&quot;,0)</formula>
+      </calculatedViewAttribute>
     </calculatedViewAttributes>
     <restrictedViewAttributes/>
     <input node="Union_5">
@@ -2194,9 +2251,19 @@
       <viewAttribute id="CQBL_DY_TB" aggregationType="sum"/>
       <viewAttribute id="CQBL_DY_HB" aggregationType="sum"/>
       <viewAttribute id="CQBL_LJ_TB" aggregationType="sum"/>
+    
+      <viewAttribute id="YYSR_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="YYSR_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="YYSR_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="JLR_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="JLR_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="JLR_LJ_TB" aggregationType="sum"/>
+    
+      <viewAttribute id="JLR_DY_JE" aggregationType="sum"/>
+      <viewAttribute id="JLR_LJ_JE" aggregationType="sum"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="Aggregation_9">
+    <input node="Aggregation_9" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="POPER" source="POPER"/>
@@ -2288,6 +2355,16 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="CQBL_DY_TB" source="CQBL_DY_TB"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CQBL_DY_HB" source="CQBL_DY_HB"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CQBL_LJ_TB" source="CQBL_LJ_TB"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="YYSR_DY_TB" source="YYSR_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YYSR_DY_HB" source="YYSR_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YYSR_LJ_TB" source="YYSR_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLR_DY_TB" source="JLR_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLR_DY_HB" source="JLR_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLR_LJ_TB" source="JLR_LJ_TB"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLR_DY_JE" source="JLR_DY_JE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLR_LJ_JE" source="JLR_LJ_JE"/>
     </input>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_5" cardinality="C1_1" joinType="leftOuter">
@@ -2384,6 +2461,14 @@
       <viewAttribute id="CQBL_DY_TB" aggregationType="sum"/>
       <viewAttribute id="CQBL_DY_HB" aggregationType="sum"/>
       <viewAttribute id="CQBL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="YYSR_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="YYSR_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="YYSR_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="JLR_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="JLR_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="JLR_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="JLR_DY_JE" aggregationType="sum"/>
+      <viewAttribute id="JLR_LJ_JE" aggregationType="sum"/>
       <viewAttribute hidden="true" id="JOIN$BUKRS$BUKRS"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -2479,6 +2564,14 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="CQBL_DY_TB" source="CQBL_DY_TB"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CQBL_DY_HB" source="CQBL_DY_HB"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CQBL_LJ_TB" source="CQBL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YYSR_DY_TB" source="YYSR_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YYSR_DY_HB" source="YYSR_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YYSR_LJ_TB" source="YYSR_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLR_DY_TB" source="JLR_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLR_DY_HB" source="JLR_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLR_LJ_TB" source="JLR_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLR_DY_JE" source="JLR_DY_JE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLR_LJ_JE" source="JLR_LJ_JE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BUKRS$BUKRS" source="BUKRS"/>
     </input>
     <input node="Projection_4">
@@ -2582,6 +2675,16 @@
       <viewAttribute id="CQBL_DY_TB"/>
       <viewAttribute id="CQBL_DY_HB"/>
       <viewAttribute id="CQBL_LJ_TB"/>
+    
+      <viewAttribute id="YYSR_DY_TB"/>
+      <viewAttribute id="YYSR_DY_HB"/>
+      <viewAttribute id="YYSR_LJ_TB"/>
+      <viewAttribute id="JLR_DY_TB"/>
+      <viewAttribute id="JLR_DY_HB"/>
+      <viewAttribute id="JLR_LJ_TB"/>
+    
+      <viewAttribute id="JLR_DY_JE"/>
+      <viewAttribute id="JLR_LJ_JE"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="Join_5"/>
@@ -3049,6 +3152,48 @@
       <measureMapping columnObjectName="Projection_3" columnName="CQBL_LJ_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
+  
+    <measure id="YYSR_DY_TB" order="93" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="营业收入-当月-同比"/>
+      <measureMapping columnObjectName="Projection_3" columnName="YYSR_DY_TB"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="YYSR_DY_HB" order="94" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="营业收入-当月-环比"/>
+      <measureMapping columnObjectName="Projection_3" columnName="YYSR_DY_HB"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="YYSR_LJ_TB" order="95" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="营业收入-累计-同比"/>
+      <measureMapping columnObjectName="Projection_3" columnName="YYSR_LJ_TB"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="JLR_DY_TB" order="96" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="净利润-当月-同比"/>
+      <measureMapping columnObjectName="Projection_3" columnName="JLR_DY_TB"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="JLR_DY_HB" order="97" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="净利润-当月-环比"/>
+      <measureMapping columnObjectName="Projection_3" columnName="JLR_DY_HB"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="JLR_LJ_TB" order="98" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="净利润-累计-同比"/>
+      <measureMapping columnObjectName="Projection_3" columnName="JLR_LJ_TB"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  
+    <measure id="JLR_DY_JE" order="99" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="净利润-当月"/>
+      <measureMapping columnObjectName="Projection_3" columnName="JLR_DY_JE"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="JLR_LJ_JE" order="100" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="净利润-累计"/>
+      <measureMapping columnObjectName="Projection_3" columnName="JLR_LJ_JE"/>
+      <exceptionAggregationMetadata/>
+    </measure>
   </baseMeasures>
   <calculatedMeasures/>
   <restrictedMeasures/>
@@ -3057,43 +3202,43 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="1084.9969303934374" y="112"/>
+      <upperLeftCorner x="1084" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
     
   
     <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="314.45985647135643" y="1646.9999916553497"/>
+      <upperLeftCorner x="314" y="1646"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="949.2006102047064" y="501.9999976158142"/>
+      <upperLeftCorner x="949" y="501"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="1168.7589040237783" y="1646.9999916553497"/>
+      <upperLeftCorner x="1168" y="1646"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="Aggregation_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="558.6666660706207" y="1501.9999928474426"/>
+      <upperLeftCorner x="558" y="1501"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_6" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="287.7931898046898" y="1501.9999928474426"/>
+      <upperLeftCorner x="287" y="1501"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="1352.0922373571118" y="1501.9999928474426"/>
+      <upperLeftCorner x="1352" y="1501"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="1142.0922373571118" y="1501.9999928474426"/>
+      <upperLeftCorner x="1142" y="1501"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_7" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="757.9999994039538" y="1241.9999940395355"/>
+      <upperLeftCorner x="757" y="1241"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_6" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
@@ -3105,7 +3250,7 @@
       <rectangleSize width="148"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_8" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="547.999999403954" y="1241.9999940395355"/>
+      <upperLeftCorner x="547" y="1241"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_6" modelObjectNameSpace="Join_8" modelObjectType="JoinNodeInput">
@@ -3117,7 +3262,7 @@
       <rectangleSize width="148"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_9" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="127.99999940395372" y="1241.9999940395355"/>
+      <upperLeftCorner x="127" y="1241"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_6" modelObjectNameSpace="Join_9" modelObjectType="JoinNodeInput">
@@ -3129,7 +3274,7 @@
       <rectangleSize width="148"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_11" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="337.99999940395406" y="1241.9999940395355"/>
+      <upperLeftCorner x="337" y="1241"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_6" modelObjectNameSpace="Join_11" modelObjectType="JoinNodeInput">
@@ -3142,7 +3287,7 @@
     </shape>
   
     <shape expanded="true" modelObjectName="Join_6" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="1198.9999982118609" y="1241.9999940395355"/>
+      <upperLeftCorner x="1198" y="1241"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_4" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
@@ -3154,7 +3299,7 @@
       <rectangleSize width="148"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_12" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="1618.9999982118609" y="1241.9999940395355"/>
+      <upperLeftCorner x="1618" y="1241"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_4" modelObjectNameSpace="Join_12" modelObjectType="JoinNodeInput">
@@ -3166,7 +3311,7 @@
       <rectangleSize width="148"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_13" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="988.9999982118609" y="1241.9999940395355"/>
+      <upperLeftCorner x="988" y="1241"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_4" modelObjectNameSpace="Join_13" modelObjectType="JoinNodeInput">
@@ -3178,7 +3323,7 @@
       <rectangleSize width="148"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_14" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="1408.9999982118609" y="1241.9999940395355"/>
+      <upperLeftCorner x="1408" y="1241"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_4" modelObjectNameSpace="Join_14" modelObjectType="JoinNodeInput">
@@ -3190,36 +3335,36 @@
       <rectangleSize width="148"/>
     </shape>
     <shape expanded="true" modelObjectName="Union_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="337.99999940395406" y="1016.9999952316284"/>
+      <upperLeftCorner x="337" y="1016"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Union_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="1067.0268924611719" y="1016.9999952316284"/>
+      <upperLeftCorner x="1067" y="1016"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_7" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="337.99999940395395" y="891.9999952316284"/>
+      <upperLeftCorner x="337" y="891"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_8" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="1067.0268924611719" y="891.9999952316284"/>
+      <upperLeftCorner x="1067" y="891"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Union_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="1040.3602257945054" y="751.9999964237213"/>
+      <upperLeftCorner x="1040" y="751"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_9" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="1040.3602257945054" y="626.9999964237213"/>
+      <upperLeftCorner x="1040" y="626"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="Union_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="1159.2006102047064" y="501.9999976158142"/>
+      <upperLeftCorner x="1159" y="501"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="1074.4709577843555" y="341.9999988079071"/>
+      <upperLeftCorner x="1074" y="341"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Union_2" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
@@ -3232,7 +3377,7 @@
     </shape>
   
     <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="1074.4709577843555" y="236.9999988079071"/>
+      <upperLeftCorner x="1074" y="236"/>
       <rectangleSize height="30" width="160"/>
     </shape></shapes>
 </layout>

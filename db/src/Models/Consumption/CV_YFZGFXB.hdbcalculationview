@@ -1,0 +1,742 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="BL.Models.Consumption::CV_YFZGFXB" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="应付暂估分析表"/>
+<localVariables>
+  <variable id="IP_CALMONTH" parameter="true">
+    <descriptions defaultDescription="输入年月"/>
+    <variableProperties datatype="NVARCHAR" length="6" mandatory="false" defaultValue="202403">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="SingleValue"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings/>
+<dataSources>
+  <DataSource id="BL.DI.Tables.S4::T_BSIK">
+    <resourceUri>BL.DI.Tables.S4::T_BSIK</resourceUri>
+  </DataSource>
+  <DataSource id="BL.DI.Tables.S4::T_T880">
+    <resourceUri>BL.DI.Tables.S4::T_T880</resourceUri>
+  </DataSource>
+  <DataSource id="BL.DI.Tables.S4::T_TCURR">
+    <resourceUri>BL.DI.Tables.S4::T_TCURR</resourceUri>
+  </DataSource>
+  <DataSource id="BL.DI.Tables.S4::T_LFA1">
+    <resourceUri>BL.DI.Tables.S4::T_LFA1</resourceUri>
+  </DataSource>
+  <DataSource id="BL.DI.Tables.S4::T_SKAT">
+    <resourceUri>BL.DI.Tables.S4::T_SKAT</resourceUri>
+  </DataSource>
+  <DataSource id="BL.DI.VirtualTable.S4::VA_T001">
+    <resourceUri>BL.DI.VirtualTable.S4::VA_T001</resourceUri>
+  </DataSource>
+  <DataSource id="BL.DI.VirtualTable.S4::VA_CEPCT">
+    <resourceUri>BL.DI.VirtualTable.S4::VA_CEPCT</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <descriptions>
+      <comment text="筛选【总账科目HKONT】为2202020301、2202020302、2202010301、2202010302，且过账日期BUDAT小于等于查询月最后一天的行 根据借贷标识置反金额"/>
+    </descriptions>
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="LIFNR"/>
+      <viewAttribute id="BUDAT"/>
+      <viewAttribute id="SHKZG"/>
+      <viewAttribute id="HKONT"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="ZUONR"/>
+      <viewAttribute id="DMBTR"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="TIME_DATE" datatype="DATE" expressionLanguage="SQL">
+        <formula>&quot;TIME&quot;</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TIME" datatype="NVARCHAR" length="6" expressionLanguage="SQL">
+        <formula>'$$IP_CALMONTH$$'</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TIME_DATE_LAST" datatype="DATE" expressionLanguage="SQL">
+        <formula>LAST_DAY(&quot;TIME_DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="BUDAT_DATE" datatype="DATE" expressionLanguage="SQL">
+        <formula>&quot;BUDAT&quot;</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="DMBTR_N" datatype="DECIMAL" length="23" scale="2" expressionLanguage="SQL">
+        <formula>CASE &quot;SHKZG&quot;
+	 WHEN 'H' then &quot;DMBTR&quot; * -1
+	 ELSE &quot;DMBTR&quot; 
+ END</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="BL.DI.Tables.S4::T_BSIK"/>
+    <filter>&quot;HKONT&quot; IN('2202020301','2202020302','2202010301','2202010302') AND &quot;BUDAT_DATE&quot; &lt;=&quot;TIME_DATE_LAST&quot;</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+    <viewAttributes>
+      <viewAttribute id="RCOMP"/>
+      <viewAttribute id="CURR"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="RCOMP_4" datatype="NVARCHAR" length="4" expressionLanguage="SQL">
+        <formula>RIGHT(&quot;RCOMP&quot;,4)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="BL.DI.Tables.S4::T_T880"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="KURST"/>
+      <viewAttribute id="FCURR"/>
+      <viewAttribute id="TCURR"/>
+      <viewAttribute id="GDATU"/>
+      <viewAttribute id="UKURS"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="GDATU_N" datatype="NVARCHAR" length="8" expressionLanguage="SQL">
+        <formula>99999999 - &quot;GDATU&quot;</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="GDATU_DATE" datatype="DATE" expressionLanguage="SQL">
+        <formula>&quot;GDATU_N&quot;</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TIME_DATE_LAST" datatype="DATE" expressionLanguage="SQL">
+        <formula>LAST_DAY(&quot;TIME_DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TIME_DATE" datatype="DATE" expressionLanguage="SQL">
+        <formula>'$$IP_CALMONTH$$'</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="BL.DI.Tables.S4::T_TCURR"/>
+    <filter>&quot;KURST&quot; = 'M' AND &quot;TCURR&quot; = 'CNY' AND &quot;GDATU_DATE&quot; =&quot;TIME_DATE_LAST&quot;</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_4">
+    <viewAttributes>
+      <viewAttribute id="LIFNR"/>
+      <viewAttribute id="NAME1"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="BL.DI.Tables.S4::T_LFA1"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_5" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="KTOPL"/>
+      <viewAttribute id="SAKNR"/>
+      <viewAttribute id="TXT20"/>
+    
+      <viewAttribute id="SPRAS"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="BL.DI.Tables.S4::T_SKAT"/>
+    <filter>&quot;KTOPL&quot; = 'LBJT' AND &quot;SPRAS&quot; = '1'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_6">
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="BUTXT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="BL.DI.VirtualTable.S4::VA_T001"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_7">
+    <viewAttributes>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="KTEXT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="BL.DI.VirtualTable.S4::VA_CEPCT"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="LIFNR"/>
+      <viewAttribute id="BUDAT"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="ZUONR"/>
+      <viewAttribute id="DMBTR" aggregationType="sum"/>
+      <viewAttribute id="TIME"/>
+      <viewAttribute id="HKONT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DMBTR" source="DMBTR_N"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:RankView" id="Rank_1">
+    <descriptions>
+      <comment text="根据公司代码、分配、供应商、利润中心排序过账日期，取最小的过账日期"/>
+    </descriptions>
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="LIFNR"/>
+      <viewAttribute id="BUDAT"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="TIME"/>
+      <viewAttribute id="ZUONR"/>
+      <viewAttribute id="HKONT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Aggregation_1"/>
+    <rankingFilter type="RANK" offset="0" offsetReference="FRONT" dynamicPartitionAttributes="false">
+      <partitionViewAttributeName id="BUKRS"/>
+      <partitionViewAttributeName id="LIFNR"/>
+      <partitionViewAttributeName id="PRCTR"/>
+      <partitionViewAttributeName id="ZUONR"/>
+      <partitionViewAttributeName id="HKONT"/>
+      <order byViewAttributeName="BUDAT" direction="ASC"/>
+      <rankThreshold/>
+    </rankingFilter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_1" joinType="leftOuter">
+    <descriptions>
+      <comment text="每个行项目都取最小的过账日期"/>
+    </descriptions>
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="LIFNR"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="ZUONR"/>
+      <viewAttribute id="DMBTR" aggregationType="sum"/>
+      <viewAttribute id="TIME"/>
+      <viewAttribute id="BUDAT"/>
+      <viewAttribute id="HKONT"/>
+      <viewAttribute hidden="true" id="JOIN$BUKRS$BUKRS"/>
+      <viewAttribute hidden="true" id="JOIN$LIFNR$LIFNR"/>
+      <viewAttribute hidden="true" id="JOIN$PRCTR$PRCTR"/>
+      <viewAttribute hidden="true" id="JOIN$ZUONR$ZUONR"/>
+      <viewAttribute hidden="true" id="JOIN$HKONT$HKONT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Aggregation_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LIFNR" source="LIFNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZUONR" source="ZUONR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DMBTR" source="DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HKONT" source="HKONT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BUKRS$BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$LIFNR$LIFNR" source="LIFNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PRCTR$PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ZUONR$ZUONR" source="ZUONR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$HKONT$HKONT" source="HKONT"/>
+    </input>
+    <input node="Rank_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUDAT" source="BUDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BUKRS$BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$LIFNR$LIFNR" source="LIFNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PRCTR$PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ZUONR$ZUONR" source="ZUONR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$HKONT$HKONT" source="HKONT"/>
+    </input>
+    <joinAttribute name="JOIN$BUKRS$BUKRS"/>
+    <joinAttribute name="JOIN$LIFNR$LIFNR"/>
+    <joinAttribute name="JOIN$PRCTR$PRCTR"/>
+    <joinAttribute name="JOIN$ZUONR$ZUONR"/>
+    <joinAttribute name="JOIN$HKONT$HKONT"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_2" cardinality="C1_1" joinType="inner">
+    <descriptions>
+      <comment text="匹配取公司对应的本币"/>
+    </descriptions>
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="LIFNR"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="ZUONR"/>
+      <viewAttribute id="DMBTR" aggregationType="sum"/>
+      <viewAttribute id="TIME"/>
+      <viewAttribute id="BUDAT"/>
+      <viewAttribute id="CURR"/>
+      <viewAttribute id="HKONT"/>
+      <viewAttribute hidden="true" id="JOIN$BUKRS$RCOMP_4"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LIFNR" source="LIFNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZUONR" source="ZUONR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DMBTR" source="DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUDAT" source="BUDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HKONT" source="HKONT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BUKRS$RCOMP_4" source="BUKRS"/>
+    </input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CURR" source="CURR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BUKRS$RCOMP_4" source="RCOMP_4"/>
+    </input>
+    <joinAttribute name="JOIN$BUKRS$RCOMP_4"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_3" cardinality="C1_N" joinType="leftOuter">
+    <descriptions>
+      <comment text="本币不为CNY的获取汇率，计算DMBTR，转为CNY"/>
+    </descriptions>
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="LIFNR"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="ZUONR"/>
+      <viewAttribute id="DMBTR" aggregationType="sum"/>
+      <viewAttribute id="TIME"/>
+      <viewAttribute id="BUDAT"/>
+      <viewAttribute id="CURR"/>
+      <viewAttribute id="UKURS" aggregationType="sum"/>
+      <viewAttribute id="HKONT"/>
+      <viewAttribute hidden="true" id="JOIN$CURR$FCURR"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="DMBTR_N" datatype="DECIMAL" length="23" scale="2" expressionLanguage="SQL">
+        <formula>CASE 
+	 WHEN &quot;UKURS&quot; IS NULL then &quot;DMBTR&quot;
+	 ELSE &quot;DMBTR&quot; * &quot;UKURS&quot;
+ END</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="Join_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LIFNR" source="LIFNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZUONR" source="ZUONR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DMBTR" source="DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUDAT" source="BUDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CURR" source="CURR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HKONT" source="HKONT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CURR$FCURR" source="CURR"/>
+    </input>
+    <input node="Projection_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="UKURS" source="UKURS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CURR$FCURR" source="FCURR"/>
+    </input>
+    <joinAttribute name="JOIN$CURR$FCURR"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_2">
+    <descriptions>
+      <comment text="增加一个合计行"/>
+    </descriptions>
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="LIFNR"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="DMBTR" aggregationType="sum"/>
+      <viewAttribute id="TIME"/>
+      <viewAttribute id="BUDAT"/>
+      <viewAttribute id="HKONT"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="ZUONR" datatype="NVARCHAR" length="18" expressionLanguage="SQL">
+        <formula>'合计'</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="Join_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DMBTR" source="DMBTR_N"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:UnionView" id="Union_1">
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="LIFNR"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="ZUONR"/>
+      <viewAttribute datatype="DECIMAL" length="23" scale="2" id="DMBTR" aggregationType="sum"/>
+      <viewAttribute id="TIME"/>
+      <viewAttribute id="BUDAT"/>
+      <viewAttribute id="HKONT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_3" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LIFNR" source="LIFNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZUONR" source="ZUONR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DMBTR" source="DMBTR_N"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUDAT" source="BUDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HKONT" source="HKONT"/>
+    </input>
+    <input node="Aggregation_2" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LIFNR" source="LIFNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZUONR" source="ZUONR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DMBTR" source="DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUDAT" source="BUDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HKONT" source="HKONT"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_4" cardinality="C1_1" joinType="inner">
+    <descriptions>
+      <comment text="取供应商描述"/>
+    </descriptions>
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="LIFNR"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="ZUONR"/>
+      <viewAttribute id="DMBTR" aggregationType="sum"/>
+      <viewAttribute id="TIME"/>
+      <viewAttribute id="BUDAT"/>
+      <viewAttribute id="LIFNR_TXT"/>
+      <viewAttribute id="HKONT"/>
+      <viewAttribute hidden="true" id="JOIN$LIFNR$LIFNR"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Union_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LIFNR" source="LIFNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZUONR" source="ZUONR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DMBTR" source="DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUDAT" source="BUDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HKONT" source="HKONT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$LIFNR$LIFNR" source="LIFNR"/>
+    </input>
+    <input node="Projection_4">
+      <mapping xsi:type="Calculation:AttributeMapping" target="LIFNR_TXT" source="NAME1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$LIFNR$LIFNR" source="LIFNR"/>
+    </input>
+    <joinAttribute name="JOIN$LIFNR$LIFNR"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_5" cardinality="C1_1" joinType="inner">
+    <descriptions>
+      <comment text="获取科目描述"/>
+    </descriptions>
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="LIFNR"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="ZUONR"/>
+      <viewAttribute id="DMBTR" aggregationType="sum"/>
+      <viewAttribute id="TIME"/>
+      <viewAttribute id="BUDAT"/>
+      <viewAttribute id="LIFNR_TXT"/>
+      <viewAttribute id="HKONT"/>
+      <viewAttribute id="HKONT_TXT"/>
+      <viewAttribute hidden="true" id="JOIN$HKONT$SAKNR"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_4">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LIFNR" source="LIFNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZUONR" source="ZUONR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DMBTR" source="DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUDAT" source="BUDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LIFNR_TXT" source="LIFNR_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HKONT" source="HKONT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$HKONT$SAKNR" source="HKONT"/>
+    </input>
+    <input node="Projection_5">
+      <mapping xsi:type="Calculation:AttributeMapping" target="HKONT_TXT" source="TXT20"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$HKONT$SAKNR" source="SAKNR"/>
+    </input>
+    <joinAttribute name="JOIN$HKONT$SAKNR"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_6" cardinality="C1_1" joinType="inner">
+    <descriptions>
+      <comment text="取公司代码描述"/>
+    </descriptions>
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="LIFNR"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="ZUONR"/>
+      <viewAttribute id="DMBTR" aggregationType="sum"/>
+      <viewAttribute id="TIME"/>
+      <viewAttribute id="BUDAT"/>
+      <viewAttribute id="LIFNR_TXT"/>
+      <viewAttribute id="HKONT"/>
+      <viewAttribute id="HKONT_TXT"/>
+      <viewAttribute id="BUTXT"/>
+      <viewAttribute hidden="true" id="JOIN$BUKRS$BUKRS"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_5">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LIFNR" source="LIFNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZUONR" source="ZUONR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DMBTR" source="DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUDAT" source="BUDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LIFNR_TXT" source="LIFNR_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HKONT" source="HKONT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HKONT_TXT" source="HKONT_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BUKRS$BUKRS" source="BUKRS"/>
+    </input>
+    <input node="Projection_6">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUTXT" source="BUTXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BUKRS$BUKRS" source="BUKRS"/>
+    </input>
+    <joinAttribute name="JOIN$BUKRS$BUKRS"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_7" cardinality="C1_1" joinType="inner">
+    <descriptions>
+      <comment text="取利润中心描述"/>
+    </descriptions>
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="LIFNR"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="ZUONR"/>
+      <viewAttribute id="DMBTR" aggregationType="sum"/>
+      <viewAttribute id="TIME"/>
+      <viewAttribute id="BUDAT"/>
+      <viewAttribute id="LIFNR_TXT"/>
+      <viewAttribute id="HKONT"/>
+      <viewAttribute id="HKONT_TXT"/>
+      <viewAttribute id="BUTXT"/>
+      <viewAttribute id="PRCTR_TXT"/>
+      <viewAttribute hidden="true" id="JOIN$PRCTR$PRCTR"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_6">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LIFNR" source="LIFNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZUONR" source="ZUONR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DMBTR" source="DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUDAT" source="BUDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LIFNR_TXT" source="LIFNR_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HKONT" source="HKONT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HKONT_TXT" source="HKONT_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUTXT" source="BUTXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PRCTR$PRCTR" source="PRCTR"/>
+    </input>
+    <input node="Projection_7">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR_TXT" source="KTEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PRCTR$PRCTR" source="PRCTR"/>
+    </input>
+    <joinAttribute name="JOIN$PRCTR$PRCTR"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_8">
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="LIFNR"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="ZUONR"/>
+      <viewAttribute id="DMBTR"/>
+      <viewAttribute id="TIME"/>
+      <viewAttribute id="BUDAT"/>
+      <viewAttribute id="LIFNR_TXT"/>
+      <viewAttribute id="HKONT"/>
+      <viewAttribute id="HKONT_TXT"/>
+      <viewAttribute id="BUTXT"/>
+      <viewAttribute id="PRCTR_TXT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_7"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Projection_8">
+  <attributes>
+    <attribute id="BUKRS" order="1" descriptionColumnName="BUTXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="公司代码"/>
+      <keyMapping columnObjectName="Projection_8" columnName="BUKRS"/>
+    </attribute>
+    <attribute id="LIFNR" order="2" descriptionColumnName="LIFNR_TXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="供应商"/>
+      <keyMapping columnObjectName="Projection_8" columnName="LIFNR"/>
+    </attribute>
+    <attribute id="PRCTR" order="3" descriptionColumnName="PRCTR_TXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="利润中心"/>
+      <keyMapping columnObjectName="Projection_8" columnName="PRCTR"/>
+    </attribute>
+    <attribute id="ZUONR" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="合同"/>
+      <keyMapping columnObjectName="Projection_8" columnName="ZUONR"/>
+    </attribute>
+    <attribute id="TIME" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TIME"/>
+      <keyMapping columnObjectName="Projection_8" columnName="TIME"/>
+    </attribute>
+    <attribute id="BUDAT" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="凭证中的过账日期"/>
+      <keyMapping columnObjectName="Projection_8" columnName="BUDAT"/>
+    </attribute>
+    <attribute id="LIFNR_TXT" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="供应商描述"/>
+      <keyMapping columnObjectName="Projection_8" columnName="LIFNR_TXT"/>
+    </attribute>
+    <attribute id="HKONT" order="9" descriptionColumnName="HKONT_TXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="总账科目"/>
+      <keyMapping columnObjectName="Projection_8" columnName="HKONT"/>
+    </attribute>
+    <attribute id="HKONT_TXT" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="总账科目描述"/>
+      <keyMapping columnObjectName="Projection_8" columnName="HKONT_TXT"/>
+    </attribute>
+    <attribute id="BUTXT" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="公司名称"/>
+      <keyMapping columnObjectName="Projection_8" columnName="BUTXT"/>
+    </attribute>
+    <attribute id="PRCTR_TXT" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="利润中心描述"/>
+      <keyMapping columnObjectName="Projection_8" columnName="PRCTR_TXT"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="DMBTR" order="5" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="以本币计的金额 "/>
+      <measureMapping columnObjectName="Projection_8" columnName="DMBTR"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="316" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="308" y="1996"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91" y="1586"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="364" y="1426"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="413" y="981"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_5" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="107" y="821"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_6" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="415" y="661"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_7" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="155" y="501"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="308" y="1891"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Rank_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="363" y="1746"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="337" y="1586"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="148"/>
+    </shape>
+    <shape modelObjectName="Rank_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="125"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="118" y="1426"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_1" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="125"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="274" y="1266"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_2" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="125"/>
+    </shape>
+    <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="180"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="176" y="1121"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="203" y="981"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="330" y="821"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Union_1" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="125"/>
+    </shape>
+    <shape modelObjectName="Projection_4" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="134" y="661"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_4" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="144"/>
+    </shape>
+    <shape modelObjectName="Projection_5" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_6" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="365" y="501"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_5" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="151"/>
+    </shape>
+    <shape modelObjectName="Projection_6" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_7" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="290" y="341"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_6" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="151"/>
+    </shape>
+    <shape modelObjectName="Projection_7" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_8" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="290" y="236"/>
+      <rectangleSize height="30" width="160"/>
+    </shape></shapes>
+</layout>
+</Calculation:scenario>
