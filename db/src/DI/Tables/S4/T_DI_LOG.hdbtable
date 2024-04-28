@@ -1,0 +1,17 @@
+COLUMN TABLE "BL.DI.Tables.S4::T_DI_LOG" (
+    "ID"         INTEGER        GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1 NO MAXVALUE) COMMENT '唯一ID',
+    "SYSTEM"     NVARCHAR(20)   COMMENT '来源系统',
+    "OBJECT"     NVARCHAR(100)  COMMENT '对象',
+    "START_TIME" TIMESTAMP      COMMENT '运行开始时间',
+    "END_TIME"   TIMESTAMP      COMMENT '运行结束时间',
+    "RUN_TIMES"  INTEGER        COMMENT '运行消耗时间(秒)',
+    "GJAHR"      NVARCHAR(4)    COMMENT '过账年度(接口)',
+    "POPER"      NVARCHAR(2)    COMMENT '过账期间(接口)',
+    "DATE_FROM"  TIMESTAMP      COMMENT '开始日期(表)',
+    "DATE_TO"    TIMESTAMP      COMMENT '结束日期(表)',
+    "RECORDS"    INTEGER        COMMENT '记录数',
+    "STATUS"     NVARCHAR(2)    COMMENT '状态(S-成功 F-失败)',
+    "MESSAGE"    NVARCHAR(5000) COMMENT '消息',
+    PRIMARY KEY ("ID")
+)
+COMMENT '数据集成日志表'
