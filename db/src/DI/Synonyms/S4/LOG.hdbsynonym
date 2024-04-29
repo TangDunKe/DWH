@@ -1,0 +1,7 @@
+{
+  "BL.DI.Synonyms.S4::LOG": {
+    "target": {
+      "object": "BL.DI.Tables.S4::T_DI_LOG"
+    }
+  }
+}

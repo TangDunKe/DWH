@@ -1,0 +1,7 @@
+{
+    "BL.Privileges::Access_DWH_Role": {
+      "DWH": {
+        "schema": "DWH_HDI_DB_1"
+      }
+    }
+  }
