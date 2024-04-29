@@ -1,7 +1,0 @@
-{
-    "DWH": {
-        "target": {
-            "schema": "DWH_HDI_DB_1" //the logical schema cannot point to the container schema
-        }
-    }
-}

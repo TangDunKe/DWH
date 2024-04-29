@@ -1,4 +1,3 @@
 [
-    "src/DI/Procedures/S4/P_ZFM_SAC_FII001.hdbprocedure",
-    "src/DI/Procedures/S4/P_ZFM_SAC_FII002.hdbprocedure"
+    "src/DI/VirtualTable/S4/T_T001W.hdbtable"
 ]

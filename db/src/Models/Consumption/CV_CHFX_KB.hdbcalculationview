@@ -13,8 +13,8 @@
   <DataSource id="Projection_1$$$$BL.DI.Tables.S4::T_ZFM_SAC_FII006$$">
     <resourceUri>BL.DI.Tables.S4::T_ZFM_SAC_FII006</resourceUri>
   </DataSource>
-  <DataSource id="BL.DI.VirtualTable.S4::T_T001W">
-    <resourceUri>BL.DI.VirtualTable.S4::T_T001W</resourceUri>
+  <DataSource id="BL.DI.Tables.S4::T_T001W">
+    <resourceUri>BL.DI.Tables.S4::T_T001W</resourceUri>
   </DataSource>
   <DataSource id="BL.DI.VirtualTable.S4::VA_T001">
     <resourceUri>BL.DI.VirtualTable.S4::VA_T001</resourceUri>
@@ -154,7 +154,7 @@
       <viewAttribute id="WERKS_TXT"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="BL.DI.VirtualTable.S4::T_T001W">
+    <input node="BL.DI.Tables.S4::T_T001W">
       <mapping xsi:type="Calculation:AttributeMapping" target="WERKS_TXT" source="NAME1"/>
     </input>
   </calculationView>

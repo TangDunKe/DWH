@@ -23,30 +23,30 @@
       <keyCalculation datatype="NVARCHAR" expressionLanguage="SQL" length="1">
         <formula>'I'</formula>
       </keyCalculation>
-    </calculatedAttribute>
+      </calculatedAttribute>
     <calculatedAttribute id="OPTION" order="3" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
       <keyCalculation datatype="NVARCHAR" expressionLanguage="SQL" length="2">
         <formula>'EQ'</formula>
       </keyCalculation>
-    </calculatedAttribute>
+      </calculatedAttribute>
     <calculatedAttribute id="HIGH" order="4" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
       <keyCalculation datatype="NVARCHAR" expressionLanguage="SQL" length="4">
         <formula>''</formula>
       </keyCalculation>
-    </calculatedAttribute>
+      </calculatedAttribute>
   </calculatedAttributes>
   <baseMeasures/>
   <calculatedMeasures/>
   <restrictedMeasures/>
 
 
-  <filter>&quot;BUKRS&quot; ！= '1000'</filter>
+  <filter>&quot;BUKRS&quot; &lt;&gt; '1000'</filter>
 
 </logicalModel>
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="100" y="105"/>
+      <upperLeftCorner x="92" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
