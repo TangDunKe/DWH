@@ -1,0 +1,148 @@
+VIEW "BL.Models.Common::V_XSSRCB_ZFIR041"
+AS
+
+WITH LIST_AGG AS (
+SELECT MANDT,
+       GJAHR,
+       POPER,
+       BUKRS,
+       PRCTR,
+	   VKBUR,
+       KATR4,
+	   VTEXT4,
+	   KATR2,
+	   VTEXT2,
+	   KUNNR,
+	   NAME1,
+	   MATKL,
+       SUM(ZSRSL) AS ZSRSL,
+       SUM(ZCBSL) AS ZCBSL,
+       SUM(ZXSSR) AS ZXSSR,
+       SUM(ZGNFL) AS ZGNFL,
+       SUM(ZXSCB) AS ZXSCB,
+       SUM(ZNXYF) AS ZNXYF,
+       SUM(ZCKYF) AS ZCKYF,
+       SUM(ZCKGZF) AS ZCKGZF,
+       SUM(ZXSML) AS ZXSML,
+       SUM(CASE WHEN ZXSMLL = '' THEN NULL ELSE TO_DECIMAL(REPLACE(ZXSMLL, '%', ''), 23, 2) END) AS ZXSMLL,
+       SUM(ZXSQT) AS ZXSQT,
+       SUM(ZYJ) AS ZYJ,
+       SUM(ZBXF) AS ZBXF,
+       SUM(ZCKQT) AS ZCKQT,
+       SUM(ZGLFY) AS ZGLFY,
+       SUM(ZYFFY) AS ZYFFY,
+       SUM(ZCWFY) AS ZCWFY,
+       SUM(ZSJFJ) AS ZSJFJ,
+       SUM(ZXSJL) AS ZXSJL,
+       SUM(CASE WHEN ZXSJLL = '' THEN NULL ELSE TO_DECIMAL(REPLACE(ZXSJLL, '%', ''), 23, 2) END) AS ZXSJLL
+  FROM "BL.DI.Tables.S4::T_ZFIR041"
+ GROUP BY MANDT, GJAHR, POPER, BUKRS, PRCTR, VKBUR, KATR4, VTEXT4, KATR2, VTEXT2, KUNNR, NAME1, MATKL
+),
+
+LIST_CTL AS (
+SELECT MANDT,
+       GJAHR,
+       RIGHT(POPER, 2) AS POPER,
+       BUKRS,
+       PRCTR,
+	   VKBUR,
+       KATR4,
+	   VTEXT4,
+	   KATR2,
+	   VTEXT2,
+	   KUNNR,
+	   NAME1,
+       RPAD(LEFT(MATKL, 3), 9, '0') AS PORDTYPE,
+	   MATKL,
+       ELEMENT_NUMBER AS SUBJECT_INDEX,
+	   MAP( ELEMENT_NUMBER, 1,  '收入数量',
+	 	                    2,  '成本数量',
+	 	                    4,  '销售收入',
+	 	                    5,  '销售收入-国内返利',
+	 	                    6,  '销售成本',
+	 	                    7,  '内销运费',
+	 	                    8,  '出口运费',
+	 	                    9,  '出口港杂费',
+	 	                    10, '销售毛利',
+	 	                    11, '销售毛利率',
+	 	                    12, '销售费用-其他',
+	 	                    13, '出口费用-佣金',
+	 	                    14, '出口费用-保险费',
+	 	                    15, '出口费用-其他',
+	 	                    16, '管理费用',
+	 	                    17, '研发费用',
+	 	                    18, '财务费用',
+	 	                    19, '税金及附加',
+	 	                    20, '销售净利',
+	 	                    21, '售净利率'
+	 	  ) AS SUBJECT_NAME,
+	   MAP(ELEMENT_NUMBER , 1,  ZSRSL,
+                            2,  ZCBSL,
+                            4,	ZXSSR,
+                            5,	ZGNFL,
+                            6,	ZXSCB,
+                            7,	ZNXYF,
+                            8,	ZCKYF,
+                            9,	ZCKGZF,
+                            10,	ZXSML,
+                            11,	ZXSMLL,
+                            12,	ZXSQT,
+                            13,	ZYJ,
+                            14,	ZBXF,
+                            15,	ZCKQT,
+                            16,	ZGLFY,
+                            17,	ZYFFY,
+                            18,	ZCWFY,
+                            19,	ZSJFJ,
+                            20,	ZXSJL,
+                            21,	ZXSJLL
+	 	  ) AS ACTUAL
+  FROM LIST_AGG,
+	   SERIES_GENERATE_INTEGER(1, 36, 57)  --转换行起始列序号 至 转换行截至列序号+1
+ ORDER BY ELEMENT_NUMBER
+)
+
+SELECT LIST.MANDT,                  --客户端
+       LIST.GJAHR,                  --会计年度
+       LIST.POPER,                  --期间
+       LIST.BUKRS,                  --法人组织(公司代码)
+       T001.BUTXT,                  --公司名称
+       LIST.PRCTR,                  --利润中心
+       CEPC.KTEXT,                  --利润中心名称
+	   LIST.VKBUR,                  --销售办事处
+       TVKBT.BEZEI,                 --销售办事处名称
+       LIST.KATR4,                  --客户类型
+	   LIST.VTEXT4,                 --客户类型描述
+	   LIST.KATR2,                  --集团客户
+	   LIST.VTEXT2,                 --集团客户描述
+	   LIST.KUNNR,                  --客户编码
+	   LIST.NAME1,                  --客户名称
+	   LIST.PORDTYPE,               --产品类型
+	   MATGROUP1.WGBEZ AS PRODDESC, --产品类型描述
+	   LIST.MATKL,                  --产品牌号
+	   MATGROUP2.WGBEZ,             --产品牌号描述
+       LIST.SUBJECT_INDEX,          --指标索引
+       LIST.SUBJECT_NAME,           --指标名称
+       LIST.ACTUAL                  --实际数
+  FROM LIST_CTL AS LIST
+  LEFT OUTER MANY TO ONE JOIN "BL.DI.Tables.S4::T_T001" AS T001
+    ON T001.MANDT = LIST.MANDT
+   AND T001.BUKRS = LIST.BUKRS
+  LEFT OUTER MANY TO ONE JOIN "BL.DI.Tables.S4::T_CEPCT" AS CEPC
+    ON CEPC.MANDT = LIST.MANDT
+   AND CEPC.PRCTR = LIST.PRCTR
+   AND CEPC.KOKRS = MAP(T001.LAND1, 'CN', 'LBCN', 'LBHW')
+   AND CEPC.DATBI >= TO_NVARCHAR(CURRENT_DATE, 'YYYYMMDD')
+   AND CEPC.SPRAS = '1'
+  LEFT OUTER MANY TO ONE JOIN "BL.DI.Tables.S4::T_TVKBT" AS TVKBT
+    ON TVKBT.MANDT = LIST.MANDT
+   AND TVKBT.VKBUR = LIST.VKBUR
+   AND TVKBT.SPRAS = '1'
+  LEFT OUTER MANY TO ONE JOIN "BL.DI.Tables.S4::T_T023T" AS MATGROUP1
+    ON MATGROUP1.MANDT = LIST.MANDT
+   AND MATGROUP1.MATKL = LIST.PORDTYPE
+   AND MATGROUP1.SPRAS = '1'
+  LEFT OUTER MANY TO ONE JOIN "BL.DI.Tables.S4::T_T023T" AS MATGROUP2
+    ON MATGROUP2.MANDT = LIST.MANDT
+   AND MATGROUP2.MATKL = LIST.MATKL
+   AND MATGROUP2.SPRAS = '1';

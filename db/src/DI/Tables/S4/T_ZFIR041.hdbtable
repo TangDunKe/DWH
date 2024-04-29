@@ -1,4 +1,5 @@
 COLUMN TABLE "BL.DI.Tables.S4::T_ZFIR041" (
+    MANDT       NVARCHAR(3),
     BLART       NVARCHAR(2),
     BUKRS       NVARCHAR(4),
     GJAHR       NVARCHAR(4),

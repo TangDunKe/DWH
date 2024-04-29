@@ -1,0 +1,19 @@
+COLUMN TABLE "BL.DI.Tables.S4::T_ZSAC_BOMBGT" (
+    MANDT               NVARCHAR(3),
+    VERSION             NVARCHAR(6),
+    ZYR                 NVARCHAR(4),
+    ZMO                 NVARCHAR(2),
+    BUKRS               NVARCHAR(4),
+    PRCTR               NVARCHAR(10),
+    PRODMATNR           NVARCHAR(40),
+    PRODMATKL           NVARCHAR(9),
+    MATERIALMATNR       NVARCHAR(40),
+    MATERIALMATKL       NVARCHAR(9),
+    ZAMTPERPROD         DECIMAL(15,5),
+    ZQTYUSED            DECIMAL(15,2),
+    ZINSERTTIME         NVARCHAR(6),
+    ZDEL                NVARCHAR(2),
+    ZINSERTDATE         NVARCHAR(8),
+    ZUPDATE             NVARCHAR(8),
+    PRIMARY KEY(MANDT, VERSION, ZINSERTTIME)
+)
