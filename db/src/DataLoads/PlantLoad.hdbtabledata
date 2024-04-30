@@ -1,0 +1,28 @@
+{
+    "format_version": 1,
+    "imports": [
+        {
+            "target_table": "BL.DI.Tables.S4::T_WERKS",
+            "import_settings": {
+                "import_columns": [
+                    "SIGN",
+                    "OPTION",
+                    "LOW",
+                    "HIGH"
+                ],
+                "include_filter": []
+            },
+            "source_data": {
+                "data_type": "CSV",
+                "file_name": "BL.DataLoads::Plant.csv",
+                "has_header": true,
+                "no_data_import": false,
+                "delete_existing_foreign_data": true,
+                "dialect": "HANA",
+                "type_config": {
+                    "delimiter": ";"
+                }
+            }
+        }
+    ]
+}
