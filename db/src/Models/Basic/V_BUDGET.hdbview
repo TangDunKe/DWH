@@ -1,0 +1,557 @@
+VIEW "BL.Models.Basic::V_BUDGET"
+AS
+
+WITH COSTBGT AS (
+SELECT MANDT,
+       VERSION,
+       ZYR AS GJAHR,
+       ZMO AS POPER,
+       BUKRS,
+       PRCTR,
+       CAST(NULL AS NVARCHAR(40)) AS PRODMATNR,
+       CAST(NULL AS NVARCHAR(9)) AS PRODMATKL,
+       MATNR AS MATERIALMATNR,
+       MATKL AS MATERIALMATKL,
+       ZUNITCOST,
+       ZCOGS,
+       ZCOGSINSHIP,
+       ZCOGSOUTSHIP,
+       ZCOGSOUTPORTMISC,
+       ZSHIPPORT,
+       ZCONSPROCESSCOST,
+       ZDIRECTLBR,
+       ZFUEL,
+       ZDA,
+       ZMANUCOST,
+	   
+       --附加指标
+       ZCOGS - ZCOGSINSHIP - ZCOGSOUTSHIP - ZCOGSOUTPORTMISC AS ZCAL_JXSCB   --减：销售成本 = 销售成本 -主营业务成本内销运费 -主营业务成本出口运费 -主营业务成本出口港杂费
+  FROM "BL.DI.Tables.S4::T_ZSAC_COSTBGT"
+ WHERE ZDEL = 'Y'
+),
+
+SALESBGT AS (
+SELECT MANDT,
+       VERSION,
+       ZYR AS GJAHR,
+       ZMO AS POPER,
+       BUKRS,
+       PRCTR,
+       CAST(NULL AS NVARCHAR(40)) AS PRODMATNR,
+       CAST(NULL AS NVARCHAR(9)) AS PRODMATKL,
+       MATNR AS MATERIALMATNR,
+       MATKL AS MATERIALMATKL,
+       ZUNITSALESPRICE,
+       ZUNITREBATE,
+       ZNETUNITSALESPRICE,
+       ZSALESAMT,
+       ZGROSSSALES,
+       ZREBATE,
+       ZNETSALES,
+	   
+	   --附加指标
+	   ZREBATE + ZNETSALES AS ZCAL_MXSZL,  --毛销售总额 = 减：返利 + 净销售总额
+	   ZREBATE AS ZCAL_JFL,                --减：返利
+       ZNETSALES AS ZCAL_JXSZR             --净销售总额
+  FROM "BL.DI.Tables.S4::T_ZSAC_SALESBGT"
+ WHERE ZDEL = 'Y'
+),
+
+LIST AS (
+SELECT MANDT,
+       VERSION,
+       ZYR AS GJAHR,
+       ZMO AS POPER,
+       BUKRS,
+       PRCTR,
+       PRODMATNR,
+       PRODMATKL,
+       MATERIALMATNR,
+       MATERIALMATKL,
+       CAST('ZSAC_BOMBGT' AS NVARCHAR(20)) AS BGTTYPE,
+       ELEMENT_NUMBER AS SUBJECT_INDEX,
+       CAST( MAP( ELEMENT_NUMBER, 1,  'ZAMTPERPROD',
+                                  2,  'ZQTYUSED'
+           ) AS NVARCHAR(50)) AS SUBJECT_CODE,
+       CAST( MAP( ELEMENT_NUMBER, 1,  '预算物料单耗量',
+                                  2,  '预算物料耗用量'
+           ) AS NVARCHAR(100)) AS SUBJECT_NAME,
+       CAST( MAP( ELEMENT_NUMBER, 1,  ZAMTPERPROD,
+                                  2,  ZQTYUSED
+           ) AS DECIMAL(23, 2)) AS BUDGET
+  FROM "BL.DI.Tables.S4::T_ZSAC_BOMBGT",
+       SERIES_GENERATE_INTEGER(1, 12, 14)  --转换行起始列序号 至 转换行截至列序号+1
+ WHERE ZDEL = 'Y'
+ 
+ UNION ALL
+ 
+SELECT MANDT,
+       VERSION,
+       GJAHR,
+       POPER,
+       BUKRS,
+       PRCTR,
+       PRODMATNR,
+       PRODMATKL,
+       MATERIALMATNR,
+       MATERIALMATKL,
+       CAST('ZSAC_COSTBGT' AS NVARCHAR(20)) AS BGTTYPE,
+       ELEMENT_NUMBER AS SUBJECT_INDEX,
+       CAST( MAP( ELEMENT_NUMBER, 1,  'ZUNITCOST',
+                                  2,  'ZCOGS',
+                                  3,  'ZCOGSINSHIP',
+                                  4,  'ZCOGSOUTSHIP',
+                                  5,  'ZCOGSOUTPORTMISC',
+                                  6,  'ZSHIPPORT',
+                                  7,  'ZCONSPROCESSCOST',
+                                  8,  'ZDIRECTLBR',
+                                  9,  'ZFUEL',
+                                  10, 'ZDA',
+                                  11, 'ZMANUCOST',
+                                  12, 'ZCAL_JXSCB'
+           ) AS NVARCHAR(50)) AS SUBJECT_CODE,
+       CAST( MAP( ELEMENT_NUMBER, 1,  '预算单位成本',
+                                  2,  '预算销售成本总额',
+                                  3,  '预算主营业务成本-内销运费总额',
+                                  4,  '预算主营业务成本-出口运费总额',
+                                  5,  '预算主营业务成本-出口港杂费总额',
+                                  6,  '预算运杂成本总额',
+                                  7,  '预算单位委托加工成本',
+                                  8,  '预算单位直接人工',
+                                  9,  '预算单位燃料动力',
+                                  10, '预算折旧和摊销',
+                                  11, '预算单位制造费用',
+                                  12, '减：销售成本'
+           ) AS NVARCHAR(100)) AS SUBJECT_NAME,
+       CAST( MAP( ELEMENT_NUMBER, 1,  ZUNITCOST,
+                                  2,  ZCOGS,
+                                  3,  ZCOGSINSHIP,
+                                  4,  ZCOGSOUTSHIP,
+                                  5,  ZCOGSOUTPORTMISC,
+                                  6,  ZSHIPPORT,
+                                  7,  ZCONSPROCESSCOST,
+                                  8,  ZDIRECTLBR,
+                                  9,  ZFUEL,
+                                  10, ZDA,
+                                  11, ZMANUCOST,
+                                  12, ZCAL_JXSCB
+           ) AS DECIMAL(23, 2)) AS BUDGET
+  FROM COSTBGT,
+       SERIES_GENERATE_INTEGER(1, 10, 22)  --转换行起始列序号 至 转换行截至列序号+1
+ 
+ UNION ALL
+ 
+SELECT MANDT,
+       VERSION,
+       ZYR AS GJAHR,
+       ZMO AS POPER,
+       BUKRS,
+       PRCTR,
+       CAST(NULL AS NVARCHAR(40)) AS PRODMATNR,
+       CAST(NULL AS NVARCHAR(9)) AS PRODMATKL,
+       CAST(NULL AS NVARCHAR(40)) AS MATERIALMATNR,
+       CAST(NULL AS NVARCHAR(9)) AS MATERIALMATKL,
+       CAST('ZSAC_FINEXPBGT' AS NVARCHAR(20)) AS BGTTYPE,
+       ELEMENT_NUMBER AS SUBJECT_INDEX,
+       CAST( MAP( ELEMENT_NUMBER, 1,  'ZINTINCOME',
+                                  2,  'ZINTEXP',
+                                  3,  'ZCURRTRANSINC',
+                                  4,  'ZCURRTRANSLOSS',
+                                  5,  'ZAGENTFEE',
+                                  6,  'ZACCEPTFEE',
+                                  7,  'ZCASHDISCOUNT',
+                                  8,  'ZGUARANTEE',
+                                  9,  'ZDISCOUNT',
+                                  10, 'ZCAPOCCU',
+                                  11, 'ZNOTE',
+                                  12, 'ZBANK',
+                                  13, 'ZROUAFIN',
+                                  14, 'ZOTHER'
+           ) AS NVARCHAR(50)) AS SUBJECT_CODE,
+       CAST( MAP( ELEMENT_NUMBER, 1,  '预算利息收入',
+                                  2,  '预算利息支出',
+                                  3,  '预算汇兑收益',
+                                  4,  '预算汇兑损失',
+                                  5,  '预算金融机构手续费',
+                                  6,  '预算承兑手续费',
+                                  7,  '预算现金折扣',
+                                  8,  '预算担保费',
+                                  9,  '预算贴息',
+                                  10, '预算资金占用费',
+                                  11, '预算银行通知费',
+                                  12, '预算银行扣费',
+                                  13, '预算使用权资产融资费用',
+                                  14, '预算其他费用'
+           ) AS NVARCHAR(100)) AS SUBJECT_NAME,
+       CAST( MAP( ELEMENT_NUMBER, 1,  ZINTINCOME,
+                                  2,  ZINTEXP,
+                                  3,  ZCURRTRANSINC,
+                                  4,  ZCURRTRANSLOSS,
+                                  5,  ZAGENTFEE,
+                                  6,  ZACCEPTFEE,
+                                  7,  ZCASHDISCOUNT,
+                                  8,  ZGUARANTEE,
+                                  9,  ZDISCOUNT,
+                                  10, ZCAPOCCU,
+                                  11, ZNOTE,
+                                  12, ZBANK,
+                                  13, ZROUAFIN,
+                                  14, ZOTHER
+           ) AS DECIMAL(23, 2)) AS BUDGET
+  FROM "BL.DI.Tables.S4::T_ZSAC_FINEXPBGT",
+       SERIES_GENERATE_INTEGER(1, 8, 22)  --转换行起始列序号 至 转换行截至列序号+1
+ WHERE ZDEL = 'Y'
+ 
+ UNION ALL
+ 
+SELECT MANDT,
+       VERSION,
+       YR AS GJAHR,
+       MO AS POPER,
+       BUKRS,
+       PRCTR,
+       CAST(NULL AS NVARCHAR(40)) AS PRODMATNR,
+       CAST(NULL AS NVARCHAR(9)) AS PRODMATKL,
+       CAST(NULL AS NVARCHAR(40)) AS MATERIALMATNR,
+       CAST(NULL AS NVARCHAR(9)) AS MATERIALMATKL,
+       CAST('ZSAC_FINRPTBGT' AS NVARCHAR(20)) AS BGTTYPE,
+       ELEMENT_NUMBER AS SUBJECT_INDEX,
+       CAST( MAP( ELEMENT_NUMBER, 1,  'ZREVENUE',
+                                  2,  'ZMAINOPINCM',
+                                  3,  'OTHEROPINCM',
+                                  4,  'ZCOST',
+                                  5,  'ZMAINOPCOST',
+                                  6,  'OTHEROPEXP',
+                                  7,  'TAXSURCHARGE',
+                                  8,  'SALESEXP',
+                                  9,  'MGMTEXP',
+                                  10, 'RDEXP',
+                                  11, 'FINEXP',
+                                  12, 'OTHERINCM',
+                                  13, 'INVINCM',
+                                  14, 'EXCINCM',
+                                  15, 'HEDGEINCM',
+                                  16, 'FVCHANGEINCM',
+                                  17, 'CREDITIMPAIRLOSS',
+                                  18, 'ASSETIMPAIRLOSS',
+                                  19, 'ASSETDISPOSALINCM',
+                                  20, 'ZOPPROFIT',
+                                  21, 'NONOPINCM',
+                                  22, 'NONOPEXP',
+                                  23, 'ZGROSSPROFIT',
+                                  24, 'INCMTAX',
+                                  25, 'NETPROFIT'
+           ) AS NVARCHAR(50)) AS SUBJECT_CODE,
+       CAST( MAP( ELEMENT_NUMBER, 1,  '预算营业收入',
+                                  2,  '预算主营业务收入',
+                                  3,  '预算其他业务输入',
+                                  4,  '预算营业成本',
+                                  5,  '预算主营业务成本',
+                                  6,  '预算其他业务支出',
+                                  7,  '预算税金及附加',
+                                  8,  '预算销售费用',
+                                  9,  '预算管理费用',
+                                  10, '预算研发费用',
+                                  11, '预算财务费用',
+                                  12, '预算其他收益',
+                                  13, '预算投资收益',
+                                  14, '预算汇兑收益',
+                                  15, '预算净敞口套期收益',
+                                  16, '预算公允价值变动收益',
+                                  17, '预算信用减值损失',
+                                  18, '预算资产减值损失',
+                                  19, '预算资产处置收益',
+                                  20, '预算营业利润',
+                                  21, '预算营业外收入',
+                                  22, '预算营业外支出',
+                                  23, '预算利润总额',
+                                  24, '预算所得税费用',
+                                  25, '预算净利润'
+           ) AS NVARCHAR(100)) AS SUBJECT_NAME,
+       CAST( MAP( ELEMENT_NUMBER, 1,  ZREVENUE,
+                                  2,  ZMAINOPINCM,
+                                  3,  OTHEROPINCM,
+                                  4,  ZCOST,
+                                  5,  ZMAINOPCOST,
+                                  6,  OTHEROPEXP,
+                                  7,  TAXSURCHARGE,
+                                  8,  SALESEXP,
+                                  9,  MGMTEXP,
+                                  10, RDEXP,
+                                  11, FINEXP,
+                                  12, OTHERINCM,
+                                  13, INVINCM,
+                                  14, EXCINCM,
+                                  15, HEDGEINCM,
+                                  16, FVCHANGEINCM,
+                                  17, CREDITIMPAIRLOSS,
+                                  18, ASSETIMPAIRLOSS,
+                                  19, ASSETDISPOSALINCM,
+                                  20, ZOPPROFIT,
+                                  21, NONOPINCM,
+                                  22, NONOPEXP,
+                                  23, ZGROSSPROFIT,
+                                  24, INCMTAX,
+                                  25, NETPROFIT
+           ) AS DECIMAL(23, 2)) AS BUDGET
+  FROM "BL.DI.Tables.S4::T_ZSAC_FINRPTBGT",
+       SERIES_GENERATE_INTEGER(1, 8, 33)  --转换行起始列序号 至 转换行截至列序号+1
+ WHERE ZDEL = 'Y'
+ 
+ UNION ALL
+ 
+SELECT MANDT,
+       VERSION,
+       ZYR AS GJAHR,
+       ZMO AS POPER,
+       BUKRS,
+       CAST(NULL AS NVARCHAR(10)) AS PRCTR,
+       CAST(NULL AS NVARCHAR(40)) AS PRODMATNR,
+       CAST(NULL AS NVARCHAR(9)) AS PRODMATKL,
+       CAST(NULL AS NVARCHAR(40)) AS MATERIALMATNR,
+       CAST(NULL AS NVARCHAR(9)) AS MATERIALMATKL,
+       CAST('ZSAC_H2O2PROD' AS NVARCHAR(20)) AS BGTTYPE,
+       CAST(1 AS BIGINT) AS SUBJECT_INDEX,
+       CAST('ZQTY' AS NVARCHAR(50)) AS SUBJECT_CODE,
+       CAST('27.5%双氧水月实际产量' AS NVARCHAR(100)) AS SUBJECT_NAME,
+       CAST(ZQTY AS DECIMAL(23, 2)) AS BUDGET
+  FROM "BL.DI.Tables.S4::T_ZSAC_H2O2PROD"
+ WHERE ZDEL = 'Y'
+ 
+ UNION ALL
+ 
+SELECT MANDT,
+       VERSION,
+       ZYR AS GJAHR,
+       ZMO AS POPER,
+       BUKRS,
+       PRCTR,
+       CAST(NULL AS NVARCHAR(40)) AS PRODMATNR,
+       CAST(NULL AS NVARCHAR(9)) AS PRODMATKL,
+       CAST(NULL AS NVARCHAR(40)) AS MATERIALMATNR,
+       CAST(NULL AS NVARCHAR(9)) AS MATERIALMATKL,
+       CAST('ZSAC_MGMTEXPBGT' AS NVARCHAR(20)) AS BGTTYPE,
+       ELEMENT_NUMBER AS SUBJECT_INDEX,
+       CAST( MAP( ELEMENT_NUMBER, 1,  'ZSALARYEQUITY',
+                                  2,  'ZREPAIR',
+                                  3,  'ZDA',
+                                  4,  'ZAUDITADVISORY',
+                                  5,  'ZOFFICE',
+                                  6,  'ZLOAD',
+                                  7,  'ZAD',
+                                  8,  'ZHOSPITALITY',
+                                  9,  'ZRENT',
+                                  10, 'ZTRAVEL',
+                                  11, 'ZTRANSPORT',
+                                  12, 'ZMEETING',
+                                  13, 'ZLAWCOMPEN',
+                                  14, 'ZINSURANCE',
+                                  15, 'ZGREENCLEAN',
+                                  16, 'ZLABOR',
+                                  17, 'ZOTHER'
+           ) AS NVARCHAR(50)) AS SUBJECT_CODE,
+       CAST( MAP( ELEMENT_NUMBER, 1,  '预算职工薪酬及股权激励',
+                                  2,  '预算物料消耗及修理费',
+                                  3,  '预算折旧和摊销',
+                                  4,  '预算审计代理咨询费',
+                                  5,  '预算办公及会议费',
+                                  6,  '预算装卸搬运费',
+                                  7,  '预算广告展览费',
+                                  8,  '预算招待费',
+                                  9,  '预算租赁费',
+                                  10, '预算差旅费',
+                                  11, '预算运输费用',
+                                  12, '预算会议费',
+                                  13, '诉讼及补偿费',
+                                  14, '预算保险费',
+                                  15, '绿化费及清洁',
+                                  16, '劳务费',
+                                  17, '预算其他费用'
+           ) AS NVARCHAR(100)) AS SUBJECT_NAME,
+       CAST( MAP( ELEMENT_NUMBER, 1,  ZSALARYEQUITY,
+                                  2,  ZREPAIR,
+                                  3,  ZDA,
+                                  4,  ZAUDITADVISORY,
+                                  5,  ZOFFICE,
+                                  6,  ZLOAD,
+                                  7,  ZAD,
+                                  8,  ZHOSPITALITY,
+                                  9,  ZRENT,
+                                  10, ZTRAVEL,
+                                  11, ZTRANSPORT,
+                                  12, ZMEETING,
+                                  13, ZLAWCOMPEN,
+                                  14, ZINSURANCE,
+                                  15, ZGREENCLEAN,
+                                  16, ZLABOR,
+                                  17, ZOTHER
+           ) AS DECIMAL(23, 2)) AS BUDGET
+  FROM "BL.DI.Tables.S4::T_ZSAC_MGMTEXPBGT",
+       SERIES_GENERATE_INTEGER(1, 8, 25)  --转换行起始列序号 至 转换行截至列序号+1
+ WHERE ZDEL = 'Y'
+ 
+ UNION ALL
+ 
+SELECT MANDT,
+       VERSION,
+       GJAHR,
+       POPER,
+       BUKRS,
+       PRCTR,
+       PRODMATNR,
+       PRODMATKL,
+       MATERIALMATNR,
+       MATERIALMATKL,
+       CAST('ZSAC_SALESBGT' AS NVARCHAR(20)) AS BGTTYPE,
+       ELEMENT_NUMBER AS SUBJECT_INDEX,
+       CAST( MAP( ELEMENT_NUMBER, 1,  'ZUNITSALESPRICE',
+                                  2,  'ZUNITREBATE',
+                                  3,  'ZNETUNITSALESPRICE',
+                                  4,  'ZSALESAMT',
+                                  5,  'ZGROSSSALES',
+                                  6,  'ZREBATE',
+                                  7,  'ZNETSALES',
+                                  8,  'ZCAL_MXSZL',
+                                  9,  'ZCAL_JFL',
+                                  10, 'ZCAL_JXSZR'
+           ) AS NVARCHAR(50)) AS SUBJECT_CODE,
+       CAST( MAP( ELEMENT_NUMBER, 1,  '预算毛销售单价（未剔除返利、未剔除佣金）',
+                                  2,  '预算返利单价',
+                                  3,  '预算净销售单价（剔除返利、未剔除佣金）',
+                                  4,  '预算销量',
+                                  5,  '预算毛销售总额（未剔除返利、未剔除佣金）',
+                                  6,  '预算返利总额',
+                                  7,  '预算净销售总额（剔除返利、未剔除佣金）',
+                                  8,  '毛销售总额',
+                                  9,  '减：返利',
+                                  10, '净销售总额'
+           ) AS NVARCHAR(100)) AS SUBJECT_NAME,
+       CAST( MAP( ELEMENT_NUMBER, 1,  ZUNITSALESPRICE,
+                                  2,  ZUNITREBATE,
+                                  3,  ZNETUNITSALESPRICE,
+                                  4,  ZSALESAMT,
+                                  5,  ZGROSSSALES,
+                                  6,  ZREBATE,
+                                  7,  ZNETSALES,
+                                  8,  ZCAL_MXSZL,
+                                  9,  ZCAL_JFL,
+                                  10, ZCAL_JXSZR
+           ) AS DECIMAL(23, 2)) AS BUDGET
+  FROM SALESBGT,
+       SERIES_GENERATE_INTEGER(1, 10, 20)  --转换行起始列序号 至 转换行截至列序号+1
+ 
+ UNION ALL
+ 
+SELECT MANDT,
+       VERSION,
+       ZYR AS GJAHR,
+       ZMO AS POPER,
+       BUKRS,
+       PRCTR,
+       CAST(NULL AS NVARCHAR(40)) AS PRODMATNR,
+       CAST(NULL AS NVARCHAR(9)) AS PRODMATKL,
+       CAST(NULL AS NVARCHAR(40)) AS MATERIALMATNR,
+       CAST(NULL AS NVARCHAR(9)) AS MATERIALMATKL,
+       CAST('ZSAC_SALESEXPBGT' AS NVARCHAR(20)) AS BGTTYPE,
+       ELEMENT_NUMBER AS SUBJECT_INDEX,
+       CAST( MAP( ELEMENT_NUMBER, 1,  'ZSHIP',
+                                  2,  'ZPORTMISC',
+                                  3,  'ZCOMM',
+                                  4,  'ZLOAD',
+                                  5,  'ZSERVICE',
+                                  6,  'ZPACKAGE',
+                                  7,  'ZSALARY',
+                                  8,  'ZINSURANCE',
+                                  9,  'ZTRAVEL',
+                                  10, 'ZAD',
+                                  11, 'ZOFFICE',
+                                  12, 'ZHOSPITALITY',
+                                  13, 'ZSTORAGE',
+                                  14, 'ZAUDITADVISORY',
+                                  15, 'ZOTHER'
+           ) AS NVARCHAR(50)) AS SUBJECT_CODE,
+       CAST( MAP( ELEMENT_NUMBER, 1,  '预算运输费',
+                                  2,  '预算港杂费',
+                                  3,  '预算佣金',
+                                  4,  '预算装卸搬运费',
+                                  5,  '预算销售服务费',
+                                  6,  '预算包装费',
+                                  7,  '预算职工薪酬',
+                                  8,  '预算保险费',
+                                  9,  '预算差旅费',
+                                  10, '预算广告展览费',
+                                  11, '预算办公及会议费',
+                                  12, '预算招待费',
+                                  13, '预算仓储费',
+                                  14, '预算审计代理咨询费',
+                                  15, '预算其他费用'
+           ) AS NVARCHAR(100)) AS SUBJECT_NAME,
+       CAST( MAP( ELEMENT_NUMBER, 1,  ZSHIP,
+                                  2,  ZPORTMISC,
+                                  3,  ZCOMM,
+                                  4,  ZLOAD,
+                                  5,  ZSERVICE,
+                                  6,  ZPACKAGE,
+                                  7,  ZSALARY,
+                                  8,  ZINSURANCE,
+                                  9,  ZTRAVEL,
+                                  10, ZAD,
+                                  11, ZOFFICE,
+                                  12, ZHOSPITALITY,
+                                  13, ZSTORAGE,
+                                  14, ZAUDITADVISORY,
+                                  15, ZOTHER
+           ) AS DECIMAL(23, 2)) AS BUDGET
+  FROM "BL.DI.Tables.S4::T_ZSAC_SALESEXPBGT",
+       SERIES_GENERATE_INTEGER(1, 8, 23)  --转换行起始列序号 至 转换行截至列序号+1
+ WHERE ZDEL = 'Y'
+)
+
+SELECT LIST.MANDT,                      --客户端
+       LIST.VERSION,                    --版本
+       LIST.GJAHR,                      --会计年度
+       LIST.POPER,                      --期间
+       LIST.BUKRS,                      --法人组织(公司代码)
+       T001.BUTXT,                      --公司名称
+       LIST.PRCTR,                      --利润中心
+       CEPC.KTEXT,                      --利润中心名称
+       
+       LIST.PRODMATNR,                  --产品-SAP物料号码
+       PROD.MAKTX AS PRODDESC,          --产品-SAP物料描述
+       LIST.PRODMATKL AS PRODMTGP,      --产品-SAP物料组编码
+       PRODMTGP.WGBEZ AS PRODMTGPDESC,  --产品-SAP物料组描述
+       LIST.MATERIALMATNR AS MATLMATNR, --材料-SAP物料号码
+       MATL.MAKTX AS MATLDESC,          --材料-SAP物料描述
+       LIST.MATERIALMATKL AS MATLMTGP,  --材料-SAP物料组编码
+       MATLMTGP.WGBEZ AS MATLMTGPDESC,  --材料-SAP物料组描述
+       LIST.BGTTYPE,                    --预算类型
+       LIST.SUBJECT_INDEX,              --指标索引
+       LIST.SUBJECT_CODE,               --指标编码
+       LIST.SUBJECT_NAME,               --指标名称
+       LIST.BUDGET                      --预算数
+  FROM LIST
+  LEFT OUTER MANY TO ONE JOIN "BL.DI.Tables.S4::T_T001" AS T001
+    ON T001.MANDT = LIST.MANDT
+   AND T001.BUKRS = LIST.BUKRS
+  LEFT OUTER MANY TO ONE JOIN "BL.DI.Tables.S4::T_CEPCT" AS CEPC
+    ON CEPC.MANDT = LIST.MANDT
+   AND CEPC.PRCTR = LIST.PRCTR
+   AND CEPC.KOKRS = MAP(T001.LAND1, 'CN', 'LBCN', 'LBHW')
+   AND CEPC.DATBI >= TO_NVARCHAR(CURRENT_DATE, 'YYYYMMDD')
+   AND CEPC.SPRAS = '1'
+  LEFT OUTER MANY TO ONE JOIN "BL.DI.Tables.S4::T_MAKT" AS PROD
+    ON PROD.MANDT = LIST.MANDT
+   AND PROD.MATNR = LIST.PRODMATNR
+   AND PROD.SPRAS = '1'
+  LEFT OUTER MANY TO ONE JOIN "BL.DI.Tables.S4::T_T023T" AS PRODMTGP
+    ON PRODMTGP.MANDT = LIST.MANDT
+   AND PRODMTGP.MATKL = LIST.PRODMATKL
+   AND PRODMTGP.SPRAS = '1'
+  LEFT OUTER MANY TO ONE JOIN "BL.DI.Tables.S4::T_MAKT" AS MATL
+    ON MATL.MANDT = LIST.MANDT
+   AND MATL.MATNR = LIST.MATERIALMATNR
+   AND MATL.SPRAS = '1'
+  LEFT OUTER MANY TO ONE JOIN "BL.DI.Tables.S4::T_T023T" AS MATLMTGP
+    ON MATLMTGP.MANDT = LIST.MANDT
+   AND MATLMTGP.MATKL = LIST.MATERIALMATKL
+   AND MATLMTGP.SPRAS = '1';
