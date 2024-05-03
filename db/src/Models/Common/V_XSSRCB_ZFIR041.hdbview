@@ -7,14 +7,14 @@ SELECT MANDT,
        POPER,
        BUKRS,
        PRCTR,
-	   VKBUR,
+       VKBUR,
        KATR4,
-	   VTEXT4,
-	   KATR2,
-	   VTEXT2,
-	   KUNNR,
-	   NAME1,
-	   MATKL,
+       VTEXT4,
+       KATR2,
+       VTEXT2,
+       KUNNR,
+       NAME1,
+       MATKL,
        SUM(ZSRSL) AS ZSRSL,
        SUM(ZCBSL) AS ZCBSL,
        SUM(ZXSSR) AS ZXSSR,
@@ -34,7 +34,19 @@ SELECT MANDT,
        SUM(ZCWFY) AS ZCWFY,
        SUM(ZSJFJ) AS ZSJFJ,
        SUM(ZXSJL) AS ZXSJL,
-       SUM(CASE WHEN ZXSJLL = '' THEN NULL ELSE TO_DECIMAL(REPLACE(ZXSJLL, '%', ''), 23, 2) END) AS ZXSJLL
+       SUM(CASE WHEN ZXSJLL = '' THEN NULL ELSE TO_DECIMAL(REPLACE(ZXSJLL, '%', ''), 23, 2) END) AS ZXSJLL,
+	   
+       --附加指标
+       SUM(ZXSSR + ZGNFL) AS ZCAL_MXSZE,                                                                           --毛销售总额 = 销售收入 + 销售收入-国内返利
+       SUM(ZGNFL) AS ZCAL_JFL,                                                                                     --减：返利
+       SUM(ZXSSR) AS ZCAL_JXSZR,                                                                                   --净销售总额
+       SUM(ZXSCB) AS ZCAL_JTZHXSCB,                                                                                --减：调整后销售成本
+       SUM(ZYJ) AS ZCAL_YJ,                                                                                        --佣金
+       SUM(ZXSSR - ZXSCB -ZYJ) AS ZCAL_XSMLE1,                                                                     --销售毛利额1
+       SUM(ZXSSR - ZXSCB -ZYJ) / NULLIF(SUM(ZXSSR + ZGNFL), 0) * 100 AS ZCAL_XSMLL1,                               --销售毛利率1 = (销售收入 - 销售成本 - 出口费用-佣金) / (销售收入 + 销售收入-国内返利)
+       SUM(ZNXYF + ZCKYF + ZCKGZF) AS ZCAL_JYZF,                                                                   --减：运杂费 = 内销运费 + 出口运费 + 出口港杂费
+       SUM((ZXSSR - ZXSCB - ZYJ) - (ZNXYF + ZCKYF + ZCKGZF)) AS ZCAL_XSMLE2,                                       --销售毛利额2 = (销售收入 - 销售成本 - 出口费用-佣金) - (内销运费 + 出口运费 + 出口港杂费)
+       SUM((ZXSSR - ZXSCB - ZYJ) - (ZNXYF + ZCKYF + ZCKGZF)) / NULLIF(SUM(ZXSSR + ZGNFL), 0) * 100 AS ZCAL_XSMLL2  --销售毛利率2
   FROM "BL.DI.Tables.S4::T_ZFIR041"
  GROUP BY MANDT, GJAHR, POPER, BUKRS, PRCTR, VKBUR, KATR4, VTEXT4, KATR2, VTEXT2, KUNNR, NAME1, MATKL
 ),
@@ -45,38 +57,79 @@ SELECT MANDT,
        RIGHT(POPER, 2) AS POPER,
        BUKRS,
        PRCTR,
-	   VKBUR,
+       VKBUR,
        KATR4,
-	   VTEXT4,
-	   KATR2,
-	   VTEXT2,
-	   KUNNR,
-	   NAME1,
+       VTEXT4,
+       KATR2,
+       VTEXT2,
+       KUNNR,
+       NAME1,
        RPAD(LEFT(MATKL, 3), 9, '0') AS PORDTYPE,
-	   MATKL,
+       MATKL,
        ELEMENT_NUMBER AS SUBJECT_INDEX,
-	   MAP( ELEMENT_NUMBER, 1,  '收入数量',
-	 	                    2,  '成本数量',
-	 	                    4,  '销售收入',
-	 	                    5,  '销售收入-国内返利',
-	 	                    6,  '销售成本',
-	 	                    7,  '内销运费',
-	 	                    8,  '出口运费',
-	 	                    9,  '出口港杂费',
-	 	                    10, '销售毛利',
-	 	                    11, '销售毛利率',
-	 	                    12, '销售费用-其他',
-	 	                    13, '出口费用-佣金',
-	 	                    14, '出口费用-保险费',
-	 	                    15, '出口费用-其他',
-	 	                    16, '管理费用',
-	 	                    17, '研发费用',
-	 	                    18, '财务费用',
-	 	                    19, '税金及附加',
-	 	                    20, '销售净利',
-	 	                    21, '售净利率'
-	 	  ) AS SUBJECT_NAME,
-	   MAP(ELEMENT_NUMBER , 1,  ZSRSL,
+       MAP( ELEMENT_NUMBER, 1,  'ZSRSL',
+                            2,  'ZCBSL',
+                            4,	'ZXSSR',
+                            5,	'ZGNFL',
+                            6,	'ZXSCB',
+                            7,	'ZNXYF',
+                            8,	'ZCKYF',
+                            9,	'ZCKGZF',
+                            10,	'ZXSML',
+                            11,	'ZXSMLL',
+                            12,	'ZXSQT',
+                            13,	'ZYJ',
+                            14,	'ZBXF',
+                            15,	'ZCKQT',
+                            16,	'ZGLFY',
+                            17,	'ZYFFY',
+                            18,	'ZCWFY',
+                            19,	'ZSJFJ',
+                            20,	'ZXSJL',
+                            21,	'ZXSJLL',
+                            22, 'ZCAL_MXSZE',
+                            23, 'ZCAL_JFL',
+                            24, 'ZCAL_JXSZR',
+                            25, 'ZCAL_JTZHXSCB',
+                            26, 'ZCAL_YJ',
+                            27, 'ZCAL_XSMLE1',
+                            28, 'ZCAL_XSMLL1',
+                            29, 'ZCAL_JYZF',
+                            30, 'ZCAL_XSMLE2',
+                            31, 'ZCAL_XSMLL2'
+          ) AS SUBJECT_CODE,
+       MAP( ELEMENT_NUMBER, 1,  '收入数量',
+                            2,  '成本数量',
+                            4,  '销售收入',
+                            5,  '销售收入-国内返利',
+                            6,  '销售成本',
+                            7,  '内销运费',
+                            8,  '出口运费',
+                            9,  '出口港杂费',
+                            10, '销售毛利',
+                            11, '销售毛利率',
+                            12, '销售费用-其他',
+                            13, '出口费用-佣金',
+                            14, '出口费用-保险费',
+                            15, '出口费用-其他',
+                            16, '管理费用',
+                            17, '研发费用',
+                            18, '财务费用',
+                            19, '税金及附加',
+                            20, '销售净利',
+                            21, '售净利率',
+                            22, '毛销售总额',
+                            23, '减：返利',
+                            24, '净销售总额',
+                            25, '减：调整后销售成本',
+                            26, '佣金',
+                            27, '销售毛利额1',
+                            28, '销售毛利率1',
+                            29, '减：运杂费',
+                            30, '销售毛利额2',
+                            31, '销售毛利率2'
+          ) AS SUBJECT_NAME,
+       MAP( ELEMENT_NUMBER, 1,  ZSRSL,
                             2,  ZCBSL,
                             4,	ZXSSR,
                             5,	ZGNFL,
@@ -95,10 +148,20 @@ SELECT MANDT,
                             18,	ZCWFY,
                             19,	ZSJFJ,
                             20,	ZXSJL,
-                            21,	ZXSJLL
-	 	  ) AS ACTUAL
+                            21,	ZXSJLL,
+                            22, ZCAL_MXSZE,
+                            23, ZCAL_JFL,
+                            24, ZCAL_JXSZR,
+                            25, ZCAL_JTZHXSCB,
+                            26, ZCAL_YJ,
+                            27, ZCAL_XSMLE1,
+                            28, ZCAL_XSMLL1,
+                            29, ZCAL_JYZF,
+                            30, ZCAL_XSMLE2,
+                            31, ZCAL_XSMLL2
+          ) AS ACTUAL
   FROM LIST_AGG,
-	   SERIES_GENERATE_INTEGER(1, 36, 57)  --转换行起始列序号 至 转换行截至列序号+1
+	   SERIES_GENERATE_INTEGER(1, 14, 44)  --转换行起始列序号 至 转换行截至列序号+1
  ORDER BY ELEMENT_NUMBER
 )
 
@@ -109,18 +172,18 @@ SELECT LIST.MANDT,                  --客户端
        T001.BUTXT,                  --公司名称
        LIST.PRCTR,                  --利润中心
        CEPC.KTEXT,                  --利润中心名称
-	   LIST.VKBUR,                  --销售办事处
+       LIST.VKBUR,                  --销售办事处
        TVKBT.BEZEI,                 --销售办事处名称
        LIST.KATR4,                  --客户类型
-	   LIST.VTEXT4,                 --客户类型描述
-	   LIST.KATR2,                  --集团客户
-	   LIST.VTEXT2,                 --集团客户描述
-	   LIST.KUNNR,                  --客户编码
-	   LIST.NAME1,                  --客户名称
-	   LIST.PORDTYPE,               --产品类型
-	   MATGROUP1.WGBEZ AS PRODDESC, --产品类型描述
-	   LIST.MATKL,                  --产品牌号
-	   MATGROUP2.WGBEZ,             --产品牌号描述
+       LIST.VTEXT4,                 --客户类型描述
+       LIST.KATR2,                  --集团客户
+       LIST.VTEXT2,                 --集团客户描述
+       LIST.KUNNR,                  --客户编码
+       LIST.NAME1,                  --客户名称
+       LIST.PORDTYPE,               --产品类型
+       MATGROUP1.WGBEZ AS PRODDESC, --产品类型描述
+       LIST.MATKL,                  --产品牌号
+       MATGROUP2.WGBEZ,             --产品牌号描述
        LIST.SUBJECT_INDEX,          --指标索引
        LIST.SUBJECT_NAME,           --指标名称
        LIST.ACTUAL                  --实际数
