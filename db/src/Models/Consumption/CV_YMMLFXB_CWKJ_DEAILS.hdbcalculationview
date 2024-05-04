@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="BL.Models.Consumption::CV_YMMLFXB_CWKJ_DEAILS" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="月末毛利分析表-财报口径-明细数据"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="BL.Models.Common::V_YMMLFXB_CWKJ_ACTUAL_DETAILS">
+    <resourceUri>BL.Models.Common::V_YMMLFXB_CWKJ_ACTUAL_DETAILS</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews/>
+
+<logicalModel id="BL.Models.Common::V_YMMLFXB_CWKJ_ACTUAL_DETAILS">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="MANDT"/>
+    </attribute>
+    <attribute id="GJAHR" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="POPER" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POPER"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="POPER"/>
+    </attribute>
+    <attribute id="CALMONTH" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CALMONTH"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="CALMONTH"/>
+    </attribute>
+    <attribute id="BUKRS" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUKRS"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="BUKRS"/>
+    </attribute>
+    <attribute id="BUTXT" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUTXT"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="BUTXT"/>
+    </attribute>
+    <attribute id="WAERS" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WAERS"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="WAERS"/>
+    </attribute>
+    <attribute id="PRCTR" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PRCTR"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="PRCTR"/>
+    </attribute>
+    <attribute id="KTEXT" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="KTEXT"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="KTEXT"/>
+    </attribute>
+    <attribute id="VKBUR" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VKBUR"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="VKBUR"/>
+    </attribute>
+    <attribute id="BEZEI" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BEZEI"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="BEZEI"/>
+    </attribute>
+    <attribute id="KATR4" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="KATR4"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="KATR4"/>
+    </attribute>
+    <attribute id="VTEXT4" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VTEXT4"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="VTEXT4"/>
+    </attribute>
+    <attribute id="KATR2" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="KATR2"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="KATR2"/>
+    </attribute>
+    <attribute id="VTEXT2" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VTEXT2"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="VTEXT2"/>
+    </attribute>
+    <attribute id="KUNNR" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="KUNNR"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="KUNNR"/>
+    </attribute>
+    <attribute id="NAME1" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NAME1"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="NAME1"/>
+    </attribute>
+    <attribute id="PORDTYPE" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PORDTYPE"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="PORDTYPE"/>
+    </attribute>
+    <attribute id="PRODDESC" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PRODDESC"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="PRODDESC"/>
+    </attribute>
+    <attribute id="MATKL" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATKL"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="MATKL"/>
+    </attribute>
+    <attribute id="WGBEZ" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WGBEZ"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="WGBEZ"/>
+    </attribute>
+    <attribute id="SUBJECT_INDEX" order="22">
+      <descriptions defaultDescription="SUBJECT_INDEX"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="SUBJECT_INDEX"/>
+    </attribute>
+    <attribute id="SUBJECT_CODE" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SUBJECT_CODE"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="SUBJECT_CODE"/>
+    </attribute>
+    <attribute id="SUBJECT_NAME" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SUBJECT_NAME"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="SUBJECT_NAME"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="ACTUAL_CNY" order="25" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="ACTUAL_CNY"/>
+      <measureMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="ACTUAL_CNY"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="SPLY_ACTUAL_CNY" order="26" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="SPLY_ACTUAL_CNY"/>
+      <measureMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="SPLY_ACTUAL_CNY"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="CYC_ACTUAL_CNY" order="27" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="CYC_ACTUAL_CNY"/>
+      <measureMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="CYC_ACTUAL_CNY"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="LYC_ACTUAL_CNY" order="28" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="LYC_ACTUAL_CNY"/>
+      <measureMapping columnObjectName="V_YMMLFXB_CWKJ_ACTUAL_DETAILS" columnName="LYC_ACTUAL_CNY"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  </shapes>
+</layout>
+</Calculation:scenario>

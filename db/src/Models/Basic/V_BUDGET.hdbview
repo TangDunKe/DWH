@@ -57,6 +57,39 @@ SELECT MANDT,
  WHERE ZDEL = 'Y'
 ),
 
+SALESEXPBGT AS (
+SELECT MANDT,
+       VERSION,
+       ZYR AS GJAHR,
+       ZMO AS POPER,
+       BUKRS,
+       PRCTR,
+       CAST(NULL AS NVARCHAR(40)) AS PRODMATNR,
+       CAST(NULL AS NVARCHAR(9)) AS PRODMATKL,
+       CAST(NULL AS NVARCHAR(40)) AS MATERIALMATNR,
+       CAST(NULL AS NVARCHAR(9)) AS MATERIALMATKL,
+       ZSHIP,
+       ZPORTMISC,
+       ZCOMM,
+       ZLOAD,
+       ZSERVICE,
+       ZPACKAGE,
+       ZSALARY,
+       ZINSURANCE,
+       ZTRAVEL,
+       ZAD,
+       ZOFFICE,
+       ZHOSPITALITY,
+       ZSTORAGE,
+       ZAUDITADVISORY,
+       ZOTHER,
+	   
+	   --附加指标
+	   ZCOMM AS ZCAL_JYJ  --减：佣金
+  FROM "BL.DI.Tables.S4::T_ZSAC_SALESEXPBGT"
+ WHERE ZDEL = 'Y'
+),
+
 LIST AS (
 SELECT MANDT,
        VERSION,
@@ -444,14 +477,14 @@ SELECT MANDT,
  
 SELECT MANDT,
        VERSION,
-       ZYR AS GJAHR,
-       ZMO AS POPER,
+       GJAHR,
+       POPER,
        BUKRS,
        PRCTR,
-       CAST(NULL AS NVARCHAR(40)) AS PRODMATNR,
-       CAST(NULL AS NVARCHAR(9)) AS PRODMATKL,
-       CAST(NULL AS NVARCHAR(40)) AS MATERIALMATNR,
-       CAST(NULL AS NVARCHAR(9)) AS MATERIALMATKL,
+       PRODMATNR,
+       PRODMATKL,
+       MATERIALMATNR,
+       MATERIALMATKL,
        CAST('ZSAC_SALESEXPBGT' AS NVARCHAR(20)) AS BGTTYPE,
        ELEMENT_NUMBER AS SUBJECT_INDEX,
        CAST( MAP( ELEMENT_NUMBER, 1,  'ZSHIP',
@@ -468,7 +501,8 @@ SELECT MANDT,
                                   12, 'ZHOSPITALITY',
                                   13, 'ZSTORAGE',
                                   14, 'ZAUDITADVISORY',
-                                  15, 'ZOTHER'
+                                  15, 'ZOTHER',
+                                  16, 'ZCAL_JYJ'
            ) AS NVARCHAR(50)) AS SUBJECT_CODE,
        CAST( MAP( ELEMENT_NUMBER, 1,  '预算运输费',
                                   2,  '预算港杂费',
@@ -484,7 +518,8 @@ SELECT MANDT,
                                   12, '预算招待费',
                                   13, '预算仓储费',
                                   14, '预算审计代理咨询费',
-                                  15, '预算其他费用'
+                                  15, '预算其他费用',
+                                  16, '减：佣金'
            ) AS NVARCHAR(100)) AS SUBJECT_NAME,
        CAST( MAP( ELEMENT_NUMBER, 1,  ZSHIP,
                                   2,  ZPORTMISC,
@@ -500,11 +535,11 @@ SELECT MANDT,
                                   12, ZHOSPITALITY,
                                   13, ZSTORAGE,
                                   14, ZAUDITADVISORY,
-                                  15, ZOTHER
+                                  15, ZOTHER,
+                                  16, ZCAL_JYJ
            ) AS DECIMAL(23, 2)) AS BUDGET
-  FROM "BL.DI.Tables.S4::T_ZSAC_SALESEXPBGT",
-       SERIES_GENERATE_INTEGER(1, 8, 23)  --转换行起始列序号 至 转换行截至列序号+1
- WHERE ZDEL = 'Y'
+  FROM SALESEXPBGT,
+       SERIES_GENERATE_INTEGER(1, 8, 24)  --转换行起始列序号 至 转换行截至列序号+1
 )
 
 SELECT LIST.MANDT,                      --客户端

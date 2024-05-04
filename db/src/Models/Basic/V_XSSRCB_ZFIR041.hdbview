@@ -1,4 +1,4 @@
-VIEW "BL.Models.Common::V_XSSRCB_ZFIR041"
+VIEW "BL.Models.Basic::V_XSSRCB_ZFIR041"
 AS
 
 WITH LIST_AGG AS (
@@ -168,8 +168,10 @@ SELECT MANDT,
 SELECT LIST.MANDT,                  --客户端
        LIST.GJAHR,                  --会计年度
        LIST.POPER,                  --期间
+       MONTH.CALMONTH,              --会计年月
        LIST.BUKRS,                  --法人组织(公司代码)
        T001.BUTXT,                  --公司名称
+       T001.WAERS,                  --交易货币
        LIST.PRCTR,                  --利润中心
        CEPC.KTEXT,                  --利润中心名称
        LIST.VKBUR,                  --销售办事处
@@ -210,4 +212,7 @@ SELECT LIST.MANDT,                  --客户端
     ON MATGROUP2.MANDT = LIST.MANDT
    AND MATGROUP2.MATKL = LIST.MATKL
    AND MATGROUP2.SPRAS = '1'
+  LEFT OUTER MANY TO ONE JOIN "BL.DI.Tables.S4::T_TIME_DIMENSION_MONTH" AS MONTH
+    ON MONTH.YEAR = LIST.GJAHR
+   AND MONTH.MONTH = LIST.POPER
  WHERE LIST.SUBJECT_INDEX <> 3;

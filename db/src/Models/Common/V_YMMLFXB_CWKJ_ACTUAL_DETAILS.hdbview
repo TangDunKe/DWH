@@ -1,0 +1,282 @@
+VIEW "BL.Models.Common::V_YMMLFXB_CWKJ_ACTUAL_DETAILS"
+AS
+
+WITH ACTUAL_LIST AS (
+SELECT MANDT,                  --客户端
+       GJAHR,                  --会计年度
+       POPER,                  --期间
+       CALMONTH,               --会计年月
+       BUKRS,                  --法人组织(公司代码)
+       BUTXT,                  --公司名称
+       WAERS,                  --交易货币
+       PRCTR,                  --利润中心
+       KTEXT,                  --利润中心名称
+       VKBUR,                  --销售办事处
+       BEZEI,                  --销售办事处名称
+       KATR4,                  --客户类型
+       VTEXT4,                 --客户类型描述
+       KATR2,                  --集团客户
+       VTEXT2,                 --集团客户描述
+       KUNNR,                  --客户编码
+       NAME1,                  --客户名称
+       PORDTYPE,               --产品类型
+       PRODDESC,               --产品类型描述
+       MATKL,                  --产品牌号
+       WGBEZ,                  --产品牌号描述
+       SUBJECT_INDEX,          --指标索引
+       SUBJECT_CODE,           --指标编码
+       SUBJECT_NAME,           --指标名称
+       ACTUAL                  --实际数
+  FROM "BL.Models.Basic::V_XSSRCB_ZFIR041"
+ WHERE SUBJECT_INDEX BETWEEN 23 AND 31
+),
+
+ATT_LIST AS (
+SELECT MANDT,
+       BUKRS,
+       BUTXT,
+       WAERS,
+       PRCTR,
+       KTEXT,
+       VKBUR,
+       BEZEI,
+       KATR4,
+       VTEXT4,
+       KATR2,
+       VTEXT2,
+       KUNNR,
+       NAME1,
+       PORDTYPE,
+       PRODDESC,
+       MATKL,
+       WGBEZ,
+       SUBJECT_INDEX,
+       SUBJECT_CODE,
+       SUBJECT_NAME
+  FROM ACTUAL_LIST
+ GROUP BY MANDT,
+          BUKRS,
+          BUTXT,
+          WAERS,
+          PRCTR,
+          KTEXT,
+          VKBUR,
+          BEZEI,
+          KATR4,
+          VTEXT4,
+          KATR2,
+          VTEXT2,
+          KUNNR,
+          NAME1,
+          PORDTYPE,
+          PRODDESC,
+          MATKL,
+          WGBEZ,
+          SUBJECT_INDEX,
+          SUBJECT_CODE,
+          SUBJECT_NAME
+),
+
+MONTH_LIST AS (
+SELECT YEAR,
+       MONTH,
+       CALMONTH
+  FROM "BL.DI.Tables.S4::T_TIME_DIMENSION_MONTH"
+ WHERE CALMONTH BETWEEN '202301' AND CONCAT(TO_NVARCHAR(CURRENT_DATE, 'YYYY'), '12')
+),
+
+ATT_SET AS (
+SELECT ATT.MANDT,
+       MONTH.YEAR AS GJAHR,
+       MONTH.MONTH AS POPER,
+       MONTH.CALMONTH,
+       ATT.BUKRS,
+       ATT.BUTXT,
+       ATT.WAERS,
+       ATT.PRCTR,
+       ATT.KTEXT,
+       ATT.VKBUR,
+       ATT.BEZEI,
+       ATT.KATR4,
+       ATT.VTEXT4,
+       ATT.KATR2,
+       ATT.VTEXT2,
+       ATT.KUNNR,
+       ATT.NAME1,
+       ATT.PORDTYPE,
+       ATT.PRODDESC,
+       ATT.MATKL,
+       ATT.WGBEZ,
+       ATT.SUBJECT_INDEX,
+       ATT.SUBJECT_CODE,
+       ATT.SUBJECT_NAME,
+	   CAST(0 AS DECIMAL(23, 2)) AS ACTUAL
+  FROM ATT_LIST AS ATT, MONTH_LIST AS MONTH
+),
+
+ACTUAL_ALL AS (
+SELECT * FROM ATT_SET
+ UNION ALL
+SELECT * FROM ACTUAL_LIST
+),
+
+ACTUAL_AGG AS (
+SELECT MANDT,
+       GJAHR,
+       POPER,
+       CALMONTH,
+       BUKRS,
+       BUTXT,
+       WAERS,
+       PRCTR,
+       KTEXT,
+       VKBUR,
+       BEZEI,
+       KATR4,
+       VTEXT4,
+       KATR2,
+       VTEXT2,
+       KUNNR,
+       NAME1,
+       PORDTYPE,
+       PRODDESC,
+       MATKL,
+       WGBEZ,
+       SUBJECT_INDEX,
+       SUBJECT_CODE,
+       SUBJECT_NAME,
+	   SUM(ACTUAL) AS ACTUAL
+  FROM ACTUAL_ALL
+ GROUP BY MANDT,
+          GJAHR,
+          POPER,
+          CALMONTH,
+          BUKRS,
+          BUTXT,
+          WAERS,
+          PRCTR,
+          KTEXT,
+          VKBUR,
+          BEZEI,
+          KATR4,
+          VTEXT4,
+          KATR2,
+          VTEXT2,
+          KUNNR,
+          NAME1,
+          PORDTYPE,
+          PRODDESC,
+          MATKL,
+          WGBEZ,
+          SUBJECT_INDEX,
+          SUBJECT_CODE,
+          SUBJECT_NAME
+),
+
+ACTUAL_SPLY_CYC AS (
+SELECT MANDT,
+       GJAHR,
+       POPER,
+       CALMONTH,
+       BUKRS,
+       BUTXT,
+       WAERS,
+       PRCTR,
+       KTEXT,
+       VKBUR,
+       BEZEI,
+       KATR4,
+       VTEXT4,
+       KATR2,
+       VTEXT2,
+       KUNNR,
+       NAME1,
+       PORDTYPE,
+       PRODDESC,
+       MATKL,
+       WGBEZ,
+       SUBJECT_INDEX,
+       SUBJECT_CODE,
+       SUBJECT_NAME,
+	   ACTUAL,
+       LAG(ACTUAL) OVER(PARTITION BY MANDT, BUKRS, BUTXT, WAERS, PRCTR, KTEXT, VKBUR, BEZEI, KATR4, VTEXT4, KATR2, VTEXT2, KUNNR, NAME1, PORDTYPE, PRODDESC, MATKL, WGBEZ, SUBJECT_INDEX, SUBJECT_CODE, SUBJECT_NAME, POPER ORDER BY GJAHR ASC) AS SPLY_ACTUAL,    --去年同期
+       SUM(ACTUAL) OVER(PARTITION BY MANDT, BUKRS, BUTXT, WAERS, PRCTR, KTEXT, VKBUR, BEZEI, KATR4, VTEXT4, KATR2, VTEXT2, KUNNR, NAME1, PORDTYPE, PRODDESC, MATKL, WGBEZ, SUBJECT_INDEX, SUBJECT_CODE, SUBJECT_NAME, GJAHR ORDER BY POPER ASC) AS CYC_ACTUAL      --年度累计
+  FROM ACTUAL_AGG
+),
+
+ACTUAL_LYC AS (
+SELECT MANDT,
+       GJAHR,
+       POPER,
+       CALMONTH,
+       BUKRS,
+       BUTXT,
+       WAERS,
+       PRCTR,
+       KTEXT,
+       VKBUR,
+       BEZEI,
+       KATR4,
+       VTEXT4,
+       KATR2,
+       VTEXT2,
+       KUNNR,
+       NAME1,
+       PORDTYPE,
+       PRODDESC,
+       MATKL,
+       WGBEZ,
+       SUBJECT_INDEX,
+       SUBJECT_CODE,
+       SUBJECT_NAME,
+	   ACTUAL,         --当月实际数
+       SPLY_ACTUAL,    --去年同期实际数-same period last year 
+       CYC_ACTUAL,     --当年累计实际数-current year cumulative
+	   LAG(CYC_ACTUAL) OVER(PARTITION BY MANDT, BUKRS, BUTXT, WAERS, PRCTR, KTEXT, VKBUR, BEZEI, KATR4, VTEXT4, KATR2, VTEXT2, KUNNR, NAME1, PORDTYPE, PRODDESC, MATKL, WGBEZ, SUBJECT_INDEX, SUBJECT_CODE, SUBJECT_NAME, POPER ORDER BY GJAHR ASC) AS LYC_ACTUAL  --去年当期累计实际数-last year cumulative
+  FROM ACTUAL_SPLY_CYC
+)
+
+SELECT LIST.MANDT,               --客户端
+       LIST.GJAHR,               --会计年度
+       LIST.POPER,               --期间
+       LIST.CALMONTH,            --会计年月
+       LIST.BUKRS,               --法人组织(公司代码)
+       LIST.BUTXT,               --公司名称
+       LIST.WAERS,               --交易货币
+       LIST.PRCTR,               --利润中心
+       LIST.KTEXT,               --利润中心名称
+       LIST.VKBUR,               --销售办事处
+       LIST.BEZEI,               --销售办事处名称
+       LIST.KATR4,               --客户类型
+       LIST.VTEXT4,              --客户类型描述
+       LIST.KATR2,               --集团客户
+       LIST.VTEXT2,              --集团客户描述
+       LIST.KUNNR,               --客户编码
+       LIST.NAME1,               --客户名称
+       LIST.PORDTYPE,            --产品类型
+       LIST.PRODDESC,            --产品类型描述
+       LIST.MATKL,               --产品牌号
+       LIST.WGBEZ,               --产品牌号描述
+       LIST.SUBJECT_INDEX,       --指标索引
+       LIST.SUBJECT_CODE,        --指标编码
+       LIST.SUBJECT_NAME,        --指标名称
+	   LIST.ACTUAL,              --当月实际数(交易币)
+       LIST.SPLY_ACTUAL,         --去年同期实际数(交易币)-same period last year 
+       LIST.CYC_ACTUAL,          --当年累计实际数(交易币)-current year cumulative
+       LIST.LYC_ACTUAL,          --去年当期累计实际数(交易币)-last year cumulative
+       EXRATE.MONTH_AVG_EXRATE,  --当月平均汇率
+       EXRATE.SPLY_AVG_EXRATE,   --去年同期平均汇率
+       EXRATE.YEAR_AVG_EXRATE,   --当年累计汇率
+       EXRATE.ASPLY_AVG_EXRATE,  --去年当期累计汇率
+	   CAST(MAP(LIST.WAERS, 'CNY', LIST.ACTUAL,      ROUND(LIST.ACTUAL * EXRATE.MONTH_AVG_EXRATE, 2)) AS DECIMAL(23, 2)) AS ACTUAL_CNY,          --当月实际数(人民币)
+	   CAST(MAP(LIST.WAERS, 'CNY', LIST.SPLY_ACTUAL, ROUND(LIST.SPLY_ACTUAL * EXRATE.SPLY_AVG_EXRATE, 2)) AS DECIMAL(23, 2)) AS SPLY_ACTUAL_CNY, --去年同期实际数(人民币)
+	   CAST(MAP(LIST.WAERS, 'CNY', LIST.CYC_ACTUAL,  ROUND(LIST.CYC_ACTUAL * EXRATE.YEAR_AVG_EXRATE, 2)) AS DECIMAL(23, 2)) AS CYC_ACTUAL_CNY,   --当年累计实际数(人民币)
+	   CAST(MAP(LIST.WAERS, 'CNY', LIST.LYC_ACTUAL,  ROUND(LIST.LYC_ACTUAL * EXRATE.ASPLY_AVG_EXRATE, 2)) AS DECIMAL(23, 2)) AS LYC_ACTUAL_CNY    --去年当期累计实际数(人民币)
+  FROM ACTUAL_LYC AS LIST
+  LEFT OUTER MANY TO ONE JOIN "BL.Models.Basic::V_EXCHANGERATES" AS EXRATE
+    ON EXRATE.MANDT = LIST.MANDT
+   AND EXRATE.KURST = MAP(LIST.BUKRS, '2050', 'Z1', '2060', 'Z1', '2070', 'Z1', 'M')
+   AND EXRATE.FCURR = LIST.WAERS
+   AND EXRATE.TCURR = 'CNY'
+   AND EXRATE.YEAR = LIST.GJAHR
+   AND EXRATE.MONTH = LIST.POPER;
