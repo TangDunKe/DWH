@@ -1,0 +1,300 @@
+VIEW "BL.Models.Common::V_YMMLFXB_CWKJ_BUDGET_DETAILS"
+AS 
+
+WITH BUDGET_LIST AS (
+SELECT MANDT,             --客户端
+       VERSION,           --版本
+       GJAHR,             --会计年度
+       POPER,             --期间
+       CALMONTH,          --会计年月
+       BUKRS,             --法人组织(公司代码)
+       BUTXT,             --公司名称
+       PRCTR,             --利润中心
+       KTEXT,             --利润中心名称
+       PRODMATNR,         --产品-SAP物料号码
+       PRODDESC,          --产品-SAP物料描述
+       PRODMTGP,          --产品-SAP物料组编码
+       PRODMTGPDESC,      --产品-SAP物料组描述
+       MATLMATNR,         --材料-SAP物料号码
+       MATLDESC,          --材料-SAP物料描述
+       MATLMTGP,          --材料-SAP物料组编码
+       MATLMTGPDESC,      --材料-SAP物料组描述
+       MAP(SUBJECT_CODE, 'ZCAL_MXSZE',  22,
+                         'ZCAL_JFL',    23,
+                         'ZCAL_JXSZR',  24,
+                         'ZCAL_JXSCB',  25,
+                         'ZCAL_JYJ',    26,
+                         'ZCAL_JYZF',   29
+          ) AS SUBJECT_INDEX,     --指标索引
+       SUBJECT_CODE,      --指标编码
+       SUBJECT_NAME,      --指标名称
+       BUDGET             --预算数
+  FROM "BL.Models.Basic::V_BUDGET"
+ WHERE SUBJECT_CODE IN ( 'ZCAL_MXSZE',   --毛销售总额
+                         'ZCAL_JFL',     --减：返利
+                         'ZCAL_JXSZR',   --净销售总额
+						 'ZCAL_JXSCB',   --减：销售成本
+						 'ZCAL_JYJ',     --减：佣金
+                         'ZCAL_JYZF'     --减：运杂费
+                       )
+),
+
+BUDGET_XSMLE1 AS (
+SELECT MANDT,
+       VERSION,
+       GJAHR,
+       POPER,
+       CALMONTH,
+       BUKRS,
+       BUTXT,
+       PRCTR,
+       KTEXT,
+       PRODMATNR,
+       PRODDESC,
+       PRODMTGP,
+       PRODMTGPDESC,
+       MATLMATNR,
+       MATLDESC,
+       MATLMTGP,
+       MATLMTGPDESC,
+       CAST(27 AS BIGINT) AS SUBJECT_INDEX,
+       CAST('ZCAL_XSMLE1' AS NVARCHAR(50)) AS SUBJECT_CODE,
+       CAST('销售毛利额1' AS NVARCHAR(100)) AS SUBJECT_NAME,
+       CAST(MAP(SUBJECT_CODE, 'ZCAL_JXSZR', BUDGET, -1 * BUDGET) AS DECIMAL(23, 2)) AS BUDGET
+  FROM "BL.Models.Basic::V_BUDGET"
+ WHERE SUBJECT_CODE IN ( 'ZCAL_JXSZR',   --净销售总额
+                         'ZCAL_JYJ'      --减：佣金
+                       )
+),
+
+BUDGET_XSMLE2 AS (
+SELECT MANDT,
+       VERSION,
+       GJAHR,
+       POPER,
+       CALMONTH,
+       BUKRS,
+       BUTXT,
+       PRCTR,
+       KTEXT,
+       PRODMATNR,
+       PRODDESC,
+       PRODMTGP,
+       PRODMTGPDESC,
+       MATLMATNR,
+       MATLDESC,
+       MATLMTGP,
+       MATLMTGPDESC,
+       CAST(30 AS BIGINT) AS SUBJECT_INDEX,
+       CAST('ZCAL_XSMLE2' AS NVARCHAR(50)) AS SUBJECT_CODE,
+       CAST('销售毛利额2' AS NVARCHAR(100)) AS SUBJECT_NAME,
+       CAST(MAP(SUBJECT_CODE, 'ZCAL_JXSZR', BUDGET, -1 * BUDGET) AS DECIMAL(23, 2)) AS BUDGET
+  FROM "BL.Models.Basic::V_BUDGET"
+ WHERE SUBJECT_CODE IN ( 'ZCAL_JXSZR',   --净销售总额
+                         'ZCAL_JYJ',     --减：佣金
+                         'ZCAL_JYZF'     --减：运杂费
+                       )
+),
+
+BUDGET_ALL1 AS (
+SELECT * FROM BUDGET_LIST
+ UNION ALL
+SELECT * FROM BUDGET_XSMLE1
+ UNION ALL
+SELECT * FROM BUDGET_XSMLE2
+),
+
+BUDGET_AGG1 AS (
+SELECT MANDT,
+       VERSION,
+       GJAHR,
+       POPER,
+       CALMONTH,
+       BUKRS,
+       BUTXT,
+       PRCTR,
+       KTEXT,
+       PRODMATNR,
+       PRODDESC,
+       PRODMTGP,
+       PRODMTGPDESC,
+       MATLMATNR,
+       MATLDESC,
+       MATLMTGP,
+       MATLMTGPDESC,
+       SUBJECT_INDEX,
+       SUBJECT_CODE,
+       SUBJECT_NAME,
+       SUM(BUDGET) AS BUDGET
+  FROM BUDGET_ALL1
+ GROUP BY MANDT,
+          VERSION,
+          GJAHR,
+          POPER,
+          CALMONTH,
+          BUKRS,
+          BUTXT,
+          PRCTR,
+          KTEXT,
+          PRODMATNR,
+          PRODDESC,
+          PRODMTGP,
+          PRODMTGPDESC,
+          MATLMATNR,
+          MATLDESC,
+          MATLMTGP,
+          MATLMTGPDESC,
+          SUBJECT_INDEX,
+          SUBJECT_CODE,
+          SUBJECT_NAME
+),
+
+ATT_LIST AS (
+SELECT MANDT,
+       VERSION,
+       GJAHR,
+       BUKRS,
+       BUTXT,
+       PRCTR,
+       KTEXT,
+       PRODMATNR,
+       PRODDESC,
+       PRODMTGP,
+       PRODMTGPDESC,
+       MATLMATNR,
+       MATLDESC,
+       MATLMTGP,
+       MATLMTGPDESC,
+       SUBJECT_INDEX,
+       SUBJECT_CODE,
+       SUBJECT_NAME
+  FROM BUDGET_AGG1
+ GROUP BY MANDT,
+          VERSION,
+          GJAHR,
+          BUKRS,
+          BUTXT,
+          PRCTR,
+          KTEXT,
+          PRODMATNR,
+          PRODDESC,
+          PRODMTGP,
+          PRODMTGPDESC,
+          MATLMATNR,
+          MATLDESC,
+          MATLMTGP,
+          MATLMTGPDESC,
+          SUBJECT_INDEX,
+          SUBJECT_CODE,
+          SUBJECT_NAME
+),
+
+MONTH_LIST AS (
+SELECT YEAR,
+       MONTH,
+       CALMONTH
+  FROM "BL.DI.Tables.S4::T_TIME_DIMENSION_MONTH"
+ --WHERE CALMONTH BETWEEN '202301' AND TO_NVARCHAR(CURRENT_DATE, 'YYYYMM')
+ WHERE CALMONTH BETWEEN '202301' AND CONCAT(TO_NVARCHAR(CURRENT_DATE, 'YYYY'), '12')
+),
+
+ATT_SET AS (
+SELECT ATT.MANDT,
+       ATT.VERSION,
+       MONTH.YEAR AS GJAHR,
+       MONTH.MONTH AS POPER,
+       MONTH.CALMONTH,
+       ATT.BUKRS,
+       ATT.BUTXT,
+       ATT.PRCTR,
+       ATT.KTEXT,
+       ATT.PRODMATNR,
+       ATT.PRODDESC,
+       ATT.PRODMTGP,
+       ATT.PRODMTGPDESC,
+       ATT.MATLMATNR,
+       ATT.MATLDESC,
+       ATT.MATLMTGP,
+       ATT.MATLMTGPDESC,
+       ATT.SUBJECT_INDEX,
+       ATT.SUBJECT_CODE,
+       ATT.SUBJECT_NAME,
+       CAST(0 AS DECIMAL(23, 2)) AS BUDGET
+  FROM ATT_LIST AS ATT, MONTH_LIST AS MONTH
+ WHERE MONTH.YEAR = ATT.GJAHR
+),
+
+BUDGET_ALL2 AS (
+SELECT * FROM ATT_SET
+ UNION ALL
+SELECT * FROM BUDGET_AGG1
+),
+
+BUDGET_AGG2 AS (
+SELECT MANDT,
+       VERSION,
+       GJAHR,
+       POPER,
+       CALMONTH,
+       BUKRS,
+       BUTXT,
+       PRCTR,
+       KTEXT,
+       PRODMATNR,
+       PRODDESC,
+       PRODMTGP,
+       PRODMTGPDESC,
+       MATLMATNR,
+       MATLDESC,
+       MATLMTGP,
+       MATLMTGPDESC,
+       SUBJECT_INDEX,
+       SUBJECT_CODE,
+       SUBJECT_NAME,
+       SUM(BUDGET) AS BUDGET
+  FROM BUDGET_ALL2
+ GROUP BY MANDT,
+          VERSION,
+          GJAHR,
+          POPER,
+          CALMONTH,
+          BUKRS,
+          BUTXT,
+          PRCTR,
+          KTEXT,
+          PRODMATNR,
+          PRODDESC,
+          PRODMTGP,
+          PRODMTGPDESC,
+          MATLMATNR,
+          MATLDESC,
+          MATLMTGP,
+          MATLMTGPDESC,
+          SUBJECT_INDEX,
+          SUBJECT_CODE,
+          SUBJECT_NAME
+)
+
+SELECT MANDT,             --客户端
+       VERSION,           --版本
+       GJAHR,             --会计年度
+       POPER,             --期间
+       CALMONTH,          --会计年月
+       BUKRS,             --法人组织(公司代码)
+       BUTXT,             --公司名称
+       PRCTR,             --利润中心
+       KTEXT,             --利润中心名称
+       PRODMATNR,         --产品-SAP物料号码
+       PRODDESC,          --产品-SAP物料描述
+       PRODMTGP,          --产品-SAP物料组编码
+       PRODMTGPDESC,      --产品-SAP物料组描述
+       MATLMATNR,         --材料-SAP物料号码
+       MATLDESC,          --材料-SAP物料描述
+       MATLMTGP,          --材料-SAP物料组编码
+       MATLMTGPDESC,      --材料-SAP物料组描述
+       SUBJECT_INDEX,     --指标索引
+       SUBJECT_CODE,      --指标编码
+       SUBJECT_NAME,      --指标名称
+	   BUDGET,            --当月预算数
+       SUM(BUDGET) OVER(PARTITION BY MANDT, VERSION, BUKRS, BUTXT, PRCTR, KTEXT, PRODMATNR, PRODDESC, PRODMTGP, PRODMTGPDESC, MATLMATNR, MATLDESC, MATLMTGP, MATLMTGPDESC, SUBJECT_INDEX, SUBJECT_CODE, SUBJECT_NAME, GJAHR ORDER BY POPER ASC) AS CYC_BUDGET  --当年累计预算数-current year cumulative
+  FROM BUDGET_AGG2;

@@ -25,7 +25,8 @@ SELECT MANDT,
        ZMANUCOST,
 	   
        --附加指标
-       ZCOGS - ZCOGSINSHIP - ZCOGSOUTSHIP - ZCOGSOUTPORTMISC AS ZCAL_JXSCB   --减：销售成本 = 销售成本 -主营业务成本内销运费 -主营业务成本出口运费 -主营业务成本出口港杂费
+       ZCOGS - ZCOGSINSHIP - ZCOGSOUTSHIP - ZCOGSOUTPORTMISC AS ZCAL_JXSCB,   --减：销售成本 = 销售成本 -主营业务成本内销运费 -主营业务成本出口运费 -主营业务成本出口港杂费
+       ZCOGSINSHIP + ZCOGSOUTSHIP + ZCOGSOUTPORTMISC AS ZCAL_JYZF             --减：运杂费 = 主营业务成本内销运费 + 主营业务成本出口运费 + 主营业务成本出口港杂费
   FROM "BL.DI.Tables.S4::T_ZSAC_COSTBGT"
  WHERE ZDEL = 'Y'
 ),
@@ -49,9 +50,9 @@ SELECT MANDT,
        ZREBATE,
        ZNETSALES,
 	   
-	   --附加指标
-	   ZREBATE + ZNETSALES AS ZCAL_MXSZL,  --毛销售总额 = 减：返利 + 净销售总额
-	   ZREBATE AS ZCAL_JFL,                --减：返利
+       --附加指标
+       ZREBATE + ZNETSALES AS ZCAL_MXSZE,  --毛销售总额 = 减：返利 + 净销售总额
+       ZREBATE AS ZCAL_JFL,                --减：返利
        ZNETSALES AS ZCAL_JXSZR             --净销售总额
   FROM "BL.DI.Tables.S4::T_ZSAC_SALESBGT"
  WHERE ZDEL = 'Y'
@@ -84,8 +85,8 @@ SELECT MANDT,
        ZAUDITADVISORY,
        ZOTHER,
 	   
-	   --附加指标
-	   ZCOMM AS ZCAL_JYJ  --减：佣金
+       --附加指标
+       ZCOMM AS ZCAL_JYJ  --减：佣金
   FROM "BL.DI.Tables.S4::T_ZSAC_SALESEXPBGT"
  WHERE ZDEL = 'Y'
 ),
@@ -141,7 +142,8 @@ SELECT MANDT,
                                   9,  'ZFUEL',
                                   10, 'ZDA',
                                   11, 'ZMANUCOST',
-                                  12, 'ZCAL_JXSCB'
+                                  12, 'ZCAL_JXSCB',
+                                  13, 'ZCAL_JYZF'
            ) AS NVARCHAR(50)) AS SUBJECT_CODE,
        CAST( MAP( ELEMENT_NUMBER, 1,  '预算单位成本',
                                   2,  '预算销售成本总额',
@@ -154,7 +156,8 @@ SELECT MANDT,
                                   9,  '预算单位燃料动力',
                                   10, '预算折旧和摊销',
                                   11, '预算单位制造费用',
-                                  12, '减：销售成本'
+                                  12, '减：销售成本',
+                                  13, '减：运杂费'
            ) AS NVARCHAR(100)) AS SUBJECT_NAME,
        CAST( MAP( ELEMENT_NUMBER, 1,  ZUNITCOST,
                                   2,  ZCOGS,
@@ -167,10 +170,11 @@ SELECT MANDT,
                                   9,  ZFUEL,
                                   10, ZDA,
                                   11, ZMANUCOST,
-                                  12, ZCAL_JXSCB
+                                  12, ZCAL_JXSCB,
+                                  13, ZCAL_JYZF
            ) AS DECIMAL(23, 2)) AS BUDGET
   FROM COSTBGT,
-       SERIES_GENERATE_INTEGER(1, 10, 22)  --转换行起始列序号 至 转换行截至列序号+1
+       SERIES_GENERATE_INTEGER(1, 10, 23)  --转换行起始列序号 至 转换行截至列序号+1
  
  UNION ALL
  
@@ -444,7 +448,7 @@ SELECT MANDT,
                                   5,  'ZGROSSSALES',
                                   6,  'ZREBATE',
                                   7,  'ZNETSALES',
-                                  8,  'ZCAL_MXSZL',
+                                  8,  'ZCAL_MXSZE',
                                   9,  'ZCAL_JFL',
                                   10, 'ZCAL_JXSZR'
            ) AS NVARCHAR(50)) AS SUBJECT_CODE,
@@ -466,7 +470,7 @@ SELECT MANDT,
                                   5,  ZGROSSSALES,
                                   6,  ZREBATE,
                                   7,  ZNETSALES,
-                                  8,  ZCAL_MXSZL,
+                                  8,  ZCAL_MXSZE,
                                   9,  ZCAL_JFL,
                                   10, ZCAL_JXSZR
            ) AS DECIMAL(23, 2)) AS BUDGET
@@ -545,7 +549,8 @@ SELECT MANDT,
 SELECT LIST.MANDT,                      --客户端
        LIST.VERSION,                    --版本
        LIST.GJAHR,                      --会计年度
-       LIST.POPER,                      --期间
+       LPAD(LIST.POPER, 2, '0') AS POPER, --期间
+       MONTH.CALMONTH,                  --会计年月
        LIST.BUKRS,                      --法人组织(公司代码)
        T001.BUTXT,                      --公司名称
        LIST.PRCTR,                      --利润中心
@@ -589,4 +594,7 @@ SELECT LIST.MANDT,                      --客户端
   LEFT OUTER MANY TO ONE JOIN "BL.DI.Tables.S4::T_T023T" AS MATLMTGP
     ON MATLMTGP.MANDT = LIST.MANDT
    AND MATLMTGP.MATKL = LIST.MATERIALMATKL
-   AND MATLMTGP.SPRAS = '1';
+   AND MATLMTGP.SPRAS = '1'
+  LEFT OUTER MANY TO ONE JOIN "BL.DI.Tables.S4::T_TIME_DIMENSION_MONTH" AS MONTH
+    ON MONTH.YEAR = LIST.GJAHR
+   AND MONTH.MONTH = LPAD(LIST.POPER, 2, '0');
