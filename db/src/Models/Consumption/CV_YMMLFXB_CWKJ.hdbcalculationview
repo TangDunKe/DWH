@@ -49,7 +49,7 @@
       <descriptions defaultDescription="利润中心名称"/>
       <keyMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="KTEXT"/>
     </attribute>
-    <attribute id="SUBJECT_INDEX" order="10">
+    <attribute id="SUBJECT_INDEX" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="指标索引"/>
       <keyMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="SUBJECT_INDEX"/>
     </attribute>
