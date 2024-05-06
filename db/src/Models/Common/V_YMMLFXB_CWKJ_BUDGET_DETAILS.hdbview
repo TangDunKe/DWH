@@ -33,8 +33,8 @@ SELECT MANDT,             --客户端
  WHERE SUBJECT_CODE IN ( 'ZCAL_MXSZE',   --毛销售总额
                          'ZCAL_JFL',     --减：返利
                          'ZCAL_JXSZR',   --净销售总额
-						 'ZCAL_JXSCB',   --减：销售成本
-						 'ZCAL_JYJ',     --减：佣金
+                         'ZCAL_JXSCB',   --减：销售成本
+                         'ZCAL_JYJ',     --减：佣金
                          'ZCAL_JYZF'     --减：运杂费
                        )
 ),
@@ -295,6 +295,6 @@ SELECT MANDT,             --客户端
        SUBJECT_INDEX,     --指标索引
        SUBJECT_CODE,      --指标编码
        SUBJECT_NAME,      --指标名称
-	   BUDGET,            --当月预算数
+       BUDGET,            --当月预算数
        SUM(BUDGET) OVER(PARTITION BY MANDT, VERSION, BUKRS, BUTXT, PRCTR, KTEXT, PRODMATNR, PRODDESC, PRODMTGP, PRODMTGPDESC, MATLMATNR, MATLDESC, MATLMTGP, MATLMTGPDESC, SUBJECT_INDEX, SUBJECT_CODE, SUBJECT_NAME, GJAHR ORDER BY POPER ASC) AS CYC_BUDGET  --当年累计预算数-current year cumulative
   FROM BUDGET_AGG2;

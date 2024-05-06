@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="BL.Models.Consumption::CV_YMMLFXB_CWKJ" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="月末毛利分析表-财报口径"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="BL.Models.Consumption::V_YMMLFXB_CWKJ">
+    <resourceUri>BL.Models.Consumption::V_YMMLFXB_CWKJ</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews/>
+
+<logicalModel id="BL.Models.Consumption::V_YMMLFXB_CWKJ">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="客户端"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="MANDT"/>
+    </attribute>
+    <attribute id="VERSION" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="版本"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="VERSION"/>
+    </attribute>
+    <attribute id="GJAHR" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="会计年度"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="POPER" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="期间"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="POPER"/>
+    </attribute>
+    <attribute id="CALMONTH" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="会计年月"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="CALMONTH"/>
+    </attribute>
+    <attribute id="BUKRS" order="6" descriptionColumnName="BUTXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="法人组织(公司代码)"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="BUKRS"/>
+    </attribute>
+    <attribute id="BUTXT" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="公司名称"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="BUTXT"/>
+    </attribute>
+    <attribute id="PRCTR" order="8" descriptionColumnName="KTEXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="利润中心"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="PRCTR"/>
+    </attribute>
+    <attribute id="KTEXT" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="利润中心名称"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="KTEXT"/>
+    </attribute>
+    <attribute id="SUBJECT_INDEX" order="10">
+      <descriptions defaultDescription="指标索引"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="SUBJECT_INDEX"/>
+    </attribute>
+    <attribute id="SUBJECT_CODE" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="指标编码"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="SUBJECT_CODE"/>
+    </attribute>
+    <attribute id="SUBJECT_NAME" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="指标名称"/>
+      <keyMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="SUBJECT_NAME"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="ACTUAL_CNY" order="13" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="当月实际数(人民币)"/>
+      <measureMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="ACTUAL_CNY"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="SPLY_ACTUAL_CNY" order="14" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="去年同期实际数(人民币)"/>
+      <measureMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="SPLY_ACTUAL_CNY"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="BUDGET" order="15" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="当月预算数"/>
+      <measureMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="BUDGET"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="CYC_ACTUAL_CNY" order="16" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="当年累计实际数(人民币)"/>
+      <measureMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="CYC_ACTUAL_CNY"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="LYC_ACTUAL_CNY" order="17" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="去年当期累计实际数(人民币)"/>
+      <measureMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="LYC_ACTUAL_CNY"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="CYC_BUDGET" order="18" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="当年累计预算数"/>
+      <measureMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="CYC_BUDGET"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  </shapes>
+</layout>
+</Calculation:scenario>
