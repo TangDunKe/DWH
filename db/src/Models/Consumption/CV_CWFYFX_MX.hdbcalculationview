@@ -10,8 +10,8 @@
   <DataSource id="BL.DI.Tables.S4::T_XSFYKMYS">
     <resourceUri>BL.DI.Tables.S4::T_XSFYKMYS</resourceUri>
   </DataSource>
-  <DataSource id="BL.DI.VirtualTable.S4::VA_T001">
-    <resourceUri>BL.DI.VirtualTable.S4::VA_T001</resourceUri>
+  <DataSource id="BL.DI.Tables.S4::T_T001">
+    <resourceUri>BL.DI.Tables.S4::T_T001</resourceUri>
   </DataSource>
 </dataSources>
 <snapshotProcedures/>
@@ -71,7 +71,7 @@
       <viewAttribute id="BUTXT"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="BL.DI.VirtualTable.S4::VA_T001"/>
+    <input node="BL.DI.Tables.S4::T_T001"/>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinType="leftOuter">
     <descriptions>
@@ -544,15 +544,15 @@
       <viewAttribute id="PRCTR" datatype="NVARCHAR" length="10"/>
       <viewAttribute id="PRCTR_TXT" datatype="NVARCHAR" length="20"/>
       <viewAttribute id="WAERS" datatype="NVARCHAR" length="5"/>
-      <viewAttribute id="QM_DMBTR" aggregationType="sum" datatype="DECIMAL" length="23"/>
-      <viewAttribute id="LJ_DMBTR" aggregationType="sum" datatype="DECIMAL" length="23"/>
+      <viewAttribute id="QM_DMBTR" aggregationType="sum" datatype="DECIMAL" length="23" scale="2"/>
+      <viewAttribute id="LJ_DMBTR" aggregationType="sum" datatype="DECIMAL" length="23" scale="2"/>
       <viewAttribute id="TIME" datatype="NVARCHAR" length="6"/>
-      <viewAttribute id="QM_DMBTR_SNTQ" aggregationType="sum" datatype="DECIMAL" length="23"/>
-      <viewAttribute id="LJ_DMBTR_SNTQ" aggregationType="sum" datatype="DECIMAL" length="23"/>
-      <viewAttribute id="YDFX_TB" aggregationType="sum" datatype="DECIMAL" length="20"/>
-      <viewAttribute id="LJFX_TB" aggregationType="sum" datatype="DECIMAL" length="20"/>
-      <viewAttribute id="YDFX_HB" aggregationType="sum" datatype="DECIMAL" length="20"/>
-      <viewAttribute id="LJFX_HB" aggregationType="sum" datatype="DECIMAL" length="20"/>
+      <viewAttribute id="QM_DMBTR_SNTQ" aggregationType="sum" datatype="DECIMAL" length="23" scale="2"/>
+      <viewAttribute id="LJ_DMBTR_SNTQ" aggregationType="sum" datatype="DECIMAL" length="23" scale="2"/>
+      <viewAttribute id="YDFX_TB" aggregationType="sum" datatype="DECIMAL" length="20" scale="7"/>
+      <viewAttribute id="LJFX_TB" aggregationType="sum" datatype="DECIMAL" length="20" scale="7"/>
+      <viewAttribute id="YDFX_HB" aggregationType="sum" datatype="DECIMAL" length="20" scale="7"/>
+      <viewAttribute id="LJFX_HB" aggregationType="sum" datatype="DECIMAL" length="20" scale="7"/>
     
       <viewAttribute id="FXKJ" datatype="NVARCHAR" length="30"/>
     
@@ -822,26 +822,26 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="333" y="112"/>
+      <upperLeftCorner x="333.43282994934236" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
     
   
     <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="177" y="1551"/>
+      <upperLeftCorner x="177.82511594066472" y="1551.9999904632568"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="387" y="1551"/>
+      <upperLeftCorner x="387.8251159406647" y="1551.9999904632568"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="181" y="501"/>
+      <upperLeftCorner x="181.3418480625732" y="501.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="262" y="1391"/>
+      <upperLeftCorner x="262.8235448987668" y="1391.9999916553497"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
@@ -853,19 +853,19 @@
       <rectangleSize width="155"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="262" y="1266"/>
+      <upperLeftCorner x="262.8235448987668" y="1266.9999916553497"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="432" y="1101"/>
+      <upperLeftCorner x="432.4274169780619" y="1101.9999928474426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="198" y="1101"/>
+      <upperLeftCorner x="198.82967247791305" y="1101.9999928474426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="941"/>
+      <upperLeftCorner x="92.00000000000001" y="941.9999940395355"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
@@ -877,7 +877,7 @@
       <rectangleSize width="183"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_6" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="941"/>
+      <upperLeftCorner x="302.00000000000006" y="941.9999940395355"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
@@ -889,25 +889,25 @@
       <rectangleSize width="183"/>
     </shape>
     <shape expanded="true" modelObjectName="Union_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="786"/>
+      <upperLeftCorner x="302.00000000000006" y="786.9999952316284"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="435" y="641"/>
+      <upperLeftCorner x="435.42163707925073" y="641.9999964237213"/>
       <rectangleSize width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="225" y="641"/>
+      <upperLeftCorner x="225.4216370792508" y="641.9999964237213"/>
       <rectangleSize width="160"/>
     </shape>
   
   
     <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="391" y="501"/>
+      <upperLeftCorner x="391.3418480625732" y="501.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="313" y="341"/>
+      <upperLeftCorner x="313.1940418653776" y="341.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Union_1" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
@@ -920,7 +920,7 @@
     </shape>
   
     <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="313" y="236"/>
+      <upperLeftCorner x="313.1940418653776" y="236.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape></shapes>
 </layout>

@@ -10,8 +10,8 @@
   <DataSource id="BL.Models.Common::CV_KMYS">
     <resourceUri>BL.Models.Common::CV_KMYS</resourceUri>
   </DataSource>
-  <DataSource id="BL.DI.VirtualTable.S4::VA_T001">
-    <resourceUri>BL.DI.VirtualTable.S4::VA_T001</resourceUri>
+  <DataSource id="BL.DI.Tables.S4::T_T001">
+    <resourceUri>BL.DI.Tables.S4::T_T001</resourceUri>
   </DataSource>
 </dataSources>
 <snapshotProcedures/>
@@ -77,7 +77,7 @@
       <viewAttribute id="BUTXT"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="BL.DI.VirtualTable.S4::VA_T001"/>
+    <input node="BL.DI.Tables.S4::T_T001"/>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinType="inner">
     <descriptions>
@@ -835,26 +835,26 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="244" y="112"/>
+      <upperLeftCorner x="244.19397269467316" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
     
   
     <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="1696"/>
+      <upperLeftCorner x="92" y="1696.999989271164"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="1696"/>
+      <upperLeftCorner x="302" y="1696.999989271164"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="113" y="501"/>
+      <upperLeftCorner x="113.73640027841202" y="501.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="179" y="1536"/>
+      <upperLeftCorner x="179.4431044448259" y="1536.9999904632568"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
@@ -866,19 +866,19 @@
       <rectangleSize width="155"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="179" y="1411"/>
+      <upperLeftCorner x="179.4431044448259" y="1411.9999904632568"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="179" y="1266"/>
+      <upperLeftCorner x="179.4431044448259" y="1266.9999916553497"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="264" y="1069"/>
+      <upperLeftCorner x="148.17578112992092" y="1121.9999928474426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="379" y="941"/>
+      <upperLeftCorner x="379.175779937828" y="941.9999940395355"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
@@ -890,7 +890,7 @@
       <rectangleSize width="183"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_6" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="94" y="941"/>
+      <upperLeftCorner x="94.84244779658758" y="941.9999940395355"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
@@ -902,26 +902,26 @@
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="Union_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="264" y="786"/>
+      <upperLeftCorner x="264.1757805338745" y="786.9999952316284"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="379" y="641"/>
+      <upperLeftCorner x="379.7989692141039" y="641.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="169" y="641"/>
+      <upperLeftCorner x="169.79896921410392" y="641.9999964237213"/>
       <rectangleSize width="160"/>
     </shape>
   
   
   
     <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="323" y="501"/>
+      <upperLeftCorner x="323.736400278412" y="501.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="228" y="341"/>
+      <upperLeftCorner x="228.35844382719267" y="341.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Union_1" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
@@ -934,7 +934,7 @@
     </shape>
   
     <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="228" y="236"/>
+      <upperLeftCorner x="228.35844382719267" y="236.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape></shapes>
 </layout>
