@@ -5,6 +5,7 @@
             "target_table": "BL.DI.Tables.S4::T_PRODTYPE",
             "import_settings": {
                 "import_columns": [
+                    "PDTYCODE",
                     "PRODTYPE",
                     "PROD",
                     "INDEX",
