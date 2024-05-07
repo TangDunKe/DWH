@@ -1,20 +1,21 @@
 VIRTUAL PROCEDURE "BL.DI.VirtualProcedure::V_ZFM_SAC_FII003" (
  IN IR_BUKRS TABLE (
-    SIGN       NVARCHAR (1),
-    OPTION     NVARCHAR (2),
-    LOW        NVARCHAR (4),
-    HIGH       NVARCHAR (4)
+    SIGN       NVARCHAR(1),
+    OPTION     NVARCHAR(2),
+    LOW        NVARCHAR(4),
+    HIGH       NVARCHAR(4)
     ),
  IN IV_BBLX    NVARCHAR(3),
  IN IV_GJAHR   NVARCHAR(4),
  IN IV_HK      NVARCHAR(1),
  IN IV_POPER   NVARCHAR(3),
 OUT ET_OUTPUT TABLE (
-    BUKRS      NVARCHAR (4),
-    GJAHR      NVARCHAR (4),
-    POPER      NVARCHAR (3),
-    PRCTR      NVARCHAR (10),
-    HC         NVARCHAR (10),
+    MANDT      NVARCHAR(3),
+    BUKRS      NVARCHAR(4),
+    GJAHR      NVARCHAR(4),
+    POPER      NVARCHAR(3),
+    PRCTR      NVARCHAR(10),
+    HC         NVARCHAR(10),
     TXT50      NVARCHAR(50),
     BEG_AMT     DECIMAL(23,2),
     END_AMT     DECIMAL(23,2)

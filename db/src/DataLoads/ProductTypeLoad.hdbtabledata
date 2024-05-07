@@ -7,6 +7,7 @@
                 "import_columns": [
                     "PRODTYPE",
                     "PROD",
+                    "INDEX",
                     "FIELD",
                     "LOW",
                     "HIGH"
@@ -21,7 +22,7 @@
                 "delete_existing_foreign_data": true,
                 "dialect": "HANA",
                 "type_config": {
-                    "delimiter": ";"
+                    "delimiter": ","
                 }
             }
         }
