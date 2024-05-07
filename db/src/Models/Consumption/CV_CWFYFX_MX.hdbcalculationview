@@ -96,7 +96,8 @@
       <calculatedViewAttribute id="FXKJ" datatype="NVARCHAR" length="30" expressionLanguage="SQL">
         <formula>CASE &quot;HKONT&quot;
 	 WHEN '6603010100' then 'ZSAC_04_01'
-	 WHEN '6603010200' then 'ZSAC_04_02'
+	 --WHEN '6603010200' then 'ZSAC_04_02'
+	 WHEN '6603010200' then 'ZSAC_04_01'
 	 WHEN '6603020100' then 'ZSAC_04_03'
 	 WHEN '6603020200' then 'ZSAC_04_04'
 	 WHEN '6603030000' then 'ZSAC_04_05'
@@ -857,7 +858,7 @@
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="432.4274169780619" y="1101.9999928474426"/>
+      <upperLeftCorner x="432.42741697806184" y="1101.9999928474426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_3" modelObjectNameSpace="CalculationView">
@@ -865,7 +866,7 @@
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92.00000000000001" y="941.9999940395355"/>
+      <upperLeftCorner x="92.00000000000003" y="941.9999940395355"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
@@ -893,7 +894,7 @@
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="435.42163707925073" y="641.9999964237213"/>
+      <upperLeftCorner x="435.4216370792507" y="641.9999964237213"/>
       <rectangleSize width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_2" modelObjectNameSpace="CalculationView">

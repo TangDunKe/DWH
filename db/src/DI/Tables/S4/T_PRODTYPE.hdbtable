@@ -1,0 +1,9 @@
+COLUMN TABLE "BL.DI.Tables.S4::T_PRODTYPE" (
+    PRODTYPE  NVARCHAR(30)  COMMENT '产品类型',
+    PROD      NVARCHAR(50)  COMMENT '产品',
+    FIELD     NVARCHAR(20)  COMMENT '约束字段',
+    LOW       NVARCHAR(40)  COMMENT '起始值',
+    HIGH      NVARCHAR(40)  COMMENT '截至值',
+    PRIMARY KEY (PRODTYPE, PROD)
+)
+COMMENT '产品类型配置表'
