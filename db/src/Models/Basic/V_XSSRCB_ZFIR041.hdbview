@@ -4,7 +4,7 @@ AS
 WITH LIST_AGG AS (
 SELECT MANDT,
        GJAHR,
-       POPER,
+       CASE WHEN POPER > '012' THEN '012' ELSE POPER END AS POPER,
        BUKRS,
        PRCTR,
        VKBUR,
