@@ -1,6 +1,7 @@
 COLUMN TABLE "BL.DI.Tables.S4::T_ZSAC_SALESBGT" (
     MANDT               NVARCHAR(3),
     VERSION             NVARCHAR(6),
+    ZINSERTTIME         NVARCHAR(6),
     ZYR                 NVARCHAR(4),
     ZMO                 NVARCHAR(2),
     BUKRS               NVARCHAR(4),
@@ -14,9 +15,8 @@ COLUMN TABLE "BL.DI.Tables.S4::T_ZSAC_SALESBGT" (
     ZGROSSSALES         DECIMAL(23,2),
     ZREBATE             DECIMAL(23,2),
     ZNETSALES           DECIMAL(23,2),
-    ZINSERTTIME         NVARCHAR(6),
     ZDEL                NVARCHAR(2),
     ZINSERTDATE         NVARCHAR(8),
     ZUPDATE             NVARCHAR(8),
-    PRIMARY KEY(MANDT, VERSION, ZINSERTTIME)
+    PRIMARY KEY(MANDT, VERSION, ZINSERTTIME, ZYR, ZMO)
 )
