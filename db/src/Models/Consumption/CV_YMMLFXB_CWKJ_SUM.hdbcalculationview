@@ -41,55 +41,47 @@
       <descriptions defaultDescription="公司名称"/>
       <keyMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="BUTXT"/>
     </attribute>
-    <attribute id="PRCTR" order="8" descriptionColumnName="KTEXT" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="利润中心"/>
-      <keyMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="PRCTR"/>
-    </attribute>
-    <attribute id="KTEXT" order="9" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="利润中心名称"/>
-      <keyMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="KTEXT"/>
-    </attribute>
-    <attribute id="SUBJECT_INDEX" order="10" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="SUBJECT_INDEX" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="指标索引"/>
       <keyMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="SUBJECT_INDEX"/>
     </attribute>
-    <attribute id="SUBJECT_CODE" order="11" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="SUBJECT_CODE" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="指标编码"/>
       <keyMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="SUBJECT_CODE"/>
     </attribute>
-    <attribute id="SUBJECT_NAME" order="12" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="SUBJECT_NAME" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="指标名称"/>
       <keyMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="SUBJECT_NAME"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="ACTUAL_CNY" order="13" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="ACTUAL_CNY" order="11" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="当月实际数(人民币)"/>
       <measureMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="ACTUAL_CNY"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="SPLY_ACTUAL_CNY" order="14" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="SPLY_ACTUAL_CNY" order="12" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="去年同期实际数(人民币)"/>
       <measureMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="SPLY_ACTUAL_CNY"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="BUDGET" order="15" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="BUDGET" order="13" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="当月预算数"/>
       <measureMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="BUDGET"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="CYC_ACTUAL_CNY" order="16" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="CYC_ACTUAL_CNY" order="14" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="当年累计实际数(人民币)"/>
       <measureMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="CYC_ACTUAL_CNY"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="LYC_ACTUAL_CNY" order="17" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="LYC_ACTUAL_CNY" order="15" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="去年当期累计实际数(人民币)"/>
       <measureMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="LYC_ACTUAL_CNY"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="CYC_BUDGET" order="18" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="CYC_BUDGET" order="16" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="当年累计预算数"/>
       <measureMapping columnObjectName="V_YMMLFXB_CWKJ" columnName="CYC_BUDGET"/>
       <exceptionAggregationMetadata/>

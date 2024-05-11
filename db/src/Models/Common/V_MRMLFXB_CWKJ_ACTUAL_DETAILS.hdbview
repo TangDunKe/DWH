@@ -1,4 +1,4 @@
-VIEW "BL.Models.Common::V_MRMLFXB_CWKJ"
+VIEW "BL.Models.Common::V_MRMLFXB_CWKJ_ACTUAL_DETAILS"
 AS 
 
 WITH LIST AS (
@@ -27,8 +27,8 @@ SELECT LIST.MANDT,        --客户端
        LIST.HSL_DAY,      --当日实际
        LIST.HSL_SUM,      --当月累计实际
        LIST.HSL_PLN,      --当月计划
-	   CASE WHEN LIST.BUKRS IN ('2050', '2060', '2070') THEN EXRATE.DATE_POINT_EXRATE ELSE 1 END AS DATE_POINT_EXRATE, --当日汇率
-	   CASE WHEN LIST.BUKRS IN ('2050', '2060', '2070') THEN EXRATE.MONTH_AVG_EXRATE ELSE 1 END AS MONTH_AVG_EXRATE   --当月累计平均汇率
+       CASE WHEN LIST.BUKRS IN ('2050', '2060', '2070') THEN EXRATE.DATE_POINT_EXRATE ELSE 1 END AS DATE_POINT_EXRATE, --当日汇率
+       CASE WHEN LIST.BUKRS IN ('2050', '2060', '2070') THEN EXRATE.MONTH_AVG_EXRATE ELSE 1 END AS MONTH_AVG_EXRATE   --当月累计平均汇率
   FROM "BL.DI.Tables.S4::T_ZTSAC_0001" AS LIST
   LEFT JOIN "BL.Models.Basic::V_EXCHANGERATES_DATE" AS EXRATE
     ON EXRATE.MANDT = LIST.MANDT
@@ -66,9 +66,9 @@ SELECT MANDT,        --客户端
                          'ADJ_COST',   '减:调整后销售成本',
                          'COMMISSION', '减:佣金',
                          'INCOME_GR1', '销售毛利额1',
-                         'INCOME_RA1', '销售毛利率1',
+                         'INCOME_RA1', '销售毛利率1(%)',
                          'INCOME_GR2', '销售毛利额2',
-                         'INCOME_RA2', '销售毛利率2',
+                         'INCOME_RA2', '销售毛利率2(%)',
                          'TR_EXPENSE', '减:运杂费',
                          'COST',       '销售成本',
                          'EXP_DOM_TR', '主营业务成本内销运费',

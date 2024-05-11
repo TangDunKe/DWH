@@ -8,8 +8,8 @@ SELECT MANDT,                                   --客户端
        CALMONTH,                                --会计年月
        BUKRS,                                   --法人组织(公司代码)
        BUTXT,                                   --公司名称
-       PRCTR,                                   --利润中心
-       KTEXT,                                   --利润中心名称
+       --PRCTR,                                 --利润中心
+       --KTEXT,                                 --利润中心名称
        SUBJECT_INDEX,                           --指标索引
        SUBJECT_CODE,                            --指标编码
        SUBJECT_NAME,                            --指标名称
@@ -25,8 +25,8 @@ SELECT MANDT,                                   --客户端
           CALMONTH,
           BUKRS,
           BUTXT,
-          PRCTR,
-          KTEXT,
+          --PRCTR,
+          --KTEXT,
           SUBJECT_INDEX,
           SUBJECT_CODE,
           SUBJECT_NAME
@@ -39,8 +39,8 @@ SELECT MANDT,
        CALMONTH,
        BUKRS,
        BUTXT,
-       PRCTR,
-       KTEXT,
+       --PRCTR,
+       --KTEXT,
        SUBJECT_INDEX,
        SUBJECT_CODE,
        SUBJECT_NAME,
@@ -58,8 +58,8 @@ SELECT XSMLE1.MANDT,
        XSMLE1.CALMONTH,
        XSMLE1.BUKRS,
        XSMLE1.BUTXT,
-       XSMLE1.PRCTR,
-       XSMLE1.KTEXT,
+       --XSMLE1.PRCTR,
+       --XSMLE1.KTEXT,
        CAST(28 AS BIGINT) AS SUBJECT_INDEX,
        CAST('ZCAL_XSMLL1' AS NVARCHAR(50)) AS SUBJECT_CODE,
        CAST('销售毛利率1(%)' AS NVARCHAR(100)) AS SUBJECT_NAME,
@@ -73,7 +73,7 @@ SELECT XSMLE1.MANDT,
    AND MXSZE.GJAHR = XSMLE1.GJAHR
    AND MXSZE.POPER = XSMLE1.POPER
    AND MXSZE.BUKRS = XSMLE1.BUKRS
-   AND MXSZE.PRCTR = XSMLE1.PRCTR
+   --AND MXSZE.PRCTR = XSMLE1.PRCTR
    AND MXSZE.SUBJECT_CODE = 'ZCAL_MXSZE'
  WHERE XSMLE1.SUBJECT_CODE = 'ZCAL_XSMLE1'
  
@@ -85,8 +85,8 @@ SELECT XSMLE2.MANDT,
        XSMLE2.CALMONTH,
        XSMLE2.BUKRS,
        XSMLE2.BUTXT,
-       XSMLE2.PRCTR,
-       XSMLE2.KTEXT,
+       --XSMLE2.PRCTR,
+       --XSMLE2.KTEXT,
        CAST(31 AS BIGINT) AS SUBJECT_INDEX,
        CAST('ZCAL_XSMLL2' AS NVARCHAR(50)) AS SUBJECT_CODE,
        CAST('销售毛利率2(%)' AS NVARCHAR(100)) AS SUBJECT_NAME,
@@ -100,7 +100,7 @@ SELECT XSMLE2.MANDT,
    AND MXSZE.GJAHR = XSMLE2.GJAHR
    AND MXSZE.POPER = XSMLE2.POPER
    AND MXSZE.BUKRS = XSMLE2.BUKRS
-   AND MXSZE.PRCTR = XSMLE2.PRCTR
+   --AND MXSZE.PRCTR = XSMLE2.PRCTR
    AND MXSZE.SUBJECT_CODE = 'ZCAL_MXSZE'
  WHERE XSMLE2.SUBJECT_CODE = 'ZCAL_XSMLE2'
 ),
@@ -113,8 +113,8 @@ SELECT MANDT,                         --客户端
        CALMONTH,                      --会计年月
        BUKRS,                         --法人组织(公司代码)
        BUTXT,                         --公司名称
-       PRCTR,                         --利润中心
-       KTEXT,                         --利润中心名称
+       --PRCTR,                         --利润中心
+       --KTEXT,                         --利润中心名称
        SUBJECT_INDEX,                 --指标索引
        SUBJECT_CODE,                  --指标编码
        SUBJECT_NAME,                  --指标名称
@@ -128,8 +128,8 @@ SELECT MANDT,                         --客户端
           CALMONTH,
           BUKRS,
           BUTXT,
-          PRCTR,
-          KTEXT,
+          --PRCTR,
+          --KTEXT,
           SUBJECT_INDEX,
           SUBJECT_CODE,
           SUBJECT_NAME
@@ -143,8 +143,8 @@ SELECT MANDT,
        CALMONTH,
        BUKRS,
        BUTXT,
-       PRCTR,
-       KTEXT,
+       --PRCTR,
+       --KTEXT,
        SUBJECT_INDEX,
        SUBJECT_CODE,
        SUBJECT_NAME,
@@ -161,8 +161,8 @@ SELECT XSMLE1.MANDT,
        XSMLE1.CALMONTH,
        XSMLE1.BUKRS,
        XSMLE1.BUTXT,
-       XSMLE1.PRCTR,
-       XSMLE1.KTEXT,
+       --XSMLE1.PRCTR,
+       --XSMLE1.KTEXT,
        CAST(28 AS BIGINT) AS SUBJECT_INDEX,
        CAST('ZCAL_XSMLL1' AS NVARCHAR(50)) AS SUBJECT_CODE,
        CAST('销售毛利率1(%)' AS NVARCHAR(100)) AS SUBJECT_NAME,
@@ -175,7 +175,7 @@ SELECT XSMLE1.MANDT,
    AND MXSZE.GJAHR = XSMLE1.GJAHR
    AND MXSZE.POPER = XSMLE1.POPER
    AND MXSZE.BUKRS = XSMLE1.BUKRS
-   AND MXSZE.PRCTR = XSMLE1.PRCTR
+   --AND MXSZE.PRCTR = XSMLE1.PRCTR
    AND MXSZE.SUBJECT_CODE = 'ZCAL_MXSZE'
  WHERE XSMLE1.SUBJECT_CODE = 'ZCAL_XSMLE1'
  
@@ -188,8 +188,8 @@ SELECT XSMLE1.MANDT,
        XSMLE1.CALMONTH,
        XSMLE1.BUKRS,
        XSMLE1.BUTXT,
-       XSMLE1.PRCTR,
-       XSMLE1.KTEXT,
+       --XSMLE1.PRCTR,
+       --XSMLE1.KTEXT,
        CAST(31 AS BIGINT) AS SUBJECT_INDEX,
        CAST('ZCAL_XSMLL2' AS NVARCHAR(50)) AS SUBJECT_CODE,
        CAST('销售毛利率2(%)' AS NVARCHAR(100)) AS SUBJECT_NAME,
@@ -202,7 +202,7 @@ SELECT XSMLE1.MANDT,
    AND MXSZE.GJAHR = XSMLE1.GJAHR
    AND MXSZE.POPER = XSMLE1.POPER
    AND MXSZE.BUKRS = XSMLE1.BUKRS
-   AND MXSZE.PRCTR = XSMLE1.PRCTR
+   --AND MXSZE.PRCTR = XSMLE1.PRCTR
    AND MXSZE.SUBJECT_CODE = 'ZCAL_MXSZE'
  WHERE XSMLE1.SUBJECT_CODE = 'ZCAL_XSMLE2'
 ),
@@ -215,8 +215,8 @@ SELECT MANDT,
        CALMONTH,
        BUKRS,
        BUTXT,
-       PRCTR,
-       KTEXT,
+       --PRCTR,
+       --KTEXT,
        SUBJECT_INDEX,
        SUBJECT_CODE,
        SUBJECT_NAME,
@@ -237,8 +237,8 @@ SELECT MANDT,
        CALMONTH,
        BUKRS,
        BUTXT,
-       PRCTR,
-       KTEXT,
+       --PRCTR,
+       --KTEXT,
        SUBJECT_INDEX,
        SUBJECT_CODE,
        SUBJECT_NAME,
@@ -258,8 +258,8 @@ SELECT MANDT,                                     --客户端
        CALMONTH,                                  --会计年月
        BUKRS,                                     --法人组织(公司代码)
        BUTXT,                                     --公司名称
-       PRCTR,                                     --利润中心
-       KTEXT,                                     --利润中心名称
+       --PRCTR,                                     --利润中心
+       --KTEXT,                                     --利润中心名称
        SUBJECT_INDEX,                             --指标索引
        SUBJECT_CODE,                              --指标编码
        SUBJECT_NAME,                              --指标名称
@@ -270,5 +270,5 @@ SELECT MANDT,                                     --客户端
        SUM(LYC_ACTUAL_CNY) AS LYC_ACTUAL_CNY,     --去年当期累计实际数(人民币)
        SUM(CYC_BUDGET) AS CYC_BUDGET              --当年累计预算数
   FROM ACTUAL_BUDGET
- GROUP BY MANDT, VERSION, GJAHR, POPER, CALMONTH, BUKRS, BUTXT, PRCTR, KTEXT, SUBJECT_INDEX, SUBJECT_CODE, SUBJECT_NAME
- ORDER BY MANDT, VERSION, GJAHR, POPER, CALMONTH, BUKRS, BUTXT, PRCTR, KTEXT, SUBJECT_INDEX, SUBJECT_CODE, SUBJECT_NAME;
+ GROUP BY MANDT, VERSION, GJAHR, POPER, CALMONTH, BUKRS, BUTXT, SUBJECT_INDEX, SUBJECT_CODE, SUBJECT_NAME
+ ORDER BY MANDT, VERSION, GJAHR, POPER, CALMONTH, BUKRS, BUTXT, SUBJECT_INDEX, SUBJECT_CODE, SUBJECT_NAME;
