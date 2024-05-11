@@ -29,7 +29,7 @@
       <descriptions defaultDescription="会计年月"/>
       <keyMapping columnObjectName="V_JLRPBTFXKB" columnName="CALMONTH"/>
     </attribute>
-    <attribute id="BUKRS" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="BUKRS" order="5" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="BUTXT">
       <descriptions defaultDescription="公司代码"/>
       <keyMapping columnObjectName="V_JLRPBTFXKB" columnName="BUKRS"/>
     </attribute>
@@ -37,7 +37,7 @@
       <descriptions defaultDescription="公司名称"/>
       <keyMapping columnObjectName="V_JLRPBTFXKB" columnName="BUTXT"/>
     </attribute>
-    <attribute id="SUBJECT_INDEX" order="7">
+    <attribute id="SUBJECT_INDEX" order="7" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="SUBJECT_NAME">
       <descriptions defaultDescription="指标编码"/>
       <keyMapping columnObjectName="V_JLRPBTFXKB" columnName="SUBJECT_INDEX"/>
     </attribute>

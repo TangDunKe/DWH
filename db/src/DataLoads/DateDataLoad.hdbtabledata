@@ -1,0 +1,54 @@
+{
+    "format_version": 1,
+    "imports": [
+        {
+            "target_table": "BL.DI.Tables.S4::T_TIME_DIMENSION",
+            "import_settings": {
+                "import_columns" : [ 
+                   "DATETIMESTAMP",
+                   "DATE_SQL",
+                   "DATETIME_SAP",
+                   "DATE_SAP",
+                   "YEAR",
+                   "QUARTER",
+                   "MONTH",
+                   "WEEK",
+                   "WEEK_YEAR",
+                   "DAY_OF_WEEK",
+                   "DAY",
+                   "HOUR",
+                   "MINUTE",
+                   "SECOND",
+                   "CALQUARTER",
+                   "CALMONTH",
+                   "CALWEEK",
+                   "YEAR_INT",
+                   "QUARTER_INT",
+                   "MONTH_INT",
+                   "WEEK_INT",
+                   "WEEK_YEAR_INT",
+                   "DAY_OF_WEEK_INT",
+                   "DAY_INT",
+                   "HOUR_INT",
+                   "MINUTE_INT",
+                   "SECOND_INT",
+                   "MONTH_LAST_DAY",
+                   "TZNTSTMPS",
+                   "TZNTSTMPL"
+                ],
+                "include_filter": []
+            },
+            "source_data": {
+                "data_type": "CSV",
+                "file_name": "BL.DataLoads::DateData.csv",
+                "has_header": true,
+                "no_data_import": false,
+                "delete_existing_foreign_data": true,
+                "dialect": "HANA",
+                "type_config": {
+                    "delimiter": ";"
+                }
+            }
+        }
+    ]
+}

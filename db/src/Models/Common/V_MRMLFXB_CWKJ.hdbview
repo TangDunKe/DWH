@@ -1,0 +1,71 @@
+VIEW "BL.Models.Common::V_MRMLFXB_CWKJ"
+AS 
+
+WITH LIST AS (
+SELECT LIST.MANDT,        --客户端    
+       LIST.DATUM,        --日期
+       LIST.BUKRS,        --法人组织
+       LIST.BUKRS_TXT,
+       LIST.PRCTR,        --利润中心
+       LIST.PRCTR_TXT,
+       LIST.MATKL_TYP,    --产品类型
+       LIST.MATKL_TYP_TXT,
+       LIST.MATKL,        --产品牌号
+       LIST.MATKL_TXT,
+       LIST.VKBUR,        --销售办事处
+       LIST.VKBUR_TXT,
+       LIST.KATR4,        --客户类型
+       LIST.KATR4_TXT,
+       LIST.KATR2,        --集团客户
+       LIST.KATR2_TXT,
+       LIST.KUNNR,        --客户
+       LIST.KUNNR_TXT,
+       LIST.WAERS,        --货币
+       LIST.INDIC,        --数据标识
+       LIST.PLN_VER,      --预算版本
+       LIST.ANL_TYP,      --分析指标
+       LIST.HSL_DAY,      --当日实际
+       LIST.HSL_SUM,      --当月累计实际
+       LIST.HSL_PLN,      --当月计划
+	   CASE WHEN LIST.BUKRS IN ('2050', '2060', '2070') THEN EXRATE.DATE_POINT_EXRATE ELSE 1 END AS DATE_POINT_EXRATE, --当日汇率
+	   CASE WHEN LIST.BUKRS IN ('2050', '2060', '2070') THEN EXRATE.MONTH_AVG_EXRATE ELSE 1 END AS MONTH_AVG_EXRATE   --当月累计平均汇率
+  FROM "BL.DI.Tables.S4::T_ZTSAC_0001" AS LIST
+  LEFT JOIN "BL.Models.Basic::V_EXCHANGERATES_DATE" AS EXRATE
+    ON EXRATE.MANDT = LIST.MANDT
+   AND EXRATE.FCURR = LIST.WAERS
+   AND EXRATE.CALDATE = LIST.DATUM
+   AND EXRATE.KURST = 'M'
+   AND EXRATE.TCURR = 'CNY'
+)
+
+SELECT MANDT,        --客户端    
+       DATUM,        --日期
+       BUKRS,        --法人组织
+       BUKRS_TXT,
+       PRCTR,        --利润中心
+       PRCTR_TXT,
+       MATKL_TYP,    --产品类型
+       MATKL_TYP_TXT,
+       MATKL,        --产品牌号
+       MATKL_TXT,
+       VKBUR,        --销售办事处
+       VKBUR_TXT,
+       KATR4,        --客户类型
+       KATR4_TXT,
+       KATR2,        --集团客户
+       KATR2_TXT,
+       KUNNR,        --客户
+       KUNNR_TXT,
+       WAERS,        --货币
+       INDIC,        --数据标识
+       PLN_VER,      --预算版本
+       ANL_TYP,      --分析指标
+       HSL_DAY,      --当日实际(交易币)
+       HSL_SUM,      --当月累计实际(交易币)
+       HSL_PLN,      --当月计划(交易币)
+       DATE_POINT_EXRATE, --当日汇率
+       MONTH_AVG_EXRATE,  --当月累计平均汇率
+       CAST(ROUND(HSL_DAY * DATE_POINT_EXRATE, 2) AS DECIMAL(23, 2)) AS HSL_DAY_CNY, --当日实际(人民币)
+       CAST(ROUND(HSL_SUM * MONTH_AVG_EXRATE, 2) AS DECIMAL(23, 2)) AS HSL_SUM_CNY,  --当月累计实际(人民币)
+       HSL_PLN AS HSL_PLN_CNY --当月计划(人民币)
+  FROM LIST;
