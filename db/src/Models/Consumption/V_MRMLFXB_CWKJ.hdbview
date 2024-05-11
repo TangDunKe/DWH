@@ -177,14 +177,16 @@ SELECT MANDT,
 )
 
 SELECT MANDT,
-       VERSION,
+       VERSION,               --预算版本
        DATUM,
        BUKRS,
        BUKRS_TXT,
-       ANL_TYP,
+       CAST(NULL AS NVARCHAR(10)) AS PRCTR,        --利润中心
+       CAST(NULL AS NVARCHAR(20)) AS PRCTR_TXT,    --利润中心名称
+       ANL_TYP,               --分析指标
        ANL_TYP_TXT,
-       HSL_DAY_CNY,
-       HSL_SUM_CNY,
-       HSL_PLN_CNY
+       HSL_DAY_CNY,           --当日实际(人民币)
+       HSL_SUM_CNY,           --当月累计实际(人民币)
+       HSL_PLN_CNY            --当月计划(人民币)
   FROM ACTUAL_BUDGET
  ORDER BY MANDT, VERSION, DATUM, BUKRS, ANL_TYP;

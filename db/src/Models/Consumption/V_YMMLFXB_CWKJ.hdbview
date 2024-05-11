@@ -258,8 +258,8 @@ SELECT MANDT,                                     --客户端
        CALMONTH,                                  --会计年月
        BUKRS,                                     --法人组织(公司代码)
        BUTXT,                                     --公司名称
-       --PRCTR,                                     --利润中心
-       --KTEXT,                                     --利润中心名称
+       CAST(NULL AS NVARCHAR(10)) AS PRCTR,       --利润中心
+       CAST(NULL AS NVARCHAR(20)) AS KTEXT,       --利润中心名称
        SUBJECT_INDEX,                             --指标索引
        SUBJECT_CODE,                              --指标编码
        SUBJECT_NAME,                              --指标名称
