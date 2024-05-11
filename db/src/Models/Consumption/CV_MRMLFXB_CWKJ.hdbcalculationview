@@ -97,47 +97,51 @@
       <descriptions defaultDescription="预算版本"/>
       <keyMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="PLN_VER"/>
     </attribute>
-    <attribute id="ANL_TYP" order="22" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ANL_TYP" order="22" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="ANL_TYP_TXT">
       <descriptions defaultDescription="分析指标"/>
       <keyMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="ANL_TYP"/>
     </attribute>
-    <attribute id="DATE_POINT_EXRATE" order="26">
+    <attribute id="ANL_TYP_TXT" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="分析指标"/>
+      <keyMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="ANL_TYP_TXT"/>
+    </attribute>
+    <attribute id="DATE_POINT_EXRATE" order="27" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="当日汇率"/>
       <keyMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="DATE_POINT_EXRATE"/>
     </attribute>
-    <attribute id="MONTH_AVG_EXRATE" order="27">
+    <attribute id="MONTH_AVG_EXRATE" order="28" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="当月累计平均汇率"/>
       <keyMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="MONTH_AVG_EXRATE"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="HSL_DAY" order="23" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="HSL_DAY" order="24" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="当日实际(交易币)"/>
       <measureMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="HSL_DAY"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="HSL_SUM" order="24" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="HSL_SUM" order="25" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="当月累计实际(交易币)"/>
       <measureMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="HSL_SUM"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="HSL_PLN" order="25" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="HSL_PLN" order="26" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="当月计划(交易币)"/>
       <measureMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="HSL_PLN"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="HSL_DAY_CNY" order="28" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="HSL_DAY_CNY" order="29" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="当日实际(人民币)"/>
       <measureMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="HSL_DAY_CNY"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="HSL_SUM_CNY" order="29" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="HSL_SUM_CNY" order="30" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="当月累计实际(人民币)"/>
       <measureMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="HSL_SUM_CNY"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="HSL_PLN_CNY" order="30" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="HSL_PLN_CNY" order="31" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="当月计划(人民币)"/>
       <measureMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="HSL_PLN_CNY"/>
       <exceptionAggregationMetadata/>

@@ -60,6 +60,20 @@ SELECT MANDT,        --客户端
        INDIC,        --数据标识
        PLN_VER,      --预算版本
        ANL_TYP,      --分析指标
+       CAST(MAP(ANL_TYP, 'INCOME_T',   '毛利销售总额',
+                         'REBATE',     '减:返利',
+                         'INCOME',     '净销售总额',
+                         'ADJ_COST',   '减:调整后销售成本',
+                         'COMMISSION', '减:佣金',
+                         'INCOME_GR1', '销售毛利额1',
+                         'INCOME_RA1', '销售毛利率1',
+                         'INCOME_GR2', '销售毛利额2',
+                         'INCOME_RA2', '销售毛利率2',
+                         'TR_EXPENSE', '减:运杂费',
+                         'COST',       '销售成本',
+                         'EXP_DOM_TR', '主营业务成本内销运费',
+                         'EXP_EXP_TR', '主营业务成本出口运费',
+                         'EXP_EXP_PO', '主营业务成本出口港杂费') AS NVARCHAR(50)) AS ANL_TYP_TXT,
        HSL_DAY,      --当日实际(交易币)
        HSL_SUM,      --当月累计实际(交易币)
        HSL_PLN,      --当月计划(交易币)
