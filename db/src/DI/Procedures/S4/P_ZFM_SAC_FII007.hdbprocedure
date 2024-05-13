@@ -84,7 +84,7 @@ BEGIN
            OPTION,
            LOW,
            HIGH
-      FROM "BL.DI.Tables.S4::T_BUKRS";
+      FROM "BL.Models.Basic::V_COMPANY";
     
     WHILE :V_INDEX <= :V_NUM DO
       
