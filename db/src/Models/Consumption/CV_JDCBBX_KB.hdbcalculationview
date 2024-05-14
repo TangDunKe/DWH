@@ -1907,19 +1907,19 @@
         <formula>(&quot;MLL_LJ&quot;-&quot;MLL_SNTQ_LJ&quot;)/nullif(&quot;MLL_SNTQ_LJ&quot;,0)</formula>
       </calculatedViewAttribute>
       <calculatedViewAttribute id="YFZKZZL_DY" datatype="DECIMAL" length="20" scale="7" expressionLanguage="SQL">
-        <formula>(&quot;YYCB_DY_JE&quot;+&quot;CHYE_DY_JE&quot;+&quot;CHYE_SY_JE&quot;)/nullif((0.5*(&quot;YFZKYE_SY_JE&quot;+&quot;YFZKYE_DY_JE&quot;)),0)</formula>
+        <formula>(&quot;YYCB_DY_JE&quot;+&quot;CHYE_DY_JE&quot;-&quot;CHYE_SY_JE&quot;)/nullif((0.5*(&quot;YFZKYE_SY_JE&quot;+&quot;YFZKYE_DY_JE&quot;)),0)</formula>
       </calculatedViewAttribute>
       <calculatedViewAttribute id="YFZKZZL_SY" datatype="DECIMAL" length="20" scale="7" expressionLanguage="SQL">
-        <formula>(&quot;YYCB_SY_JE&quot;+&quot;CHYE_SY_JE&quot;+&quot;CHYE_S2Y_JE&quot;)/nullif((0.5*(&quot;YFZKYE_S2Y_JE&quot;+&quot;YFZKYE_SY_JE&quot;)),0)</formula>
+        <formula>(&quot;YYCB_SY_JE&quot;+&quot;CHYE_SY_JE&quot;-&quot;CHYE_S2Y_JE&quot;)/nullif((0.5*(&quot;YFZKYE_S2Y_JE&quot;+&quot;YFZKYE_SY_JE&quot;)),0)</formula>
       </calculatedViewAttribute>
       <calculatedViewAttribute id="YFZKZZL_SNTQ_DY" datatype="DECIMAL" length="20" scale="7" expressionLanguage="SQL">
-        <formula>(&quot;YYCB_SNTQ_DY_JE&quot;+&quot;CHYE_SNTQ_DY_JE&quot;+&quot;CHYE_SNTQ_SY_JE&quot;)/nullif((0.5*(&quot;YFZKYE_SNTQ_SY_JE&quot;+&quot;YFZKYE_SNTQ_DY_JE&quot;)),0)</formula>
+        <formula>(&quot;YYCB_SNTQ_DY_JE&quot;+&quot;CHYE_SNTQ_DY_JE&quot;-&quot;CHYE_SNTQ_SY_JE&quot;)/nullif((0.5*(&quot;YFZKYE_SNTQ_SY_JE&quot;+&quot;YFZKYE_SNTQ_DY_JE&quot;)),0)</formula>
       </calculatedViewAttribute>
       <calculatedViewAttribute id="YFZKZZL_LJ" datatype="DECIMAL" length="20" scale="7" expressionLanguage="SQL">
-        <formula>(&quot;YYCB_LJ_JE&quot;+&quot;CHYE_DY_JE&quot;+&quot;CHYE_SNNM_JE&quot;)/nullif((0.5*(&quot;YFZKYE_SNNM_JE&quot;+&quot;YFZKYE_DY_JE&quot;)),0)</formula>
+        <formula>(&quot;YYCB_LJ_JE&quot;+&quot;CHYE_DY_JE&quot;-&quot;CHYE_SNNM_JE&quot;)/nullif((0.5*(&quot;YFZKYE_SNNM_JE&quot;+&quot;YFZKYE_DY_JE&quot;)),0)</formula>
       </calculatedViewAttribute>
       <calculatedViewAttribute id="YFZKZZL_SNTQ_LJ" datatype="DECIMAL" length="20" scale="7" expressionLanguage="SQL">
-        <formula>(&quot;YYCB_SNTQ_LJ_JE&quot;+&quot;CHYE_SNTQ_DY_JE&quot;+&quot;CHYE_SNTQ_SNNM_JE&quot;)/nullif((0.5*(&quot;YFZKYE_SNTQ_SNNM_JE&quot;+&quot;YFZKYE_SNTQ_DY_JE&quot;)),0)</formula>
+        <formula>(&quot;YYCB_SNTQ_LJ_JE&quot;+&quot;CHYE_SNTQ_DY_JE&quot;-&quot;CHYE_SNTQ_SNNM_JE&quot;)/nullif((0.5*(&quot;YFZKYE_SNTQ_SNNM_JE&quot;+&quot;YFZKYE_SNTQ_DY_JE&quot;)),0)</formula>
       </calculatedViewAttribute>
       <calculatedViewAttribute id="YFZKZZL_DY_TB" datatype="DECIMAL" length="20" scale="7" expressionLanguage="SQL">
         <formula>(&quot;YFZKZZL_DY&quot;-&quot;YFZKZZL_SNTQ_DY&quot;)/nullif(&quot;YFZKZZL_SNTQ_DY&quot;,0)</formula>
