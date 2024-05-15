@@ -4,115 +4,115 @@
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="BL.DI.Tables.S4::T_ZSAC_CPLRB">
-    <resourceUri>BL.DI.Tables.S4::T_ZSAC_CPLRB</resourceUri>
+  <DataSource id="BL.DI.Tables.S4::T_CPDDDLRFXB">
+    <resourceUri>BL.DI.Tables.S4::T_CPDDDLRFXB</resourceUri>
   </DataSource>
 </dataSources>
 <snapshotProcedures/>
 <calculationViews/>
 
-<logicalModel id="BL.DI.Tables.S4::T_ZSAC_CPLRB">
+<logicalModel id="BL.DI.Tables.S4::T_CPDDDLRFXB">
   <attributes>
     <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="客户端"/>
-      <keyMapping columnObjectName="T_ZSAC_CPLRB" columnName="MANDT"/>
+      <keyMapping columnObjectName="T_CPDDDLRFXB" columnName="MANDT"/>
     </attribute>
     <attribute id="GJAHR" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="年度"/>
-      <keyMapping columnObjectName="T_ZSAC_CPLRB" columnName="GJAHR"/>
+      <keyMapping columnObjectName="T_CPDDDLRFXB" columnName="GJAHR"/>
     </attribute>
     <attribute id="ZMONTH" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="期间"/>
-      <keyMapping columnObjectName="T_ZSAC_CPLRB" columnName="ZMONTH"/>
+      <keyMapping columnObjectName="T_CPDDDLRFXB" columnName="ZMONTH"/>
     </attribute>
     <attribute id="BUKRS_NAME" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="公司名称"/>
-      <keyMapping columnObjectName="T_ZSAC_CPLRB" columnName="BUKRS_NAME"/>
+      <keyMapping columnObjectName="T_CPDDDLRFXB" columnName="BUKRS_NAME"/>
     </attribute>
     <attribute id="ZCP" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="产品"/>
-      <keyMapping columnObjectName="T_ZSAC_CPLRB" columnName="ZCP"/>
+      <keyMapping columnObjectName="T_CPDDDLRFXB" columnName="ZCP"/>
     </attribute></attributes>
   <calculatedAttributes/>
   <baseMeasures>
     <measure id="MENGE" order="6" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="数量（吨）"/>
-      <measureMapping columnObjectName="T_ZSAC_CPLRB" columnName="MENGE"/>
+      <measureMapping columnObjectName="T_CPDDDLRFXB" columnName="MENGE"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZHSDJ" order="7" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="含税销价（元/吨）"/>
-      <measureMapping columnObjectName="T_ZSAC_CPLRB" columnName="ZHSDJ"/>
+      <measureMapping columnObjectName="T_CPDDDLRFXB" columnName="ZHSDJ"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZDWCB" order="8" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="单位成本（元/吨）"/>
-      <measureMapping columnObjectName="T_ZSAC_CPLRB" columnName="ZDWCB"/>
+      <measureMapping columnObjectName="T_CPDDDLRFXB" columnName="ZDWCB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZCJX_FCP" order="9" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="冲减项-副产品（元/吨）"/>
-      <measureMapping columnObjectName="T_ZSAC_CPLRB" columnName="ZCJX_FCP"/>
+      <measureMapping columnObjectName="T_CPDDDLRFXB" columnName="ZCJX_FCP"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZCJX_TK" order="10" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="冲减项-钛矿（元/吨）"/>
-      <measureMapping columnObjectName="T_ZSAC_CPLRB" columnName="ZCJX_TK"/>
+      <measureMapping columnObjectName="T_CPDDDLRFXB" columnName="ZCJX_TK"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZCJX_XJ" order="11" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="冲减项-小计（元/吨）"/>
-      <measureMapping columnObjectName="T_ZSAC_CPLRB" columnName="ZCJX_XJ"/>
+      <measureMapping columnObjectName="T_CPDDDLRFXB" columnName="ZCJX_XJ"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZCJHDWCB" order="12" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="冲减后单位成本（元/吨）"/>
-      <measureMapping columnObjectName="T_ZSAC_CPLRB" columnName="ZCJHDWCB"/>
+      <measureMapping columnObjectName="T_CPDDDLRFXB" columnName="ZCJHDWCB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZFJJFY" order="13" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="费用及附加（元/吨）"/>
-      <measureMapping columnObjectName="T_ZSAC_CPLRB" columnName="ZFJJFY"/>
+      <measureMapping columnObjectName="T_CPDDDLRFXB" columnName="ZFJJFY"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZHSWQCB" order="14" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="含税完全成本（元/吨）"/>
-      <measureMapping columnObjectName="T_ZSAC_CPLRB" columnName="ZHSWQCB"/>
+      <measureMapping columnObjectName="T_CPDDDLRFXB" columnName="ZHSWQCB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZDPJL" order="15" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="吨平净利（元/吨）"/>
-      <measureMapping columnObjectName="T_ZSAC_CPLRB" columnName="ZDPJL"/>
+      <measureMapping columnObjectName="T_CPDDDLRFXB" columnName="ZDPJL"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZJLRGX" order="16" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="净利润贡献（万元）"/>
-      <measureMapping columnObjectName="T_ZSAC_CPLRB" columnName="ZJLRGX"/>
+      <measureMapping columnObjectName="T_CPDDDLRFXB" columnName="ZJLRGX"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZCJJKJE" order="17" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="冲减铁精矿金额（元/吨）"/>
-      <measureMapping columnObjectName="T_ZSAC_CPLRB" columnName="ZCJJKJE"/>
+      <measureMapping columnObjectName="T_CPDDDLRFXB" columnName="ZCJJKJE"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZCJJKH_BHSCB" order="18" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="冲减铁精矿后-不含税成本（元/吨）"/>
-      <measureMapping columnObjectName="T_ZSAC_CPLRB" columnName="ZCJJKH_BHSCB"/>
+      <measureMapping columnObjectName="T_CPDDDLRFXB" columnName="ZCJJKH_BHSCB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZCJJKH_CPDPJLR" order="19" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="冲减铁精矿后-产品吨平净利（元/吨）"/>
-      <measureMapping columnObjectName="T_ZSAC_CPLRB" columnName="ZCJJKH_CPDPJLR"/>
+      <measureMapping columnObjectName="T_CPDDDLRFXB" columnName="ZCJJKH_CPDPJLR"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZCJJKH_CPJLR" order="20" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="冲减铁精矿后-产品净利润（万元）"/>
-      <measureMapping columnObjectName="T_ZSAC_CPLRB" columnName="ZCJJKH_CPJLR"/>
+      <measureMapping columnObjectName="T_CPDDDLRFXB" columnName="ZCJJKH_CPJLR"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZCJX_YK" order="21" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="冲减项-原矿"/>
-      <measureMapping columnObjectName="T_ZSAC_CPLRB" columnName="ZCJX_YK"/>
+      <measureMapping columnObjectName="T_CPDDDLRFXB" columnName="ZCJX_YK"/>
       <exceptionAggregationMetadata/>
     </measure>
   </baseMeasures>
