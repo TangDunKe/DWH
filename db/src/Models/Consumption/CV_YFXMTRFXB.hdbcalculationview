@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="BL.Models.Consumption::CV_YFXMTRFXB" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="研发项目投入分析表"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="BL.Models.Common::V_YFXMTRFXB">
+    <resourceUri>BL.Models.Common::V_YFXMTRFXB</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews/>
+
+<logicalModel id="BL.Models.Common::V_YFXMTRFXB">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="客户端"/>
+      <keyMapping columnObjectName="V_YFXMTRFXB" columnName="MANDT"/>
+    </attribute>
+    <attribute id="BUKRS" order="2" descriptionColumnName="BUTXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="公司编码"/>
+      <keyMapping columnObjectName="V_YFXMTRFXB" columnName="BUKRS"/>
+    </attribute>
+    <attribute id="BUTXT" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="公司名称"/>
+      <keyMapping columnObjectName="V_YFXMTRFXB" columnName="BUTXT"/>
+    </attribute>
+    <attribute id="PRCTR" order="4" descriptionColumnName="KTEXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="利润中心"/>
+      <keyMapping columnObjectName="V_YFXMTRFXB" columnName="PRCTR"/>
+    </attribute>
+    <attribute id="KTEXT" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="利润中心描述"/>
+      <keyMapping columnObjectName="V_YFXMTRFXB" columnName="KTEXT"/>
+    </attribute>
+    <attribute id="GJAHR" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="会计年度"/>
+      <keyMapping columnObjectName="V_YFXMTRFXB" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="POPER" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="会计期间"/>
+      <keyMapping columnObjectName="V_YFXMTRFXB" columnName="POPER"/>
+    </attribute>
+    <attribute id="CALMONTH" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="财务年月"/>
+      <keyMapping columnObjectName="V_YFXMTRFXB" columnName="CALMONTH"/>
+    </attribute>
+    <attribute id="SUBJECT_CODE" order="9" descriptionColumnName="SUBJECT_NAME" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="分析指标"/>
+      <keyMapping columnObjectName="V_YFXMTRFXB" columnName="SUBJECT_CODE"/>
+    </attribute>
+    <attribute id="SUBJECT_NAME" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="指标名称"/>
+      <keyMapping columnObjectName="V_YFXMTRFXB" columnName="SUBJECT_NAME"/>
+    </attribute>
+    <attribute id="WAERS" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="交易币币种"/>
+      <keyMapping columnObjectName="V_YFXMTRFXB" columnName="WAERS"/>
+    </attribute>
+    <attribute id="MONTH_AVG_EXRATE" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="当月平均汇率"/>
+      <keyMapping columnObjectName="V_YFXMTRFXB" columnName="MONTH_AVG_EXRATE"/>
+    </attribute>
+    <attribute id="YEAR_AVG_EXRATE" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="当年累计汇率"/>
+      <keyMapping columnObjectName="V_YFXMTRFXB" columnName="YEAR_AVG_EXRATE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="AMT" order="12" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="当月实际(交易币)"/>
+      <measureMapping columnObjectName="V_YFXMTRFXB" columnName="AMT"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="AMT_CNY" order="14" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="当月实际(人民币)"/>
+      <measureMapping columnObjectName="V_YFXMTRFXB" columnName="AMT_CNY"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="YFTR_RATE" order="15" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="当月占总研发投入比"/>
+      <measureMapping columnObjectName="V_YFXMTRFXB" columnName="YFTR_RATE"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="XSSR_RATE" order="16" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="当月占收入比"/>
+      <measureMapping columnObjectName="V_YFXMTRFXB" columnName="XSSR_RATE"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="CYC_AMT" order="17" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="当年累计实际(交易币)"/>
+      <measureMapping columnObjectName="V_YFXMTRFXB" columnName="CYC_AMT"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="CYC_AMT_CNY" order="19" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="当年累计实际(人民币)"/>
+      <measureMapping columnObjectName="V_YFXMTRFXB" columnName="CYC_AMT_CNY"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="CYC_YFTR_RATE" order="20" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="当年累计占总研发投入比"/>
+      <measureMapping columnObjectName="V_YFXMTRFXB" columnName="CYC_YFTR_RATE"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="CYC_XSSR_RATE" order="21" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="当年累计占收入比"/>
+      <measureMapping columnObjectName="V_YFXMTRFXB" columnName="CYC_XSSR_RATE"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  </shapes>
+</layout>
+</Calculation:scenario>
