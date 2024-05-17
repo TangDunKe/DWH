@@ -61,7 +61,7 @@
       <descriptions defaultDescription="当月平均汇率"/>
       <keyMapping columnObjectName="V_YFXMTRFXB" columnName="MONTH_AVG_EXRATE"/>
     </attribute>
-    <attribute id="YEAR_AVG_EXRATE" order="18" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="YEAR_AVG_EXRATE" order="16" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="当年累计汇率"/>
       <keyMapping columnObjectName="V_YFXMTRFXB" columnName="YEAR_AVG_EXRATE"/>
     </attribute>
@@ -78,37 +78,16 @@
       <measureMapping columnObjectName="V_YFXMTRFXB" columnName="AMT_CNY"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="YFTR_RATE" order="15" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
-      <descriptions defaultDescription="当月占总研发投入比"/>
-      <measureMapping columnObjectName="V_YFXMTRFXB" columnName="YFTR_RATE"/>
-      <exceptionAggregationMetadata/>
-    </measure>
-    <measure id="XSSR_RATE" order="16" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
-      <descriptions defaultDescription="当月占收入比"/>
-      <measureMapping columnObjectName="V_YFXMTRFXB" columnName="XSSR_RATE"/>
-      <exceptionAggregationMetadata/>
-    </measure>
-    <measure id="CYC_AMT" order="17" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="CYC_AMT" order="15" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="当年累计实际(交易币)"/>
       <measureMapping columnObjectName="V_YFXMTRFXB" columnName="CYC_AMT"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="CYC_AMT_CNY" order="19" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="CYC_AMT_CNY" order="17" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="当年累计实际(人民币)"/>
       <measureMapping columnObjectName="V_YFXMTRFXB" columnName="CYC_AMT_CNY"/>
       <exceptionAggregationMetadata/>
-    </measure>
-    <measure id="CYC_YFTR_RATE" order="20" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
-      <descriptions defaultDescription="当年累计占总研发投入比"/>
-      <measureMapping columnObjectName="V_YFXMTRFXB" columnName="CYC_YFTR_RATE"/>
-      <exceptionAggregationMetadata/>
-    </measure>
-    <measure id="CYC_XSSR_RATE" order="21" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
-      <descriptions defaultDescription="当年累计占收入比"/>
-      <measureMapping columnObjectName="V_YFXMTRFXB" columnName="CYC_XSSR_RATE"/>
-      <exceptionAggregationMetadata/>
-    </measure>
-  </baseMeasures>
+    </measure></baseMeasures>
   <calculatedMeasures/>
   <restrictedMeasures/>
   <localDimensions/>
@@ -116,7 +95,9 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="40" y="85"/>
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
     </shape>
     
   </shapes>
