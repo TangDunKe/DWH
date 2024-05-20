@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="BL.Models.Consumption::CV_ZDGZCPXSFXKB" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="重点关注产品销售分析看板"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="BL.DI.Tables.S4::T_ZDGZCPXSFXKB">
+    <resourceUri>BL.DI.Tables.S4::T_ZDGZCPXSFXKB</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews/>
+
+<logicalModel id="BL.DI.Tables.S4::T_ZDGZCPXSFXKB">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="客户端"/>
+      <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="MANDT"/>
+    </attribute>
+    <attribute id="VERSION" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="预算版本"/>
+      <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="VERSION"/>
+    </attribute>
+    <attribute id="BUKRS" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="公司代码"/>
+      <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="BUKRS"/>
+    </attribute>
+    <attribute id="GJAHR" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="会计年度"/>
+      <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="MONAT" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="期间"/>
+      <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="MONAT"/>
+    </attribute>
+    <attribute id="ZCPM" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="产品名称"/>
+      <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="ZCPM"/>
+    </attribute>
+    <attribute id="PRCTR" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="利润中心"/>
+      <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="PRCTR"/>
+    </attribute>
+    <attribute id="VKBUR" order="8" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="BEZEI">
+      <descriptions defaultDescription="销售办公室"/>
+      <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="VKBUR"/>
+    </attribute>
+    <attribute id="BEZEI" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="销售办事处描述"/>
+      <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="BEZEI"/>
+    </attribute>
+    <attribute id="KATR4" order="10" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="VTEXT4">
+      <descriptions defaultDescription="客户类型"/>
+      <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="KATR4"/>
+    </attribute>
+    <attribute id="VTEXT4" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="客户类型描述"/>
+      <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="VTEXT4"/>
+    </attribute>
+    <attribute id="KATR2" order="12" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="VTEXT2">
+      <descriptions defaultDescription="集团客户"/>
+      <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="KATR2"/>
+    </attribute>
+    <attribute id="VTEXT2" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="集团客户名称"/>
+      <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="VTEXT2"/>
+    </attribute>
+    <attribute id="NAME1" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="客户名称"/>
+      <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="NAME1"/>
+    </attribute>
+    <attribute id="MATKL" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="物料组"/>
+      <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="MATKL"/>
+    </attribute>
+    <attribute id="ZMLL" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="毛利率"/>
+      <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="ZMLL"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="ZXL" order="16" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="销量"/>
+      <measureMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="ZXL"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="ZJHXL" order="17" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="计划销量"/>
+      <measureMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="ZJHXL"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="ZXSDJHS" order="18" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="销售单价含税"/>
+      <measureMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="ZXSDJHS"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="ZXSSR" order="20" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="销售收入"/>
+      <measureMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="ZXSSR"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="ZXSCB" order="21" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="销售成本"/>
+      <measureMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="ZXSCB"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  </shapes>
+</layout>
+</Calculation:scenario>

@@ -1,85 +1,303 @@
 VIEW "BL.Models.Common::V_MRMLFXB_CWKJ_ACTUAL_DETAILS"
 AS 
 
-WITH LIST AS (
-SELECT LIST.MANDT,        --客户端    
-       LIST.DATUM,        --日期
-       LIST.BUKRS,        --法人组织
-       LIST.BUKRS_TXT,
-       LIST.PRCTR,        --利润中心
-       LIST.PRCTR_TXT,
-       LIST.MATKL_TYP,    --产品类型
-       LIST.MATKL_TYP_TXT,
-       LIST.MATKL,        --产品牌号
-       LIST.MATKL_TXT,
-       LIST.VKBUR,        --销售办事处
-       LIST.VKBUR_TXT,
-       LIST.KATR4,        --客户类型
-       LIST.KATR4_TXT,
-       LIST.KATR2,        --集团客户
-       LIST.KATR2_TXT,
-       LIST.KUNNR,        --客户
-       LIST.KUNNR_TXT,
-       LIST.WAERS,        --货币
-       LIST.INDIC,        --数据标识
-       LIST.PLN_VER,      --预算版本
-       LIST.ANL_TYP,      --分析指标
-       LIST.HSL_DAY,      --当日实际
-       LIST.HSL_SUM,      --当月累计实际
-       LIST.HSL_PLN,      --当月计划
-       CASE WHEN LIST.BUKRS IN ('2050', '2060', '2070') THEN EXRATE.DATE_POINT_EXRATE ELSE 1 END AS DATE_POINT_EXRATE, --当日汇率
-       CASE WHEN LIST.BUKRS IN ('2050', '2060', '2070') THEN EXRATE.MONTH_AVG_EXRATE ELSE 1 END AS MONTH_AVG_EXRATE   --当月累计平均汇率
-  FROM "BL.DI.Tables.S4::T_MRMLFXB" AS LIST
-  LEFT JOIN "BL.Models.Basic::V_EXCHANGERATES_DATE" AS EXRATE
-    ON EXRATE.MANDT = LIST.MANDT
-   AND EXRATE.FCURR = LIST.WAERS
-   AND EXRATE.CALDATE = LIST.DATUM
-   AND EXRATE.KURST = 'M'
-   AND EXRATE.TCURR = 'CNY'
-)
+WITH LIST_DATE AS (
+SELECT MANDT,
+       DATE,
+       BUKRS,
+       PRCTR,
+       VKBUR,
+       KATR4,
+       VTEXT4,
+       KATR2,
+       VTEXT2,
+       KUNNR,
+       NAME1,
+       MATKL,
+	   
+       --附加指标
+       SUM(ZXSSR + ZGNFL) AS ZCAL_MXSZE,                                                                                --毛销售总额 = 销售收入 + 销售收入-国内返利
+       SUM(ZGNFL) AS ZCAL_JFL,                                                                                          --减：返利
+       SUM(ZXSSR) AS ZCAL_JXSZR,                                                                                        --净销售总额
+       SUM(ZXSCB) AS ZCAL_JXSCB,                                                                                        --减：销售成本
+       SUM(ZYJ) AS ZCAL_JYJ,                                                                                            --减：佣金
+       SUM(ZXSSR - ZXSCB -ZYJ) AS ZCAL_XSMLE1,                                                                          --销售毛利额1
+       CAST(ROUND(SUM(ZXSSR - ZXSCB - ZYJ) / NULLIF(SUM(ZXSSR + ZGNFL), 0) * 100, 2) AS DECIMAL(23, 2)) AS ZCAL_XSMLL1, --销售毛利率1 = (销售收入 - 销售成本 - 出口费用-佣金) / (销售收入 + 销售收入-国内返利)
+       SUM(ZNXYF + ZCKYF + ZCKGZF) AS ZCAL_JYZF,                                                                        --减：运杂费 = 内销运费 + 出口运费 + 出口港杂费
+       SUM((ZXSSR - ZXSCB - ZYJ) - (ZNXYF + ZCKYF + ZCKGZF)) AS ZCAL_XSMLE2,                                            --销售毛利额2 = (销售收入 - 销售成本 - 出口费用-佣金) - (内销运费 + 出口运费 + 出口港杂费)
+       CAST(ROUND(SUM((ZXSSR - ZXSCB - ZYJ) - (ZNXYF + ZCKYF + ZCKGZF)) / NULLIF(SUM(ZXSSR + ZGNFL), 0) * 100, 2) AS DECIMAL(23, 2)) AS ZCAL_XSMLL2  --销售毛利率2
+  FROM "BL.DI.Tables.S4::T_ZFIR041_DATE"
+ WHERE TYPE = 'DATE'
+   AND BLART = 'Z1'
+ GROUP BY MANDT, DATE, BUKRS, PRCTR, VKBUR, KATR4, VTEXT4, KATR2, VTEXT2, KUNNR, NAME1, MATKL
+),
 
-SELECT MANDT,        --客户端    
-       DATUM,        --日期
-       BUKRS,        --法人组织
-       BUKRS_TXT,
-       PRCTR,        --利润中心
-       PRCTR_TXT,
-       MATKL_TYP,    --产品类型
-       MATKL_TYP_TXT,
-       MATKL,        --产品牌号
-       MATKL_TXT,
-       VKBUR,        --销售办事处
-       VKBUR_TXT,
-       KATR4,        --客户类型
-       KATR4_TXT,
-       KATR2,        --集团客户
-       KATR2_TXT,
-       KUNNR,        --客户
-       KUNNR_TXT,
-       WAERS,        --货币
-       INDIC,        --数据标识
-       PLN_VER,      --预算版本
-       ANL_TYP,      --分析指标
-       CAST(MAP(ANL_TYP, 'INCOME_T',   '毛利销售总额',
-                         'REBATE',     '减:返利',
-                         'INCOME',     '净销售总额',
-                         'ADJ_COST',   '减:调整后销售成本',
-                         'COMMISSION', '减:佣金',
-                         'INCOME_GR1', '销售毛利额1',
-                         'INCOME_RA1', '销售毛利率1(%)',
-                         'INCOME_GR2', '销售毛利额2',
-                         'INCOME_RA2', '销售毛利率2(%)',
-                         'TR_EXPENSE', '减:运杂费',
-                         'COST',       '销售成本',
-                         'EXP_DOM_TR', '主营业务成本内销运费',
-                         'EXP_EXP_TR', '主营业务成本出口运费',
-                         'EXP_EXP_PO', '主营业务成本出口港杂费') AS NVARCHAR(50)) AS ANL_TYP_TXT,
-       HSL_DAY,      --当日实际(交易币)
-       HSL_SUM,      --当月累计实际(交易币)
-       HSL_PLN,      --当月计划(交易币)
-       DATE_POINT_EXRATE, --当日汇率
-       MONTH_AVG_EXRATE,  --当月累计平均汇率
-       CAST(ROUND(HSL_DAY * DATE_POINT_EXRATE, 2) AS DECIMAL(23, 2)) AS HSL_DAY_CNY, --当日实际(人民币)
-       CAST(ROUND(HSL_SUM * MONTH_AVG_EXRATE, 2) AS DECIMAL(23, 2)) AS HSL_SUM_CNY,  --当月累计实际(人民币)
-       HSL_PLN AS HSL_PLN_CNY --当月计划(人民币)
-  FROM LIST;
+LIST_DATE_CTR AS (
+SELECT MANDT,
+       DATE,
+       BUKRS,
+       PRCTR,
+       VKBUR,
+       KATR4,
+       VTEXT4,
+       KATR2,
+       VTEXT2,
+       KUNNR,
+       NAME1,
+       RPAD(LEFT(MATKL, 3), 9, '0') AS PORDTYPE,
+       MATKL,
+       CAST( MAP( ELEMENT_NUMBER, 1, 'ZSAC_01_MXSZE',
+                                  2, 'ZSAC_02_JFL',
+                                  3, 'ZSAC_03_JXSZR',
+                                  4, 'ZSAC_04_JXSCB',
+                                  5, 'ZSAC_05_JYJ',
+                                  6, 'ZSAC_06_XSMLE1',
+                                  7, 'ZSAC_07_XSMLL1',
+                                  8, 'ZSAC_08_JYZF',
+                                  9, 'ZSAC_09_XSMLE2',
+                                  10,'ZSAC_10_XSMLL2'
+           ) AS NVARCHAR(50)) AS SUBJECT_CODE,
+       CAST( MAP( ELEMENT_NUMBER, 1, '毛销售总额',
+                                  2, '减：返利',
+                                  3, '净销售总额',
+                                  4, '减：销售成本',
+                                  5, '减：佣金',
+                                  6, '销售毛利额1',
+                                  7, '销售毛利率1(%)',
+                                  8, '减：运杂费',
+                                  9, '销售毛利额2',
+                                  10,'销售毛利率2(%)'
+           ) AS NVARCHAR(100)) AS SUBJECT_NAME,
+       CAST( MAP( ELEMENT_NUMBER, 1, ZCAL_MXSZE,
+                                  2, ZCAL_JFL,
+                                  3, ZCAL_JXSZR,
+                                  4, ZCAL_JXSCB,
+                                  5, ZCAL_JYJ,
+                                  6, ZCAL_XSMLE1,
+                                  7, ZCAL_XSMLL1,
+                                  8, ZCAL_JYZF,
+                                  9, ZCAL_XSMLE2,
+                                  10,ZCAL_XSMLL2
+           ) AS DECIMAL(23, 2)) AS ACTUAL
+  FROM LIST_DATE,
+       SERIES_GENERATE_INTEGER(1, 13, 23)  --转换行起始列序号 至 转换行截至列序号+1
+ ORDER BY ELEMENT_NUMBER
+),
+
+LIST_MTD AS (
+SELECT MANDT,
+       DATE,
+       BUKRS,
+       PRCTR,
+       VKBUR,
+       KATR4,
+       VTEXT4,
+       KATR2,
+       VTEXT2,
+       KUNNR,
+       NAME1,
+       MATKL,
+	   
+       --附加指标
+       SUM(ZXSSR + ZGNFL) AS ZCAL_MXSZE,                                                                                --毛销售总额 = 销售收入 + 销售收入-国内返利
+       SUM(ZGNFL) AS ZCAL_JFL,                                                                                          --减：返利
+       SUM(ZXSSR) AS ZCAL_JXSZR,                                                                                        --净销售总额
+       SUM(ZXSCB) AS ZCAL_JXSCB,                                                                                        --减：销售成本
+       SUM(ZYJ) AS ZCAL_JYJ,                                                                                            --减：佣金
+       SUM(ZXSSR - ZXSCB -ZYJ) AS ZCAL_XSMLE1,                                                                          --销售毛利额1
+       CAST(ROUND(SUM(ZXSSR - ZXSCB - ZYJ) / NULLIF(SUM(ZXSSR + ZGNFL), 0) * 100, 2) AS DECIMAL(23, 2)) AS ZCAL_XSMLL1, --销售毛利率1 = (销售收入 - 销售成本 - 出口费用-佣金) / (销售收入 + 销售收入-国内返利)
+       SUM(ZNXYF + ZCKYF + ZCKGZF) AS ZCAL_JYZF,                                                                        --减：运杂费 = 内销运费 + 出口运费 + 出口港杂费
+       SUM((ZXSSR - ZXSCB - ZYJ) - (ZNXYF + ZCKYF + ZCKGZF)) AS ZCAL_XSMLE2,                                            --销售毛利额2 = (销售收入 - 销售成本 - 出口费用-佣金) - (内销运费 + 出口运费 + 出口港杂费)
+       CAST(ROUND(SUM((ZXSSR - ZXSCB - ZYJ) - (ZNXYF + ZCKYF + ZCKGZF)) / NULLIF(SUM(ZXSSR + ZGNFL), 0) * 100, 2) AS DECIMAL(23, 2)) AS ZCAL_XSMLL2  --销售毛利率2
+  FROM "BL.DI.Tables.S4::T_ZFIR041_DATE"
+ WHERE TYPE = 'MTD'
+   AND BLART = 'Z1'
+ GROUP BY MANDT, DATE, BUKRS, PRCTR, VKBUR, KATR4, VTEXT4, KATR2, VTEXT2, KUNNR, NAME1, MATKL
+),
+
+LIST_MTD_CTR AS (
+SELECT MANDT,
+       DATE,
+       BUKRS,
+       PRCTR,
+       VKBUR,
+       KATR4,
+       VTEXT4,
+       KATR2,
+       VTEXT2,
+       KUNNR,
+       NAME1,
+       RPAD(LEFT(MATKL, 3), 9, '0') AS PORDTYPE,
+       MATKL,
+       CAST( MAP( ELEMENT_NUMBER, 1, 'ZSAC_01_MXSZE',
+                                  2, 'ZSAC_02_JFL',
+                                  3, 'ZSAC_03_JXSZR',
+                                  4, 'ZSAC_04_JXSCB',
+                                  5, 'ZSAC_05_JYJ',
+                                  6, 'ZSAC_06_XSMLE1',
+                                  7, 'ZSAC_07_XSMLL1',
+                                  8, 'ZSAC_08_JYZF',
+                                  9, 'ZSAC_09_XSMLE2',
+                                  10,'ZSAC_10_XSMLL2'
+           ) AS NVARCHAR(50)) AS SUBJECT_CODE,
+       CAST( MAP( ELEMENT_NUMBER, 1, '毛销售总额',
+                                  2, '减：返利',
+                                  3, '净销售总额',
+                                  4, '减：销售成本',
+                                  5, '减：佣金',
+                                  6, '销售毛利额1',
+                                  7, '销售毛利率1(%)',
+                                  8, '减：运杂费',
+                                  9, '销售毛利额2',
+                                  10,'销售毛利率2(%)'
+           ) AS NVARCHAR(100)) AS SUBJECT_NAME,
+       CAST( MAP( ELEMENT_NUMBER, 1, ZCAL_MXSZE,
+                                  2, ZCAL_JFL,
+                                  3, ZCAL_JXSZR,
+                                  4, ZCAL_JXSCB,
+                                  5, ZCAL_JYJ,
+                                  6, ZCAL_XSMLE1,
+                                  7, ZCAL_XSMLL1,
+                                  8, ZCAL_JYZF,
+                                  9, ZCAL_XSMLE2,
+                                  10,ZCAL_XSMLL2
+           ) AS DECIMAL(23, 2)) AS CMC_ACTUAL
+  FROM LIST_MTD,
+       SERIES_GENERATE_INTEGER(1, 13, 23)  --转换行起始列序号 至 转换行截至列序号+1
+ ORDER BY ELEMENT_NUMBER
+),
+
+LIST_ALL AS (
+SELECT MANDT,
+       DATE,
+       BUKRS,
+       PRCTR,
+       VKBUR,
+       KATR4,
+       VTEXT4,
+       KATR2,
+       VTEXT2,
+       KUNNR,
+       NAME1,
+       PORDTYPE,
+       MATKL,
+       SUBJECT_CODE,
+       SUBJECT_NAME,
+       ACTUAL,
+       CAST(0 AS DECIMAL(23, 2)) AS CMC_ACTUAL
+  FROM LIST_DATE_CTR
+ 
+ UNION ALL
+ 
+SELECT MANDT,
+       DATE,
+       BUKRS,
+       PRCTR,
+       VKBUR,
+       KATR4,
+       VTEXT4,
+       KATR2,
+       VTEXT2,
+       KUNNR,
+       NAME1,
+       PORDTYPE,
+       MATKL,
+       SUBJECT_CODE,
+       SUBJECT_NAME,
+       CAST(0 AS DECIMAL(23, 2)) AS ACTUAL,
+       CMC_ACTUAL
+  FROM LIST_MTD_CTR
+),
+
+LIST_AGG AS (
+SELECT MANDT,
+       DATE,
+       BUKRS,
+       PRCTR,
+       VKBUR,
+       KATR4,
+       VTEXT4,
+       KATR2,
+       VTEXT2,
+       KUNNR,
+       NAME1,
+       PORDTYPE,
+       MATKL,
+       SUBJECT_CODE,
+       SUBJECT_NAME,
+       SUM(ACTUAL) AS ACTUAL,
+       SUM(CMC_ACTUAL) AS CMC_ACTUAL
+  FROM LIST_ALL
+ GROUP BY MANDT,
+          DATE,
+          BUKRS,
+          PRCTR,
+          VKBUR,
+          KATR4,
+          VTEXT4,
+          KATR2,
+          VTEXT2,
+          KUNNR,
+          NAME1,
+          PORDTYPE,
+          MATKL,
+          SUBJECT_CODE,
+          SUBJECT_NAME
+)
+	   
+SELECT LIST.MANDT,                  --客户端
+       LIST.DATE,                   --过账日期
+       LIST.BUKRS,                  --法人组织(公司代码)
+       T001.BUTXT,                  --公司名称
+       LIST.PRCTR,                  --利润中心
+       CEPC.KTEXT,                  --利润中心名称
+       LIST.VKBUR,                  --销售办事处
+       TVKBT.BEZEI,                 --销售办事处名称
+       LIST.KATR4,                  --客户类型
+       LIST.VTEXT4,                 --客户类型描述
+       LIST.KATR2,                  --集团客户
+       LIST.VTEXT2,                 --集团客户描述
+       LIST.KUNNR,                  --客户编码
+       LIST.NAME1,                  --客户名称
+       LIST.PORDTYPE,               --产品类型
+       MATGROUP1.WGBEZ AS PRODDESC, --产品类型描述
+       LIST.MATKL,                  --产品牌号
+       MATGROUP2.WGBEZ,             --产品牌号描述
+       LIST.SUBJECT_CODE,           --指标编码
+       LIST.SUBJECT_NAME,           --指标名称
+       LIST.ACTUAL,                 --当日实际(交易币)
+       LIST.CMC_ACTUAL,             --当月累计实际(交易币)
+       
+       T001.WAERS,                  --交易货币
+       MAP(T001.WAERS, 'CNY', 1, EXRATE.DATE_POINT_EXRATE) AS DATE_POINT_EXRATE,   --当日汇率
+       MAP(T001.WAERS, 'CNY', 1, EXRATE.MONTH_AVG_EXRATE) AS MONTH_AVG_EXRATE,     --当月累计平均汇率
+       CAST(MAP(T001.WAERS, 'CNY', LIST.ACTUAL, ROUND(LIST.ACTUAL * EXRATE.DATE_POINT_EXRATE, 2)) AS DECIMAL(23, 2)) AS ACTUAL_CNY,            --当日实际(人民币)
+       CAST(MAP(T001.WAERS, 'CNY', LIST.CMC_ACTUAL, ROUND(LIST.CMC_ACTUAL * EXRATE.MONTH_AVG_EXRATE, 2)) AS DECIMAL(23, 2)) AS CMC_ACTUAL_CNY  --当月累计实际(人民币)
+  FROM LIST_AGG AS LIST
+  LEFT OUTER MANY TO ONE JOIN "BL.DI.Tables.S4::T_T001" AS T001
+    ON T001.MANDT = LIST.MANDT
+   AND T001.BUKRS = LIST.BUKRS
+  LEFT OUTER MANY TO ONE JOIN "BL.DI.Tables.S4::T_CEPCT" AS CEPC
+    ON CEPC.MANDT = LIST.MANDT
+   AND CEPC.PRCTR = LIST.PRCTR
+   AND CEPC.KOKRS = MAP(T001.LAND1, 'CN', 'LBCN', 'LBHW')
+   AND CEPC.DATBI >= TO_NVARCHAR(CURRENT_DATE, 'YYYYMMDD')
+   AND CEPC.SPRAS = '1'
+  LEFT OUTER MANY TO ONE JOIN "BL.DI.Tables.S4::T_TVKBT" AS TVKBT
+    ON TVKBT.MANDT = LIST.MANDT
+   AND TVKBT.VKBUR = LIST.VKBUR
+   AND TVKBT.SPRAS = '1'
+  LEFT OUTER MANY TO ONE JOIN "BL.DI.Tables.S4::T_T023T" AS MATGROUP1
+    ON MATGROUP1.MANDT = LIST.MANDT
+   AND MATGROUP1.MATKL = LIST.PORDTYPE
+   AND MATGROUP1.SPRAS = '1'
+  LEFT OUTER MANY TO ONE JOIN "BL.DI.Tables.S4::T_T023T" AS MATGROUP2
+    ON MATGROUP2.MANDT = LIST.MANDT
+   AND MATGROUP2.MATKL = LIST.MATKL
+   AND MATGROUP2.SPRAS = '1'
+  LEFT OUTER MANY TO ONE JOIN "BL.Models.Basic::V_EXCHANGERATES_DATE" AS EXRATE
+    ON EXRATE.MANDT = LIST.MANDT
+   AND EXRATE.KURST = 'M'
+   AND EXRATE.FCURR = T001.WAERS
+   AND EXRATE.TCURR = 'CNY'
+   AND EXRATE.CALDATE = LIST.DATE;

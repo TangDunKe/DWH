@@ -21,50 +21,50 @@
       <descriptions defaultDescription="版本"/>
       <keyMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="VERSION"/>
     </attribute>
-    <attribute id="DATUM" order="3" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="日期"/>
-      <keyMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="DATUM"/>
+    <attribute id="DATE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="过账日期"/>
+      <keyMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="DATE"/>
     </attribute>
-    <attribute id="BUKRS" order="4" descriptionColumnName="BUKRS_TXT" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="BUKRS" order="4" descriptionColumnName="BUTXT" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="法人组织(公司代码)"/>
       <keyMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="BUKRS"/>
     </attribute>
-    <attribute id="BUKRS_TXT" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="BUTXT" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="公司名称"/>
-      <keyMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="BUKRS_TXT"/>
+      <keyMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="BUTXT"/>
     </attribute>
-    <attribute id="PRCTR" order="6" descriptionColumnName="PRCTR_TXT" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PRCTR" order="6" descriptionColumnName="KTEXT" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="利润中心"/>
       <keyMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="PRCTR"/>
     </attribute>
-    <attribute id="PRCTR_TXT" order="7" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="KTEXT" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="利润中心名称"/>
-      <keyMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="PRCTR_TXT"/>
+      <keyMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="KTEXT"/>
     </attribute>
-    <attribute id="ANL_TYP" order="8" descriptionColumnName="ANL_TYP_TXT" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="分析指标"/>
-      <keyMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="ANL_TYP"/>
+    <attribute id="SUBJECT_CODE" order="8" descriptionColumnName="SUBJECT_NAME" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="指标编码"/>
+      <keyMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="SUBJECT_CODE"/>
     </attribute>
-    <attribute id="ANL_TYP_TXT" order="9" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="分析指标描述"/>
-      <keyMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="ANL_TYP_TXT"/>
+    <attribute id="SUBJECT_NAME" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="指标名称"/>
+      <keyMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="SUBJECT_NAME"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="HSL_DAY_CNY" order="10" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="ACTUAL_CNY" order="10" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="当日实际(人民币)"/>
-      <measureMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="HSL_DAY_CNY"/>
+      <measureMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="ACTUAL_CNY"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="HSL_SUM_CNY" order="11" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="CMC_ACTUAL_CNY" order="11" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="当月累计实际(人民币)"/>
-      <measureMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="HSL_SUM_CNY"/>
+      <measureMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="CMC_ACTUAL_CNY"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="HSL_PLN_CNY" order="12" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
-      <descriptions defaultDescription="当月计划(人民币)"/>
-      <measureMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="HSL_PLN_CNY"/>
+    <measure id="BUDGET" order="12" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="当月预算数(人民币)"/>
+      <measureMapping columnObjectName="V_MRMLFXB_CWKJ" columnName="BUDGET"/>
       <exceptionAggregationMetadata/>
     </measure>
   </baseMeasures>

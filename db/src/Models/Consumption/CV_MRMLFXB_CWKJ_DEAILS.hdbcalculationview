@@ -11,91 +11,91 @@
 <snapshotProcedures/>
 <calculationViews/>
 
-<logicalModel id="BL.Models.Common::V_MRMLFXB_CWKJ_ACTUAL_DETAILS" filterExpressionLanguage="SQL">
+<logicalModel filterExpressionLanguage="SQL" id="BL.Models.Common::V_MRMLFXB_CWKJ_ACTUAL_DETAILS">
   <attributes>
     <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="客户端"/>
       <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="MANDT"/>
     </attribute>
-    <attribute id="DATUM" order="2" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="日期"/>
-      <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="DATUM"/>
+    <attribute id="DATE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="过账日期"/>
+      <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="DATE"/>
     </attribute>
-    <attribute id="BUKRS" order="3" descriptionColumnName="BUKRS_TXT" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="法人组织"/>
+    <attribute id="BUKRS" order="3" descriptionColumnName="BUTXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="法人组织(公司代码)"/>
       <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="BUKRS"/>
     </attribute>
-    <attribute id="BUKRS_TXT" order="4" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="法人组织名称"/>
-      <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="BUKRS_TXT"/>
+    <attribute id="BUTXT" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="公司名称"/>
+      <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="BUTXT"/>
     </attribute>
-    <attribute id="PRCTR" order="5" descriptionColumnName="PRCTR_TXT" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PRCTR" order="5" descriptionColumnName="KTEXT" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="利润中心"/>
       <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="PRCTR"/>
     </attribute>
-    <attribute id="PRCTR_TXT" order="6" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="KTEXT" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="利润中心名称"/>
-      <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="PRCTR_TXT"/>
+      <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="KTEXT"/>
     </attribute>
-    <attribute id="MATKL_TYP" order="7" descriptionColumnName="MATKL_TYP_TXT" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="产品类型"/>
-      <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="MATKL_TYP"/>
-    </attribute>
-    <attribute id="MATKL_TYP_TXT" order="8" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="产品类型描述"/>
-      <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="MATKL_TYP_TXT"/>
-    </attribute>
-    <attribute id="MATKL" order="9" descriptionColumnName="MATKL_TXT" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="产品牌号"/>
-      <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="MATKL"/>
-    </attribute>
-    <attribute id="MATKL_TXT" order="10" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="产品牌号描述"/>
-      <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="MATKL_TXT"/>
-    </attribute>
-    <attribute id="VKBUR" order="11" descriptionColumnName="VKBUR_TXT" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="VKBUR" order="7" descriptionColumnName="BEZEI" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="销售办事处"/>
       <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="VKBUR"/>
     </attribute>
-    <attribute id="VKBUR_TXT" order="12" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="BEZEI" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="销售办事处名称"/>
-      <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="VKBUR_TXT"/>
+      <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="BEZEI"/>
     </attribute>
-    <attribute id="KATR4" order="13" descriptionColumnName="KATR4_TXT" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="KATR4" order="9" descriptionColumnName="VTEXT4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="客户类型"/>
       <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="KATR4"/>
     </attribute>
-    <attribute id="KATR4_TXT" order="14" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="VTEXT4" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="客户类型描述"/>
-      <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="KATR4_TXT"/>
+      <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="VTEXT4"/>
     </attribute>
-    <attribute id="KATR2" order="15" descriptionColumnName="KATR2_TXT" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="KATR2" order="11" descriptionColumnName="VTEXT2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="集团客户"/>
       <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="KATR2"/>
     </attribute>
-    <attribute id="KATR2_TXT" order="16" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="集团客户名称"/>
-      <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="KATR2_TXT"/>
+    <attribute id="VTEXT2" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="集团客户描述"/>
+      <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="VTEXT2"/>
     </attribute>
-    <attribute id="KUNNR" order="17" descriptionColumnName="KUNNR_TXT" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="客户"/>
+    <attribute id="KUNNR" order="13" descriptionColumnName="NAME1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="客户编码"/>
       <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="KUNNR"/>
     </attribute>
-    <attribute id="KUNNR_TXT" order="18" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="NAME1" order="14" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="客户名称"/>
-      <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="KUNNR_TXT"/>
+      <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="NAME1"/>
     </attribute>
-    <attribute id="WAERS" order="19" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="货币"/>
+    <attribute id="PORDTYPE" order="15" descriptionColumnName="PRODDESC" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="产品类型"/>
+      <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="PORDTYPE"/>
+    </attribute>
+    <attribute id="PRODDESC" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="产品类型描述"/>
+      <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="PRODDESC"/>
+    </attribute>
+    <attribute id="MATKL" order="17" descriptionColumnName="WGBEZ" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="产品牌号"/>
+      <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="MATKL"/>
+    </attribute>
+    <attribute id="WGBEZ" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="产品牌号描述"/>
+      <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="WGBEZ"/>
+    </attribute>
+    <attribute id="SUBJECT_CODE" order="19" descriptionColumnName="SUBJECT_NAME" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="指标编码"/>
+      <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="SUBJECT_CODE"/>
+    </attribute>
+    <attribute id="SUBJECT_NAME" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="指标名称"/>
+      <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="SUBJECT_NAME"/>
+    </attribute>
+    <attribute id="WAERS" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="交易货币"/>
       <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="WAERS"/>
-    </attribute>
-    <attribute id="ANL_TYP" order="20" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="ANL_TYP_TXT">
-      <descriptions defaultDescription="分析指标"/>
-      <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="ANL_TYP"/>
-    </attribute>
-    <attribute id="ANL_TYP_TXT" order="21" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="分析指标"/>
-      <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="ANL_TYP_TXT"/>
     </attribute>
     <attribute id="DATE_POINT_EXRATE" order="24" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="当日汇率"/>
@@ -105,44 +105,33 @@
       <descriptions defaultDescription="当月累计平均汇率"/>
       <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="MONTH_AVG_EXRATE"/>
     </attribute>
-  
-    <attribute id="INDIC" order="28" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="数据标识"/>
-  
-      <keyMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="INDIC"/>
-  
-    </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="HSL_DAY" order="22" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="ACTUAL" order="21" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="当日实际(交易币)"/>
-      <measureMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="HSL_DAY"/>
+      <measureMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="ACTUAL"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="HSL_SUM" order="23" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="CMC_ACTUAL" order="22" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="当月累计实际(交易币)"/>
-      <measureMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="HSL_SUM"/>
+      <measureMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="CMC_ACTUAL"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="HSL_DAY_CNY" order="26" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="ACTUAL_CNY" order="26" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="当日实际(人民币)"/>
-      <measureMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="HSL_DAY_CNY"/>
+      <measureMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="ACTUAL_CNY"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="HSL_SUM_CNY" order="27" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="CMC_ACTUAL_CNY" order="27" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="当月累计实际(人民币)"/>
-      <measureMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="HSL_SUM_CNY"/>
+      <measureMapping columnObjectName="V_MRMLFXB_CWKJ_ACTUAL_DETAILS" columnName="CMC_ACTUAL_CNY"/>
       <exceptionAggregationMetadata/>
-    </measure></baseMeasures>
+    </measure>
+  </baseMeasures>
   <calculatedMeasures/>
   <restrictedMeasures/>
-  <localDimensions/>
-
-
-  <filter>&quot;INDIC&quot; = 'ACTU'</filter>
-
-</logicalModel>
+  <localDimensions/></logicalModel>
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">

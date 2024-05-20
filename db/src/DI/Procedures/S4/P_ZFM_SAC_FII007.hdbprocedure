@@ -102,6 +102,32 @@ BEGIN
                                                        EV_MESSAGE => V_MESSAGE,
                                                        EV_TYPE => V_TYPE
                                                      );
+      IF :V_TYPE = 'S' THEN
+        
+        --重点关注产品销售分析看板
+        CALL "BL.DI.VirtualProcedure::V_ZFM_SAC_FII008"( IR_BUKRS => :LT_COMP_LIST,
+        	                                               IV_GJAHR => :V_GJAHR,
+        	                                               IV_MONAT => :V_POPER,
+        	                                               ET_OUTPUT => LT_RESULT_ZDGZCPXSFXKB,
+        	                                               EV_MESSAGE => V_MESSAGE,
+        	                                               EV_TYPE => V_TYPE
+                                                       );
+        
+      END IF;
+      
+      IF :V_TYPE = 'S' THEN
+        
+        --钛白粉销售分析看板
+        CALL "BL.DI.VirtualProcedure::V_ZFM_SAC_FII009"( IR_BUKRS => :LT_COMP_LIST,
+                                                         IV_BUDAT_HIGH => :V_BUDAT_HIGH,
+                                                         IV_BUDAT_LOW => :V_BUDAT_LOW,
+                                                         IV_GJAHR => :V_GJAHR,
+                                                         ET_OUTPUT => LT_RESULT_TBFXSFXKB,
+                                                         EV_MESSAGE => V_MESSAGE,
+                                                         EV_TYPE => V_TYPE
+                                                       );
+        
+      END IF;
       
       SELECT COUNT(1) AS NUM INTO V_RECORDS FROM :LT_RESULT;
       V_END_TIME := UTCTOLOCAL(CURRENT_TIMESTAMP, 'Asia/Beijing');
@@ -113,7 +139,11 @@ BEGIN
       IF :V_STATUS = 'S' THEN
         
         DELETE FROM "BL.DI.Tables.S4::T_ZFIR041" WHERE GJAHR = :V_GJAHR AND POPER = LPAD(:V_POPER, 3, '0');
+        DELETE FROM "BL.DI.Tables.S4::T_ZDGZCPXSFXKB" WHERE GJAHR = :V_GJAHR AND MONAT = LPAD(:V_POPER, 3, '0');
+        DELETE FROM "BL.DI.Tables.S4::T_TBFXSFXKB" WHERE GJAHR = :V_GJAHR AND POPER = LPAD(:V_POPER, 3, '0');
         INSERT INTO "BL.DI.Tables.S4::T_ZFIR041" SELECT * FROM :LT_RESULT;
+        INSERT INTO "BL.DI.Tables.S4::T_ZDGZCPXSFXKB" SELECT * FROM :LT_RESULT_ZDGZCPXSFXKB;
+        INSERT INTO "BL.DI.Tables.S4::T_TBFXSFXKB" SELECT * FROM :LT_RESULT_TBFXSFXKB;
         
       END IF;
       

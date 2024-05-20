@@ -1,189 +1,240 @@
 VIEW "BL.Models.Consumption::V_MRMLFXB_CWKJ"
-AS
+AS 
 
 WITH ACTUAL_AGG AS (
-SELECT MANDT,        --客户端
-       DATUM,        --日期
-       LEFT(DATUM, 6) AS CALMONTH, --会计年月
-       BUKRS,        --法人组织
-       BUKRS_TXT,
-       ANL_TYP,      --分析指标
-       ANL_TYP_TXT,
-       SUM(HSL_DAY_CNY) AS HSL_DAY_CNY,  --当日实际(人民币)
-       SUM(HSL_SUM_CNY) AS HSL_SUM_CNY   --当月累计实际(人民币)
-  FROM "BL.Models.Common::V_MRMLFXB_CWKJ_ACTUAL_DETAILS" 
- WHERE INDIC = 'ACTU'
-   AND ANL_TYP NOT IN ('INCOME_RA1', 'INCOME_RA2')
- GROUP BY MANDT, DATUM, BUKRS, BUKRS_TXT, ANL_TYP, ANL_TYP_TXT
+SELECT MANDT,                                   --客户端
+       DATE,                                    --过账日期
+       BUKRS,                                   --法人组织(公司代码)
+       BUTXT,                                   --公司名称
+       --PRCTR,                                 --利润中心
+       --KTEXT,                                 --利润中心名称
+       SUBJECT_CODE,                            --指标编码
+       SUBJECT_NAME,                            --指标名称
+       SUM(ACTUAL_CNY) AS ACTUAL_CNY,           --当日实际(人民币)
+       SUM(CMC_ACTUAL_CNY) AS CMC_ACTUAL_CNY    --当月累计实际(人民币)
+  FROM "BL.Models.Common::V_MRMLFXB_CWKJ_ACTUAL_DETAILS"
+ WHERE SUBJECT_CODE NOT IN ('ZSAC_07_XSMLL1', 'ZSAC_10_XSMLL2')
+ GROUP BY MANDT,
+          DATE,
+          BUKRS,
+          BUTXT,
+          --PRCTR,
+          --KTEXT,
+          SUBJECT_CODE,
+          SUBJECT_NAME
 ),
 
 ACTUAL_XSMLL AS (
 SELECT MANDT,
-       DATUM,
+       DATE,
        BUKRS,
-       BUKRS_TXT,
-       ANL_TYP,
-       ANL_TYP_TXT,
-       HSL_DAY_CNY,
-       HSL_SUM_CNY
+       BUTXT,
+       --PRCTR,
+       --KTEXT,
+       SUBJECT_CODE,
+       SUBJECT_NAME,
+       ACTUAL_CNY,
+       CMC_ACTUAL_CNY
   FROM ACTUAL_AGG
  
  UNION ALL
  
 SELECT XSMLE1.MANDT,
-       XSMLE1.DATUM,
+       XSMLE1.DATE,
        XSMLE1.BUKRS,
-       XSMLE1.BUKRS_TXT,
-       CAST('INCOME_RA1' AS NVARCHAR(50)) AS ANL_TYP,
-       CAST('销售毛利率1(%)' AS NVARCHAR(100)) AS ANL_TYP_TXT,
-       CAST(ROUND(XSMLE1.HSL_DAY_CNY / NULLIF(MXSZE.HSL_DAY_CNY, 0) * 100, 2) AS DECIMAL(23, 2)) AS HSL_DAY_CNY,
-       CAST(ROUND(XSMLE1.HSL_SUM_CNY / NULLIF(MXSZE.HSL_SUM_CNY, 0) * 100, 2) AS DECIMAL(23, 2)) AS HSL_SUM_CNY
+       XSMLE1.BUTXT,
+       --XSMLE1.PRCTR,
+       --XSMLE1.KTEXT,
+       CAST('ZSAC_07_XSMLL1' AS NVARCHAR(50)) AS SUBJECT_CODE,
+       CAST('销售毛利率1(%)' AS NVARCHAR(100)) AS SUBJECT_NAME,
+       CAST(ROUND(XSMLE1.ACTUAL_CNY / NULLIF(MXSZE.ACTUAL_CNY, 0) * 100, 2) AS DECIMAL(23, 2)) AS ACTUAL_CNY,
+       CAST(ROUND(XSMLE1.CMC_ACTUAL_CNY / NULLIF(MXSZE.CMC_ACTUAL_CNY, 0) * 100, 2) AS DECIMAL(23, 2)) AS CMC_ACTUAL_CNY
   FROM ACTUAL_AGG AS XSMLE1
-  LEFT OUTER JOIN ACTUAL_AGG AS MXSZE
+  LEFT JOIN ACTUAL_AGG AS MXSZE
     ON MXSZE.MANDT = XSMLE1.MANDT
-   AND MXSZE.DATUM = XSMLE1.DATUM
+   AND MXSZE.DATE = XSMLE1.DATE
    AND MXSZE.BUKRS = XSMLE1.BUKRS
-   AND MXSZE.ANL_TYP = 'INCOME_T'
- WHERE XSMLE1.ANL_TYP = 'INCOME_GR1'
+   --AND MXSZE.PRCTR = XSMLE1.PRCTR
+   AND MXSZE.SUBJECT_CODE = 'ZSAC_01_MXSZE'
+ WHERE XSMLE1.SUBJECT_CODE = 'ZSAC_06_XSMLE1'
  
  UNION ALL
  
 SELECT XSMLE2.MANDT,
-       XSMLE2.DATUM,
+       XSMLE2.DATE,
        XSMLE2.BUKRS,
-       XSMLE2.BUKRS_TXT,
-       CAST('INCOME_RA2' AS NVARCHAR(50)) AS ANL_TYP,
-       CAST('销售毛利率2(%)' AS NVARCHAR(100)) AS ANL_TYP_TXT,
-       CAST(ROUND(XSMLE2.HSL_DAY_CNY / NULLIF(MXSZE.HSL_DAY_CNY, 0) * 100, 2) AS DECIMAL(23, 2)) AS HSL_DAY_CNY,
-       CAST(ROUND(XSMLE2.HSL_SUM_CNY / NULLIF(MXSZE.HSL_SUM_CNY, 0) * 100, 2) AS DECIMAL(23, 2)) AS HSL_SUM_CNY
+       XSMLE2.BUTXT,
+       --XSMLE2.PRCTR,
+       --XSMLE2.KTEXT,
+       CAST('ZSAC_10_XSMLL2' AS NVARCHAR(50)) AS SUBJECT_CODE,
+       CAST('销售毛利率2(%)' AS NVARCHAR(100)) AS SUBJECT_NAME,
+       CAST(ROUND(XSMLE2.ACTUAL_CNY / NULLIF(MXSZE.ACTUAL_CNY, 0) * 100, 2) AS DECIMAL(23, 2)) AS ACTUAL_CNY,
+       CAST(ROUND(XSMLE2.CMC_ACTUAL_CNY / NULLIF(MXSZE.CMC_ACTUAL_CNY, 0) * 100, 2) AS DECIMAL(23, 2)) AS CMC_ACTUAL_CNY
   FROM ACTUAL_AGG AS XSMLE2
-  LEFT OUTER JOIN ACTUAL_AGG AS MXSZE
+  LEFT JOIN ACTUAL_AGG AS MXSZE
     ON MXSZE.MANDT = XSMLE2.MANDT
-   AND MXSZE.DATUM = XSMLE2.DATUM
+   AND MXSZE.DATE = XSMLE2.DATE
    AND MXSZE.BUKRS = XSMLE2.BUKRS
-   AND MXSZE.ANL_TYP = 'INCOME_T'
- WHERE XSMLE2.ANL_TYP = 'INCOME_GR2'
-),
-
-BUDGET AS (
-SELECT MANDT,        --客户端
-       PLN_VER,      --预算版本
-       DATUM,        --日期
-       LEFT(DATUM, 6) AS CALMONTH, --会计年月
-       BUKRS,        --法人组织
-       BUKRS_TXT,
-       ANL_TYP,      --分析指标
-       ANL_TYP_TXT,
-       SUM(HSL_PLN_CNY) AS HSL_PLN_CNY --当月计划(人民币)
-  FROM "BL.Models.Common::V_MRMLFXB_CWKJ_ACTUAL_DETAILS"
- WHERE INDIC = 'PLAN'
-   AND ANL_TYP NOT IN ('INCOME_RA1', 'INCOME_RA2')
- GROUP BY MANDT, PLN_VER, DATUM, BUKRS, BUKRS_TXT, ANL_TYP, ANL_TYP_TXT
+   --AND MXSZE.PRCTR = XSMLE2.PRCTR
+   AND MXSZE.SUBJECT_CODE = 'ZSAC_01_MXSZE'
+ WHERE XSMLE2.SUBJECT_CODE = 'ZSAC_09_XSMLE2'
 ),
 
 BUDGET_AGG AS (
-SELECT BUDGET.MANDT,        --客户端
-       BUDGET.PLN_VER,      --预算版本
-       DATE_LIST.DATE_SAP AS DATUM, --日期
-       BUDGET.BUKRS,        --法人组织
-       BUDGET.BUKRS_TXT,
-       BUDGET.ANL_TYP,      --分析指标
-       BUDGET.ANL_TYP_TXT,
-       BUDGET.HSL_PLN_CNY   --当月计划(人民币)
-  FROM BUDGET
- INNER JOIN "BL.DI.Tables.S4::T_TIME_DIMENSION" AS DATE_LIST
-    ON DATE_LIST.CALMONTH = BUDGET.CALMONTH
+SELECT MANDT,                         --客户端
+       VERSION,                       --版本
+       GJAHR,                         --会计年度
+       POPER,                         --期间
+       CALMONTH,                      --会计年月
+       DATE,                          --过账日期
+       BUKRS,                         --法人组织(公司代码)
+       BUTXT,                         --公司名称
+       --PRCTR,                         --利润中心
+       --KTEXT,                         --利润中心名称
+       MAP(SUBJECT_CODE, 'ZCAL_MXSZE',  'ZSAC_01_MXSZE',
+                         'ZCAL_JFL',    'ZSAC_02_JFL',
+                         'ZCAL_JXSZR',  'ZSAC_03_JXSZR',
+                         'ZCAL_JXSCB',  'ZSAC_04_JXSCB',
+                         'ZCAL_JYJ',    'ZSAC_05_JYJ',
+                         'ZCAL_XSMLE1', 'ZSAC_06_XSMLE1',
+                         'ZCAL_XSMLL1', 'ZSAC_07_XSMLL1',
+                         'ZCAL_JYZF',   'ZSAC_08_JYZF',
+                         'ZCAL_XSMLE2', 'ZSAC_09_XSMLE2',
+                         'ZCAL_XSMLL2', 'ZSAC_10_XSMLL2'
+          ) AS SUBJECT_CODE,          --指标编码
+       SUBJECT_NAME,                  --指标名称
+       SUM(BUDGET) AS BUDGET          --当月预算数
+  FROM "BL.Models.Common::V_YMMLFXB_CWKJ_BUDGET_DETAILS" AS BUDGET,
+       (SELECT MAX(DATE) AS DATE FROM ACTUAL_AGG) AS ACTUAL
+ WHERE CALMONTH = LEFT(DATE, 6)
+ GROUP BY MANDT,
+          VERSION,
+          GJAHR,
+          POPER,
+          CALMONTH,
+          DATE,
+          BUKRS,
+          BUTXT,
+          --PRCTR,
+          --KTEXT,
+          SUBJECT_INDEX,
+          SUBJECT_CODE,
+          SUBJECT_NAME
 ),
 
-BUDGET_XSMLL AS (
+BUDGET_XSMLL AS ( 
 SELECT MANDT,
-       PLN_VER,
-       DATUM,
+       VERSION,
+       GJAHR,
+       POPER,
+       CALMONTH,
+       DATE,
        BUKRS,
-       BUKRS_TXT,
-       ANL_TYP,
-       ANL_TYP_TXT,
-       HSL_PLN_CNY
+       BUTXT,
+       --PRCTR,
+       --KTEXT,
+       SUBJECT_CODE,
+       SUBJECT_NAME,
+       BUDGET
   FROM BUDGET_AGG
  
  UNION ALL
  
 SELECT XSMLE1.MANDT,
-       XSMLE1.PLN_VER,
-       XSMLE1.DATUM,
+       XSMLE1.VERSION,
+       XSMLE1.GJAHR,
+       XSMLE1.POPER,
+       XSMLE1.CALMONTH,
+       XSMLE1.DATE,
        XSMLE1.BUKRS,
-       XSMLE1.BUKRS_TXT,
-       CAST('INCOME_RA1' AS NVARCHAR(50)) AS ANL_TYP,
-       CAST('销售毛利率1(%)' AS NVARCHAR(100)) AS ANL_TYP_TXT,
-       CAST(ROUND(XSMLE1.HSL_PLN_CNY / NULLIF(MXSZE.HSL_PLN_CNY, 0) * 100, 2) AS DECIMAL(23, 2)) AS HSL_PLN_CNY
+       XSMLE1.BUTXT,
+       --XSMLE1.PRCTR,
+       --XSMLE1.KTEXT,
+       CAST('ZSAC_07_XSMLL1' AS NVARCHAR(50)) AS SUBJECT_CODE,
+       CAST('销售毛利率1(%)' AS NVARCHAR(100)) AS SUBJECT_NAME,
+       CAST(ROUND(XSMLE1.BUDGET / NULLIF(MXSZE.BUDGET, 0) * 100, 2) AS DECIMAL(23, 2)) AS BUDGET
   FROM BUDGET_AGG AS XSMLE1
-  LEFT OUTER JOIN BUDGET_AGG AS MXSZE
+  LEFT JOIN BUDGET_AGG AS MXSZE
     ON MXSZE.MANDT = XSMLE1.MANDT
-   AND MXSZE.PLN_VER = XSMLE1.PLN_VER
-   AND MXSZE.DATUM = XSMLE1.DATUM
+   AND MXSZE.VERSION = XSMLE1.VERSION
+   AND MXSZE.GJAHR = XSMLE1.GJAHR
+   AND MXSZE.POPER = XSMLE1.POPER
    AND MXSZE.BUKRS = XSMLE1.BUKRS
-   AND MXSZE.ANL_TYP = 'INCOME_T'
- WHERE XSMLE1.ANL_TYP = 'INCOME_GR1'
+   --AND MXSZE.PRCTR = XSMLE1.PRCTR
+   AND MXSZE.SUBJECT_CODE = 'ZSAC_01_MXSZE'
+ WHERE XSMLE1.SUBJECT_CODE = 'ZSAC_06_XSMLE1'
  
  UNION ALL
  
-SELECT XSMLE2.MANDT,
-       XSMLE2.PLN_VER,
-       XSMLE2.DATUM,
-       XSMLE2.BUKRS,
-       XSMLE2.BUKRS_TXT,
-       CAST('INCOME_RA2' AS NVARCHAR(50)) AS ANL_TYP,
-       CAST('销售毛利率2(%)' AS NVARCHAR(100)) AS ANL_TYP_TXT,
-       CAST(ROUND(XSMLE2.HSL_PLN_CNY / NULLIF(MXSZE.HSL_PLN_CNY, 0) * 100, 2) AS DECIMAL(23, 2)) AS HSL_PLN_CNY
-  FROM BUDGET_AGG AS XSMLE2
-  LEFT OUTER JOIN BUDGET_AGG AS MXSZE
-    ON MXSZE.MANDT = XSMLE2.MANDT
-   AND MXSZE.PLN_VER = XSMLE2.PLN_VER
-   AND MXSZE.DATUM = XSMLE2.DATUM
-   AND MXSZE.BUKRS = XSMLE2.BUKRS
-   AND MXSZE.ANL_TYP = 'INCOME_T'
- WHERE XSMLE2.ANL_TYP = 'INCOME_GR2'
+SELECT XSMLE1.MANDT,
+       XSMLE1.VERSION,
+       XSMLE1.GJAHR,
+       XSMLE1.POPER,
+       XSMLE1.CALMONTH,
+       XSMLE1.DATE,
+       XSMLE1.BUKRS,
+       XSMLE1.BUTXT,
+       --XSMLE1.PRCTR,
+       --XSMLE1.KTEXT,
+       CAST('ZSAC_10_XSMLL2' AS NVARCHAR(50)) AS SUBJECT_CODE,
+       CAST('销售毛利率2(%)' AS NVARCHAR(100)) AS SUBJECT_NAME,
+       CAST(ROUND(XSMLE1.BUDGET / NULLIF(MXSZE.BUDGET, 0) * 100, 2) AS DECIMAL(23, 2)) AS BUDGET
+  FROM BUDGET_AGG AS XSMLE1
+  LEFT JOIN BUDGET_AGG AS MXSZE
+    ON MXSZE.MANDT = XSMLE1.MANDT
+   AND MXSZE.VERSION = XSMLE1.VERSION
+   AND MXSZE.GJAHR = XSMLE1.GJAHR
+   AND MXSZE.POPER = XSMLE1.POPER
+   AND MXSZE.BUKRS = XSMLE1.BUKRS
+   --AND MXSZE.PRCTR = XSMLE1.PRCTR
+   AND MXSZE.SUBJECT_CODE = 'ZSAC_01_MXSZE'
+ WHERE XSMLE1.SUBJECT_CODE = 'ZSAC_09_XSMLE2'
 ),
 
 ACTUAL_BUDGET AS (
 SELECT MANDT,
        CAST('Actual' AS NVARCHAR(6)) AS VERSION,
-       DATUM,
+       DATE,
        BUKRS,
-       BUKRS_TXT,
-       ANL_TYP,
-       ANL_TYP_TXT,
-       HSL_DAY_CNY,
-       HSL_SUM_CNY,
-       CAST(NULL AS DECIMAL(23, 2)) AS HSL_PLN_CNY
+       BUTXT,
+       --PRCTR,
+       --KTEXT,
+       SUBJECT_CODE,
+       SUBJECT_NAME,
+       ACTUAL_CNY,
+       CMC_ACTUAL_CNY,
+       CAST(NULL AS DECIMAL(23, 2)) AS BUDGET
   FROM ACTUAL_XSMLL
  
  UNION ALL
  
 SELECT MANDT,
-       PLN_VER AS VERSION,
-       DATUM,
+       VERSION,
+       DATE,
        BUKRS,
-       BUKRS_TXT,
-       ANL_TYP,
-       ANL_TYP_TXT,
-       CAST(NULL AS DECIMAL(23, 2)) AS HSL_DAY_CNY,
-       CAST(NULL AS DECIMAL(23, 2)) AS HSL_SUM_CNY,
-       HSL_PLN_CNY
+       BUTXT,
+       --PRCTR,
+       --KTEXT,
+       SUBJECT_CODE,
+       SUBJECT_NAME,
+       CAST(NULL AS DECIMAL(23, 2)) AS ACTUAL_CNY,
+       CAST(NULL AS DECIMAL(23, 2)) AS CMC_ACTUAL_CNY,
+       BUDGET
   FROM BUDGET_XSMLL
 )
 
-SELECT MANDT,
-       VERSION,               --预算版本
-       DATUM,
-       BUKRS,
-       BUKRS_TXT,
-       CAST(NULL AS NVARCHAR(10)) AS PRCTR,        --利润中心
-       CAST(NULL AS NVARCHAR(20)) AS PRCTR_TXT,    --利润中心名称
-       ANL_TYP,               --分析指标
-       ANL_TYP_TXT,
-       HSL_DAY_CNY,           --当日实际(人民币)
-       HSL_SUM_CNY,           --当月累计实际(人民币)
-       HSL_PLN_CNY            --当月计划(人民币)
+SELECT MANDT,                                     --客户端
+       VERSION,                                   --版本
+       DATE,                                      --过账日期
+       BUKRS,                                     --法人组织(公司代码)
+       BUTXT,                                     --公司名称
+       CAST(NULL AS NVARCHAR(10)) AS PRCTR,       --利润中心
+       CAST(NULL AS NVARCHAR(20)) AS KTEXT,       --利润中心名称
+       SUBJECT_CODE,                              --指标编码
+       SUBJECT_NAME,                              --指标名称
+       SUM(ACTUAL_CNY) AS ACTUAL_CNY,             --当日实际(人民币)
+       SUM(CMC_ACTUAL_CNY) AS CMC_ACTUAL_CNY,     --当月累计实际(人民币)
+       SUM(BUDGET) AS BUDGET                      --当月预算数(人民币)
   FROM ACTUAL_BUDGET
- ORDER BY MANDT, VERSION, DATUM, BUKRS, ANL_TYP;
+ GROUP BY MANDT, VERSION, DATE, BUKRS, BUTXT, SUBJECT_CODE, SUBJECT_NAME
+ ORDER BY MANDT, VERSION, DATE, BUKRS, BUTXT, SUBJECT_CODE, SUBJECT_NAME;
