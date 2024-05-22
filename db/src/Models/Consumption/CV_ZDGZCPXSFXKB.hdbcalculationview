@@ -21,86 +21,106 @@
       <descriptions defaultDescription="预算版本"/>
       <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="VERSION"/>
     </attribute>
-    <attribute id="BUKRS" order="3" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="BUKRS" order="3" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="BUTXT">
       <descriptions defaultDescription="公司代码"/>
       <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="BUKRS"/>
     </attribute>
-    <attribute id="GJAHR" order="4" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="BUTXT" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="公司描述"/>
+      <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="BUTXT"/>
+    </attribute>
+    <attribute id="GJAHR" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="会计年度"/>
       <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="GJAHR"/>
     </attribute>
-    <attribute id="MONAT" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MONAT" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="期间"/>
       <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="MONAT"/>
     </attribute>
-    <attribute id="ZCPM" order="6" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ZCPID" order="7" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="ZCPM">
+      <descriptions defaultDescription="产品"/>
+      <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="ZCPID"/>
+    </attribute>
+    <attribute id="ZCPM" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="产品名称"/>
       <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="ZCPM"/>
     </attribute>
-    <attribute id="PRCTR" order="7" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PRCTR" order="9" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="KTEXT">
       <descriptions defaultDescription="利润中心"/>
       <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="PRCTR"/>
     </attribute>
-    <attribute id="VKBUR" order="8" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="BEZEI">
+    <attribute id="KTEXT" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="利润中心描述"/>
+      <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="KTEXT"/>
+    </attribute>
+    <attribute id="VKBUR" order="11" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="BEZEI">
       <descriptions defaultDescription="销售办公室"/>
       <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="VKBUR"/>
     </attribute>
-    <attribute id="BEZEI" order="9" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="BEZEI" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="销售办事处描述"/>
       <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="BEZEI"/>
     </attribute>
-    <attribute id="KATR4" order="10" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="VTEXT4">
+    <attribute id="KATR4" order="13" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="VTEXT4">
       <descriptions defaultDescription="客户类型"/>
       <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="KATR4"/>
     </attribute>
-    <attribute id="VTEXT4" order="11" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="VTEXT4" order="14" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="客户类型描述"/>
       <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="VTEXT4"/>
     </attribute>
-    <attribute id="KATR2" order="12" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="VTEXT2">
+    <attribute id="KATR2" order="15" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="VTEXT2">
       <descriptions defaultDescription="集团客户"/>
       <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="KATR2"/>
     </attribute>
-    <attribute id="VTEXT2" order="13" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="VTEXT2" order="16" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="集团客户名称"/>
       <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="VTEXT2"/>
     </attribute>
-    <attribute id="NAME1" order="14" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="KUNNR" order="17" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="NAME1">
+      <descriptions defaultDescription="客户"/>
+      <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="KUNNR"/>
+    </attribute>
+    <attribute id="NAME1" order="18" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="客户名称"/>
       <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="NAME1"/>
     </attribute>
-    <attribute id="MATKL" order="15" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MATKL" order="19" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="WGBEZ">
       <descriptions defaultDescription="物料组"/>
       <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="MATKL"/>
     </attribute>
-    <attribute id="ZMLL" order="19" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="毛利率"/>
-      <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="ZMLL"/>
-    </attribute>
-  </attributes>
+    <attribute id="WGBEZ" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="物料组描述"/>
+      <keyMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="WGBEZ"/>
+    </attribute></attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="ZXL" order="16" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="ZXL" order="21" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="销量"/>
       <measureMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="ZXL"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="ZJHXL" order="17" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="ZJHXL" order="22" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="计划销量"/>
       <measureMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="ZJHXL"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="ZXSDJHS" order="18" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="ZXSDJHS" order="23" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="销售单价含税"/>
       <measureMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="ZXSDJHS"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="ZXSSR" order="20" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="ZMLL" order="24" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="毛利率"/>
+      <measureMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="ZMLL"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="ZXSSR" order="25" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="销售收入"/>
       <measureMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="ZXSSR"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="ZXSCB" order="21" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="ZXSCB" order="26" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="销售成本"/>
       <measureMapping columnObjectName="T_ZDGZCPXSFXKB" columnName="ZXSCB"/>
       <exceptionAggregationMetadata/>
@@ -113,7 +133,9 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="40" y="85"/>
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
     </shape>
     
   </shapes>

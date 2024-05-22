@@ -470,46 +470,46 @@
       <viewAttribute id="LJ_DMBTR_SNTQ_Y" aggregationType="sum"/>
     </viewAttributes>
     <calculatedViewAttributes>
-      <calculatedViewAttribute id="YDFX_TB" datatype="DECIMAL" length="20" expressionLanguage="SQL">
+      <calculatedViewAttribute id="YDFX_TB" datatype="DECIMAL" length="23" expressionLanguage="SQL" scale="2">
         <formula>CASE &quot;QM_DMBTR_SNTQ&quot;
 	 WHEN 0 then 0 
 	 ELSE (&quot;QM_DMBTR&quot;-&quot;QM_DMBTR_SNTQ&quot;)/&quot;QM_DMBTR_SNTQ&quot;
  END</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="LJFX_TB" datatype="DECIMAL" length="20" expressionLanguage="SQL">
+      <calculatedViewAttribute id="LJFX_TB" datatype="DECIMAL" length="23" expressionLanguage="SQL" scale="2">
         <formula>CASE &quot;LJ_DMBTR_SNTQ&quot;
 	 WHEN 0 then 0 
 	 ELSE (&quot;LJ_DMBTR&quot;-&quot;LJ_DMBTR_SNTQ&quot;)/&quot;LJ_DMBTR_SNTQ&quot;
  END</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="YDFX_HB" datatype="DECIMAL" length="20" expressionLanguage="SQL">
+      <calculatedViewAttribute id="YDFX_HB" datatype="DECIMAL" length="23" expressionLanguage="SQL" scale="2">
         <formula>CASE &quot;QM_DMBTR_SY&quot;
 	 WHEN 0 then 0
 	 ELSE (&quot;QM_DMBTR&quot;-&quot;QM_DMBTR_SY&quot;)/&quot;QM_DMBTR_SY&quot;
  END</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="LJFX_HB" datatype="DECIMAL" length="20" expressionLanguage="SQL">
+      <calculatedViewAttribute id="LJFX_HB" datatype="DECIMAL" length="23" expressionLanguage="SQL" scale="2">
         <formula>CASE &quot;LJ_DMBTR_SY_Y&quot;
 	 WHEN 0 then 0 
 	 ELSE (&quot;LJ_DMBTR_Y&quot;-&quot;LJ_DMBTR_SY_Y&quot;)/&quot;LJ_DMBTR_SY_Y&quot;
  END</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="QM_DMBTR" datatype="DECIMAL" length="23" expressionLanguage="SQL">
+      <calculatedViewAttribute id="QM_DMBTR" datatype="DECIMAL" length="23" expressionLanguage="SQL" scale="2">
         <formula>IFNULL(&quot;QM_DMBTR_Y&quot;,0)</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="LJ_DMBTR" datatype="DECIMAL" length="23" expressionLanguage="SQL">
+      <calculatedViewAttribute id="LJ_DMBTR" datatype="DECIMAL" length="23" expressionLanguage="SQL" scale="2">
         <formula>IFNULL(&quot;LJ_DMBTR_Y&quot;,0)</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="QM_DMBTR_SY" datatype="DECIMAL" length="23" expressionLanguage="SQL">
+      <calculatedViewAttribute id="QM_DMBTR_SY" datatype="DECIMAL" length="23" expressionLanguage="SQL" scale="2">
         <formula>IFNULL(&quot;QM_DMBTR_SY_Y&quot;,0)</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="LJ_DMBTR_SY" datatype="DECIMAL" length="23" expressionLanguage="SQL">
+      <calculatedViewAttribute id="LJ_DMBTR_SY" datatype="DECIMAL" length="23" expressionLanguage="SQL" scale="2">
         <formula>IFNULL(&quot;LJ_DMBTR_SY_Y&quot;,0)</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="QM_DMBTR_SNTQ" datatype="DECIMAL" length="23" expressionLanguage="SQL">
+      <calculatedViewAttribute id="QM_DMBTR_SNTQ" datatype="DECIMAL" length="23" expressionLanguage="SQL" scale="2">
         <formula>IFNULL(&quot;QM_DMBTR_SNTQ_Y&quot;,0)</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="LJ_DMBTR_SNTQ" datatype="DECIMAL" length="23" expressionLanguage="SQL">
+      <calculatedViewAttribute id="LJ_DMBTR_SNTQ" datatype="DECIMAL" length="23" expressionLanguage="SQL" scale="2">
         <formula>IFNULL(&quot;LJ_DMBTR_SNTQ_Y&quot;,0)</formula>
       </calculatedViewAttribute>
       <calculatedViewAttribute id="FXKJ" datatype="NVARCHAR" length="30" expressionLanguage="SQL">
@@ -835,26 +835,26 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="244.19397269467316" y="112"/>
+      <upperLeftCorner x="244" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
     
   
     <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="1696.999989271164"/>
+      <upperLeftCorner x="92" y="1696"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="1696.999989271164"/>
+      <upperLeftCorner x="302" y="1696"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="113.73640027841202" y="501.9999976158142"/>
+      <upperLeftCorner x="113" y="501"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="179.4431044448259" y="1536.9999904632568"/>
+      <upperLeftCorner x="179" y="1536"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
@@ -866,19 +866,19 @@
       <rectangleSize width="155"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="179.4431044448259" y="1411.9999904632568"/>
+      <upperLeftCorner x="179" y="1411"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="179.4431044448259" y="1266.9999916553497"/>
+      <upperLeftCorner x="179" y="1266"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="148.17578112992092" y="1121.9999928474426"/>
+      <upperLeftCorner x="148" y="1121"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="379.175779937828" y="941.9999940395355"/>
+      <upperLeftCorner x="379" y="941"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
@@ -890,7 +890,7 @@
       <rectangleSize width="183"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_6" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="94.84244779658758" y="941.9999940395355"/>
+      <upperLeftCorner x="94" y="941"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
@@ -902,26 +902,26 @@
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="Union_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="264.1757805338745" y="786.9999952316284"/>
+      <upperLeftCorner x="264" y="786"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="379.7989692141039" y="641.9999964237213"/>
+      <upperLeftCorner x="379" y="641"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="169.79896921410392" y="641.9999964237213"/>
+      <upperLeftCorner x="169" y="641"/>
       <rectangleSize width="160"/>
     </shape>
   
   
   
     <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="323.736400278412" y="501.9999976158142"/>
+      <upperLeftCorner x="323" y="501"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="228.35844382719267" y="341.9999988079071"/>
+      <upperLeftCorner x="228" y="341"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Union_1" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
@@ -934,7 +934,7 @@
     </shape>
   
     <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="228.35844382719267" y="236.9999988079071"/>
+      <upperLeftCorner x="228" y="236"/>
       <rectangleSize height="30" width="160"/>
     </shape></shapes>
 </layout>

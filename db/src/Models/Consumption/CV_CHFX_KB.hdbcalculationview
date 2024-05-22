@@ -7,8 +7,8 @@
   <DataSource id="BL.DI.Tables.S4::T_ZFM_SAC_FII006">
     <resourceUri>BL.DI.Tables.S4::T_ZFM_SAC_FII006</resourceUri>
   </DataSource>
-  <DataSource id="BL.DI.Tables.S4::T_ACDOCA">
-    <resourceUri>BL.DI.Tables.S4::T_ACDOCA</resourceUri>
+  <DataSource id="BL.DI.Tables.S4::T_ACDOCA_N">
+    <resourceUri>BL.DI.Tables.S4::T_ACDOCA_N</resourceUri>
   </DataSource>
   <DataSource id="Projection_1$$$$BL.DI.Tables.S4::T_ZFM_SAC_FII006$$">
     <resourceUri>BL.DI.Tables.S4::T_ZFM_SAC_FII006</resourceUri>
@@ -30,6 +30,7 @@
       <comment text="原材料-主辅材余额 原材料-设备及五金余额"/>
     </descriptions>
     <viewAttributes>
+      <viewAttribute id="MANDT"/>
       <viewAttribute id="BDATJ"/>
       <viewAttribute id="POPER"/>
       <viewAttribute id="BWKEY"/>
@@ -37,6 +38,8 @@
       <viewAttribute id="VBELN"/>
       <viewAttribute id="PSPNR"/>
       <viewAttribute id="SALKV"/>
+    
+      <viewAttribute id="POSNR"/>
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="TIME" datatype="NVARCHAR" length="6" expressionLanguage="SQL">
@@ -62,18 +65,19 @@
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <input node="BL.DI.Tables.S4::T_ZFM_SAC_FII006"/>
-    <filter>&quot;BKLAS&quot; IN ('LB03','LB04','LB05','LB06') AND ( &quot;VBELN&quot; = '' ) AND (&quot;PSPNR&quot; = '')</filter>
+    <filter>&quot;BKLAS&quot; IN ('LB03','LB04','LB05','LB06') AND &quot;VBELN&quot; = '' AND &quot;POSNR&quot; = '000000'</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3" filterExpressionLanguage="SQL">
     <descriptions>
       <comment text="原材料余额 产成品余额 工程物资余额 在产品余额 半成品余额 产成品余额 发出商品余额 在途物资余额 周转材料余额"/>
     </descriptions>
     <viewAttributes>
+      <viewAttribute id="RCLNT"/>
       <viewAttribute id="RBUKRS"/>
       <viewAttribute id="GJAHR"/>
       <viewAttribute id="RACCT"/>
-      <viewAttribute id="HSL"/>
       <viewAttribute id="WERKS"/>
+      <viewAttribute id="HSL"/>
       <viewAttribute id="POPER"/>
     </viewAttributes>
     <calculatedViewAttributes>
@@ -87,7 +91,6 @@
 	 WHEN '1605010000' then 'ZSAC_06_03'
 	 WHEN '1409010000' then 'ZSAC_06_04'
 	 WHEN '1404010000' then 'ZSAC_06_05'
-	 WHEN '1405010000' then 'ZSAC_06_06'
 	 WHEN '1406010000' then 'ZSAC_06_07'
 	 WHEN '1402010000' then 'ZSAC_06_10'
 	 WHEN '1411010000' then 'ZSAC_06_11'
@@ -102,7 +105,6 @@
 	 WHEN '1605010000' then '工程物资'
 	 WHEN '1409010000' then '在产品'
 	 WHEN '1404010000' then '半成品'
-	 WHEN '1405010000' then '产成品'
 	 WHEN '1406010000' then '发出商品'
 	 WHEN '1402010000' then '在途物资'
 	 WHEN '1411010000' then '周转材料'
@@ -111,23 +113,15 @@
  END</formula>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
-    <input node="BL.DI.Tables.S4::T_ACDOCA"/>
-    <filter>&quot;RACCT&quot; IN(
-'1403010000',
-'1405010000',
-'1605010000',
-'1409010000',
-'1404010000',
-'1405010000',
-'1406010000',
-'1402010000',
-'1411010000','1411020000')</filter>
+    <input node="BL.DI.Tables.S4::T_ACDOCA_N"/>
+    <filter>&quot;RACCT&quot; IN('1403010000', '1405010000', '1605010000', '1409010000', '1404010000', '1406010000', '1402010000', '1411010000', '1411020000')</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
     <descriptions>
       <comment text="钛白粉库存"/>
     </descriptions>
     <viewAttributes>
+      <viewAttribute id="MANDT"/>
       <viewAttribute id="BDATJ"/>
       <viewAttribute id="POPER"/>
       <viewAttribute id="BWKEY"/>
@@ -135,6 +129,8 @@
       <viewAttribute id="PSPNR"/>
       <viewAttribute id="SALKV"/>
       <viewAttribute id="MATKL"/>
+    
+      <viewAttribute id="POSNR"/>
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="TIME" datatype="NVARCHAR" length="6" expressionLanguage="SQL">
@@ -148,10 +144,11 @@
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <input node="Projection_1$$$$BL.DI.Tables.S4::T_ZFM_SAC_FII006$$"/>
-    <filter>LEFT(&quot;MATKL&quot;,4) IN ('2010','2020') AND &quot;VBELN&quot; = '' AND &quot;PSPNR&quot; = ''</filter>
+    <filter>LEFT(&quot;MATKL&quot;,3) IN ('201','202') AND &quot;VBELN&quot; = '' AND &quot;POSNR&quot; = '000000'</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_4">
     <viewAttributes>
+      <viewAttribute id="MANDT"/>
       <viewAttribute id="WERKS"/>
       <viewAttribute id="WERKS_TXT"/>
     </viewAttributes>
@@ -162,6 +159,7 @@
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_6">
     <viewAttributes>
+      <viewAttribute id="MANDT"/>
       <viewAttribute id="BUKRS"/>
       <viewAttribute id="BUTXT"/>
     </viewAttributes>
@@ -170,14 +168,107 @@
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_7">
     <viewAttributes>
+      <viewAttribute id="MANDT"/>
       <viewAttribute id="BWKEY"/>
       <viewAttribute id="BUKRS"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="BL.DI.Tables.S4::T_T001K"/>
   </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_2">
+    <viewAttributes>
+      <viewAttribute id="RCLNT"/>
+      <viewAttribute id="WERKS"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="POPER"/>
+      <viewAttribute id="TIME"/>
+      <viewAttribute id="FXKJ"/>
+      <viewAttribute id="FXKJ_TXT"/>
+      <viewAttribute id="HSL" aggregationType="sum"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_3"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_3">
+    <viewAttributes>
+      <viewAttribute id="RCLNT"/>
+      <viewAttribute id="WERKS"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="POPER"/>
+      <viewAttribute id="TIME"/>
+      <viewAttribute id="FXKJ"/>
+      <viewAttribute id="FXKJ_TXT"/>
+      <viewAttribute id="HSL" aggregationType="sum"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Aggregation_2"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_4" cardinality="CN_N" joinType="inner" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="RCLNT"/>
+      <viewAttribute id="WERKS"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="POPER"/>
+      <viewAttribute id="TIME"/>
+      <viewAttribute id="FXKJ"/>
+      <viewAttribute id="FXKJ_TXT"/>
+      <viewAttribute id="HSL" aggregationType="sum"/>
+      <viewAttribute id="TIME_N"/>
+      <viewAttribute hidden="true" id="JOIN$RCLNT$RCLNT"/>
+      <viewAttribute hidden="true" id="JOIN$WERKS$WERKS"/>
+      <viewAttribute hidden="true" id="JOIN$FXKJ$FXKJ"/>
+      <viewAttribute hidden="true" id="JOIN$FXKJ_TXT$FXKJ_TXT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Aggregation_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="RCLNT" source="RCLNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WERKS" source="WERKS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POPER" source="POPER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ" source="FXKJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ_TXT" source="FXKJ_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RCLNT$RCLNT" source="RCLNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$WERKS$WERKS" source="WERKS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FXKJ$FXKJ" source="FXKJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FXKJ_TXT$FXKJ_TXT" source="FXKJ_TXT"/>
+    </input>
+    <input node="Aggregation_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="HSL" source="HSL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME_N" source="TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RCLNT$RCLNT" source="RCLNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$WERKS$WERKS" source="WERKS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FXKJ$FXKJ" source="FXKJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FXKJ_TXT$FXKJ_TXT" source="FXKJ_TXT"/>
+    </input>
+    <filter>&quot;TIME&quot; &gt;= &quot;TIME_N&quot;</filter>
+    <joinAttribute name="JOIN$RCLNT$RCLNT"/>
+    <joinAttribute name="JOIN$WERKS$WERKS"/>
+    <joinAttribute name="JOIN$FXKJ$FXKJ"/>
+    <joinAttribute name="JOIN$FXKJ_TXT$FXKJ_TXT"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_4">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="WERKS"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="POPER"/>
+      <viewAttribute id="TIME"/>
+      <viewAttribute id="FXKJ"/>
+      <viewAttribute id="FXKJ_TXT"/>
+      <viewAttribute id="HSL" aggregationType="sum"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Join_4">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="RCLNT"/>
+    </input>
+  </calculationView>
   <calculationView xsi:type="Calculation:UnionView" id="Union_1">
     <viewAttributes>
+      <viewAttribute id="MANDT"/>
       <viewAttribute id="HSL" aggregationType="sum"/>
       <viewAttribute id="WERKS"/>
       <viewAttribute id="POPER"/>
@@ -187,7 +278,7 @@
       <viewAttribute id="GJAHR"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="Projection_3" emptyUnionBehavior="NO_ROW">
+    <input node="Aggregation_4" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="HSL" source="HSL"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="WERKS" source="WERKS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="POPER" source="POPER"/>
@@ -195,6 +286,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ" source="FXKJ"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ_TXT" source="FXKJ_TXT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
     </input>
     <input node="Projection_2" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="HSL" source="SALKV"/>
@@ -204,6 +297,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ" source="FXKJ"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ_TXT" source="FXKJ_TXT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="BDATJ"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
     </input>
     <input node="Projection_1" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="HSL" source="SALKV"/>
@@ -213,10 +308,13 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ" source="FXKJ"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ_TXT" source="FXKJ_TXT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="BDATJ"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
     </input>
   </calculationView>
   <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
     <viewAttributes>
+      <viewAttribute id="MANDT"/>
       <viewAttribute id="HSL" aggregationType="sum"/>
       <viewAttribute id="WERKS"/>
       <viewAttribute id="POPER"/>
@@ -229,11 +327,12 @@
     <restrictedViewAttributes/>
     <input node="Union_1"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinType="inner">
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinType="leftOuter">
     <descriptions>
       <comment text="取工厂描述"/>
     </descriptions>
     <viewAttributes>
+      <viewAttribute id="MANDT"/>
       <viewAttribute id="HSL" aggregationType="sum"/>
       <viewAttribute id="WERKS"/>
       <viewAttribute id="POPER"/>
@@ -243,6 +342,7 @@
       <viewAttribute id="GJAHR"/>
       <viewAttribute id="WERKS_TXT"/>
       <viewAttribute hidden="true" id="JOIN$WERKS$WERKS"/>
+      <viewAttribute hidden="true" id="JOIN$MANDT$MANDT"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="Aggregation_1">
@@ -253,19 +353,24 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ" source="FXKJ"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ_TXT" source="FXKJ_TXT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$WERKS$WERKS" source="WERKS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
     </input>
     <input node="Projection_4">
       <mapping xsi:type="Calculation:AttributeMapping" target="WERKS_TXT" source="WERKS_TXT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$WERKS$WERKS" source="WERKS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
     </input>
     <joinAttribute name="JOIN$WERKS$WERKS"/>
+    <joinAttribute name="JOIN$MANDT$MANDT"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_3" cardinality="CN_1" joinType="inner">
+  <calculationView xsi:type="Calculation:JoinView" id="Join_3" cardinality="CN_1" joinType="leftOuter">
     <descriptions>
       <comment text="根据工厂取公司代码"/>
     </descriptions>
     <viewAttributes>
+      <viewAttribute id="MANDT"/>
       <viewAttribute id="HSL" aggregationType="sum"/>
       <viewAttribute id="WERKS"/>
       <viewAttribute id="POPER"/>
@@ -276,6 +381,7 @@
       <viewAttribute id="WERKS_TXT"/>
       <viewAttribute id="BUKRS"/>
       <viewAttribute hidden="true" id="JOIN$WERKS$BWKEY"/>
+      <viewAttribute hidden="true" id="JOIN$MANDT$MANDT"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="Join_1">
@@ -287,16 +393,21 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ_TXT" source="FXKJ_TXT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="WERKS_TXT" source="WERKS_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$WERKS$BWKEY" source="WERKS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
     </input>
     <input node="Projection_7">
       <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$WERKS$BWKEY" source="BWKEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
     </input>
     <joinAttribute name="JOIN$WERKS$BWKEY"/>
+    <joinAttribute name="JOIN$MANDT$MANDT"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_2" cardinality="C1_1" joinType="inner">
+  <calculationView xsi:type="Calculation:JoinView" id="Join_2" cardinality="C1_1" joinType="leftOuter">
     <viewAttributes>
+      <viewAttribute id="MANDT"/>
       <viewAttribute id="BUTXT"/>
       <viewAttribute id="HSL" aggregationType="sum"/>
       <viewAttribute id="WERKS"/>
@@ -308,11 +419,13 @@
       <viewAttribute id="WERKS_TXT"/>
       <viewAttribute id="BUKRS"/>
       <viewAttribute hidden="true" id="JOIN$BUKRS$BUKRS"/>
+      <viewAttribute hidden="true" id="JOIN$MANDT$MANDT"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="Projection_6">
       <mapping xsi:type="Calculation:AttributeMapping" target="BUTXT" source="BUTXT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BUKRS$BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
     </input>
     <input node="Join_3">
       <mapping xsi:type="Calculation:AttributeMapping" target="HSL" source="HSL"/>
@@ -324,12 +437,16 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="WERKS_TXT" source="WERKS_TXT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BUKRS$BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
     </input>
     <joinAttribute name="JOIN$BUKRS$BUKRS"/>
+    <joinAttribute name="JOIN$MANDT$MANDT"/>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_5">
     <viewAttributes>
+      <viewAttribute id="MANDT"/>
       <viewAttribute id="BUTXT"/>
       <viewAttribute id="HSL"/>
       <viewAttribute id="WERKS"/>
@@ -348,46 +465,50 @@
 
 <logicalModel id="Projection_5">
   <attributes>
-    <attribute id="BUTXT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="客户端"/>
+      <keyMapping columnObjectName="Projection_5" columnName="MANDT"/>
+    </attribute>
+    <attribute id="BUTXT" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="公司名称"/>
       <keyMapping columnObjectName="Projection_5" columnName="BUTXT"/>
     </attribute>
-    <attribute id="WERKS" order="3" descriptionColumnName="WERKS_TXT" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="WERKS" order="4" descriptionColumnName="WERKS_TXT" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="工厂"/>
       <keyMapping columnObjectName="Projection_5" columnName="WERKS"/>
     </attribute>
-    <attribute id="POPER" order="4" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="POPER" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="过账期间"/>
       <keyMapping columnObjectName="Projection_5" columnName="POPER"/>
     </attribute>
-    <attribute id="TIME" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="TIME" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TIME"/>
       <keyMapping columnObjectName="Projection_5" columnName="TIME"/>
     </attribute>
-    <attribute id="FXKJ" order="6" descriptionColumnName="FXKJ_TXT" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="FXKJ" order="7" descriptionColumnName="FXKJ_TXT" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="分析指标"/>
       <keyMapping columnObjectName="Projection_5" columnName="FXKJ"/>
     </attribute>
-    <attribute id="FXKJ_TXT" order="7" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="FXKJ_TXT" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="分析指标描述"/>
       <keyMapping columnObjectName="Projection_5" columnName="FXKJ_TXT"/>
     </attribute>
-    <attribute id="GJAHR" order="8" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="GJAHR" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="会计年度"/>
       <keyMapping columnObjectName="Projection_5" columnName="GJAHR"/>
     </attribute>
-    <attribute id="WERKS_TXT" order="9" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="WERKS_TXT" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="工厂名称"/>
       <keyMapping columnObjectName="Projection_5" columnName="WERKS_TXT"/>
     </attribute>
-    <attribute id="BUKRS" order="10" descriptionColumnName="BUTXT" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="BUKRS" order="11" descriptionColumnName="BUTXT" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="公司代码"/>
       <keyMapping columnObjectName="Projection_5" columnName="BUKRS"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="HSL" order="2" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="HSL" order="3" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="以公司代码货币计的金额 "/>
       <measureMapping columnObjectName="Projection_5" columnName="HSL"/>
       <exceptionAggregationMetadata/>
@@ -400,47 +521,72 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="395" y="112"/>
+      <upperLeftCorner x="465" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="1081"/>
+      <upperLeftCorner x="92" y="1101"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="511" y="1081"/>
+      <upperLeftCorner x="452" y="1636"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="301" y="1081"/>
+      <upperLeftCorner x="600" y="1101"/>
       <rectangleSize width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="593" y="821"/>
+      <upperLeftCorner x="484" y="821"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_6" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="270" y="501"/>
+      <upperLeftCorner x="334" y="501"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_7" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="352" y="661"/>
+      <upperLeftCorner x="597" y="661"/>
       <rectangleSize height="30" width="160"/>
     </shape>
+    <shape expanded="true" modelObjectName="Aggregation_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="452" y="1531"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="501" y="1406"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="413" y="1246"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Aggregation_2" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="148"/>
+    </shape>
+    <shape modelObjectName="Aggregation_3" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="533" y="27"/>
+      <rectangleSize width="148"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_4" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="390" y="1111"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
   
   
     <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="301" y="926"/>
+      <upperLeftCorner x="390" y="946"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="301" y="821"/>
+      <upperLeftCorner x="274" y="821"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="562" y="661"/>
+      <upperLeftCorner x="301" y="661"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
@@ -452,7 +598,7 @@
       <rectangleSize width="153"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="480" y="501"/>
+      <upperLeftCorner x="544" y="501"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_1" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
@@ -464,7 +610,7 @@
       <rectangleSize width="136"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="377" y="341"/>
+      <upperLeftCorner x="448" y="341"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Projection_6" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
@@ -476,7 +622,7 @@
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="377" y="236"/>
+      <upperLeftCorner x="448" y="236"/>
       <rectangleSize height="30" width="160"/>
     </shape></shapes>
 </layout>

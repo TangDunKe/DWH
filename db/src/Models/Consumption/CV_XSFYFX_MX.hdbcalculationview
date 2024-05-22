@@ -459,46 +459,46 @@
       <viewAttribute id="LJ_DMBTR_Y" aggregationType="sum"/>
     </viewAttributes>
     <calculatedViewAttributes>
-      <calculatedViewAttribute id="YDFX_TB" datatype="DECIMAL" length="20" expressionLanguage="SQL">
+      <calculatedViewAttribute id="YDFX_TB" datatype="DECIMAL" length="23" expressionLanguage="SQL" scale="2">
         <formula>CASE &quot;QM_DMBTR_SNTQ&quot;
 	 WHEN 0 then 0 
 	 ELSE (&quot;QM_DMBTR&quot;-&quot;QM_DMBTR_SNTQ&quot;)/&quot;QM_DMBTR_SNTQ&quot;
  END</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="LJFX_TB" datatype="DECIMAL" length="20" expressionLanguage="SQL">
+      <calculatedViewAttribute id="LJFX_TB" datatype="DECIMAL" length="23" expressionLanguage="SQL" scale="2">
         <formula>CASE &quot;LJ_DMBTR_SNTQ&quot;
 	 WHEN 0 then 0 
 	 ELSE (&quot;LJ_DMBTR&quot;-&quot;LJ_DMBTR_SNTQ&quot;)/&quot;LJ_DMBTR_SNTQ&quot;
  END</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="YDFX_HB" datatype="DECIMAL" length="20" expressionLanguage="SQL">
+      <calculatedViewAttribute id="YDFX_HB" datatype="DECIMAL" length="23" expressionLanguage="SQL" scale="2">
         <formula>CASE &quot;QM_DMBTR_SY&quot; 
 	 WHEN 0 then 0
 	 ELSE (&quot;QM_DMBTR&quot;-&quot;QM_DMBTR_SY&quot;)/&quot;QM_DMBTR_SY&quot;
  END</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="LJFX_HB" datatype="DECIMAL" length="20" expressionLanguage="SQL">
+      <calculatedViewAttribute id="LJFX_HB" datatype="DECIMAL" length="23" expressionLanguage="SQL" scale="2">
         <formula>CASE &quot;LJ_DMBTR_SY&quot;
 	 WHEN 0 then 0 
 	 ELSE (&quot;LJ_DMBTR&quot;-&quot;LJ_DMBTR_SY&quot;)/&quot;LJ_DMBTR_SY&quot;
  END</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="QM_DMBTR" datatype="DECIMAL" length="23" expressionLanguage="SQL">
+      <calculatedViewAttribute id="QM_DMBTR" datatype="DECIMAL" length="23" expressionLanguage="SQL" scale="2">
         <formula>IFNULL(&quot;QM_DMBTR_Y&quot;,0)</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="LJ_DMBTR" datatype="DECIMAL" length="23" expressionLanguage="SQL">
+      <calculatedViewAttribute id="LJ_DMBTR" datatype="DECIMAL" length="23" expressionLanguage="SQL" scale="2">
         <formula>IFNULL(&quot;LJ_DMBTR_Y&quot;,0)</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="QM_DMBTR_SY" datatype="DECIMAL" length="23" expressionLanguage="SQL">
+      <calculatedViewAttribute id="QM_DMBTR_SY" datatype="DECIMAL" length="23" expressionLanguage="SQL" scale="2">
         <formula>IFNULL(&quot;QM_DMBTR_SY_Y&quot;,0)</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="LJ_DMBTR_SY" datatype="DECIMAL" length="23" expressionLanguage="SQL">
+      <calculatedViewAttribute id="LJ_DMBTR_SY" datatype="DECIMAL" length="23" expressionLanguage="SQL" scale="2">
         <formula>IFNULL(&quot;LJ_DMBTR_SY_Y&quot;,0)</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="QM_DMBTR_SNTQ" datatype="DECIMAL" length="23" expressionLanguage="SQL">
+      <calculatedViewAttribute id="QM_DMBTR_SNTQ" datatype="DECIMAL" length="23" expressionLanguage="SQL" scale="2">
         <formula>IFNULL(&quot;QM_DMBTR_SNTQ_Y&quot;,0)</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="LJ_DMBTR_SNTQ" datatype="DECIMAL" length="23" expressionLanguage="SQL">
+      <calculatedViewAttribute id="LJ_DMBTR_SNTQ" datatype="DECIMAL" length="23" expressionLanguage="SQL" scale="2">
         <formula>IFNULL(&quot;LJ_DMBTR_SNTQ_Y&quot;,0)</formula>
       </calculatedViewAttribute>
       <calculatedViewAttribute id="FXKJ" datatype="NVARCHAR" length="30" expressionLanguage="SQL">
@@ -691,52 +691,52 @@
 
 <logicalModel id="Projection_4">
   <attributes>
-    <attribute id="FXKJ" order="2" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="FXKJ_TXT">
-      <descriptions defaultDescription="分析指标"/>
-      <keyMapping columnObjectName="Projection_4" columnName="FXKJ"/>
-    </attribute>
-    <attribute id="BUKRS" order="3" descriptionColumnName="BUTXT" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="BUKRS" order="1" descriptionColumnName="BUTXT" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="公司代码"/>
       <keyMapping columnObjectName="Projection_4" columnName="BUKRS"/>
     </attribute>
-    <attribute id="GJAHR" order="4" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="会计年度"/>
-      <keyMapping columnObjectName="Projection_4" columnName="GJAHR"/>
+    <attribute id="BUTXT" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="公司名称"/>
+      <keyMapping columnObjectName="Projection_4" columnName="BUTXT"/>
     </attribute>
-    <attribute id="MONAT" order="5" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="会计期间"/>
-      <keyMapping columnObjectName="Projection_4" columnName="MONAT"/>
-    </attribute>
-    <attribute id="PRCTR" order="6" descriptionColumnName="PRCTR_TXT" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PRCTR" order="3" descriptionColumnName="PRCTR_TXT" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="利润中心"/>
       <keyMapping columnObjectName="Projection_4" columnName="PRCTR"/>
     </attribute>
-    <attribute id="PRCTR_TXT" order="7" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PRCTR_TXT" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="利润中心描述"/>
       <keyMapping columnObjectName="Projection_4" columnName="PRCTR_TXT"/>
     </attribute>
-    <attribute id="FKBER" order="8" descriptionColumnName="FKBTX" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="GJAHR" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="会计年度"/>
+      <keyMapping columnObjectName="Projection_4" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="MONAT" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="会计期间"/>
+      <keyMapping columnObjectName="Projection_4" columnName="MONAT"/>
+    </attribute>
+    <attribute id="FKBER" order="7" descriptionColumnName="FKBTX" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="功能范围"/>
       <keyMapping columnObjectName="Projection_4" columnName="FKBER"/>
     </attribute>
-    <attribute id="FKBTX" order="9" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="FKBTX" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="功能范围描述"/>
       <keyMapping columnObjectName="Projection_4" columnName="FKBTX"/>
+    </attribute>
+    <attribute id="TIME" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TIME"/>
+      <keyMapping columnObjectName="Projection_4" columnName="TIME"/>
     </attribute>
     <attribute id="WAERS" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="货币码"/>
       <keyMapping columnObjectName="Projection_4" columnName="WAERS"/>
     </attribute>
-    <attribute id="TIME" order="13" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="TIME"/>
-      <keyMapping columnObjectName="Projection_4" columnName="TIME"/>
-    </attribute>
-    <attribute id="BUTXT" order="20" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="公司名称"/>
-      <keyMapping columnObjectName="Projection_4" columnName="BUTXT"/>
+    <attribute id="FXKJ" order="11" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="FXKJ_TXT">
+      <descriptions defaultDescription="分析指标"/>
+      <keyMapping columnObjectName="Projection_4" columnName="FXKJ"/>
     </attribute>
   
-    <attribute id="FXKJ_TXT" order="25" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="FXKJ_TXT" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="分析指标描述"/>
   
       <keyMapping columnObjectName="Projection_4" columnName="FXKJ_TXT"/>
@@ -745,19 +745,9 @@
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="LJFX_QNLJ" order="1" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
-      <descriptions defaultDescription="累计分析_全年累计"/>
-      <measureMapping columnObjectName="Projection_4" columnName="LJFX_QNLJ"/>
-      <exceptionAggregationMetadata/>
-    </measure>
-    <measure id="QM_DMBTR" order="11" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="QM_DMBTR" order="13" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="当月"/>
       <measureMapping columnObjectName="Projection_4" columnName="QM_DMBTR"/>
-      <exceptionAggregationMetadata/>
-    </measure>
-    <measure id="LJ_DMBTR" order="12" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
-      <descriptions defaultDescription="当年累计"/>
-      <measureMapping columnObjectName="Projection_4" columnName="LJ_DMBTR"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="QM_DMBTR_SNTQ" order="14" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
@@ -775,38 +765,48 @@
       <measureMapping columnObjectName="Projection_4" columnName="YDFX_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="LJFX_TB" order="17" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
-      <descriptions defaultDescription="累计分析_同比"/>
-      <measureMapping columnObjectName="Projection_4" columnName="LJFX_TB"/>
-      <exceptionAggregationMetadata/>
-    </measure>
-    <measure id="YDFX_HB" order="18" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="YDFX_HB" order="17" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="月度分析_环比"/>
       <measureMapping columnObjectName="Projection_4" columnName="YDFX_HB"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="LJFX_HB" order="19" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
-      <descriptions defaultDescription="累计分析_环比"/>
-      <measureMapping columnObjectName="Projection_4" columnName="LJFX_HB"/>
-      <exceptionAggregationMetadata/>
-    </measure>
   
-    <measure id="YDFX_YDJH" order="21" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="YDFX_YDJH" order="18" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="月度分析_月度计划"/>
       <measureMapping columnObjectName="Projection_4" columnName="YDFX_YDJH"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="YDFX_JHWCL" order="22" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="YDFX_JHWCL" order="19" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="月度分析_月度计划完成率"/>
       <measureMapping columnObjectName="Projection_4" columnName="YDFX_JHWCL"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="LJFX_NDJH" order="23" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="LJ_DMBTR" order="20" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="当年累计"/>
+      <measureMapping columnObjectName="Projection_4" columnName="LJ_DMBTR"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="LJFX_QNLJ" order="21" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="累计分析_全年累计"/>
+      <measureMapping columnObjectName="Projection_4" columnName="LJFX_QNLJ"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="LJFX_TB" order="22" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="累计分析_同比"/>
+      <measureMapping columnObjectName="Projection_4" columnName="LJFX_TB"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="LJFX_HB" order="23" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="累计分析_环比"/>
+      <measureMapping columnObjectName="Projection_4" columnName="LJFX_HB"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="LJFX_NDJH" order="24" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="累计分析_年度计划"/>
       <measureMapping columnObjectName="Projection_4" columnName="LJFX_NDJH"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="LJFX_NDJHWCL" order="24" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="LJFX_NDJHWCL" order="25" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="累计分析_年度计划完成率"/>
       <measureMapping columnObjectName="Projection_4" columnName="LJFX_NDJHWCL"/>
       <exceptionAggregationMetadata/>

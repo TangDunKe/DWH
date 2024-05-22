@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="BL.Models.ScriptModel::CV_003_CLIENT_TEST" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" defaultClient="$$client$$">
+<descriptions defaultDescription="Test For Session Client"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="BL.DI.Tables.S4::T_BSIK">
+    <resourceUri>BL.DI.Tables.S4::T_BSIK</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews/>
+
+<logicalModel id="BL.DI.Tables.S4::T_BSIK">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="客户端 "/>
+      <keyMapping columnObjectName="T_BSIK" columnName="MANDT"/>
+    </attribute>
+    <attribute id="GJAHR" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="会计年度"/>
+      <keyMapping columnObjectName="T_BSIK" columnName="GJAHR"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="DMBTR" order="3" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="以本币计的金额 "/>
+      <measureMapping columnObjectName="T_BSIK" columnName="DMBTR"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  </shapes>
+</layout>
+</Calculation:scenario>
