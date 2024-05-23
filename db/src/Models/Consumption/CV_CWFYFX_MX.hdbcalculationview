@@ -56,7 +56,7 @@
 '6603060000'	,'6603070000'	,'6603080000'	,'6603090000'	,'6603100000'	,
 '6603110000'	,'6603120000'	,'6603130000'	,'6603990000')</filter>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2" filterExpressionLanguage="SQL">
     <viewAttributes>
       <viewAttribute id="HKONT"/>
       <viewAttribute id="KMMC"/>
@@ -99,7 +99,8 @@
 	 --WHEN '6603010200' then 'ZSAC_04_02'
 	 WHEN '6603010200' then 'ZSAC_04_01'
 	 WHEN '6603020100' then 'ZSAC_04_03'
-	 WHEN '6603020200' then 'ZSAC_04_04'
+	 WHEN '6603020200' then 'ZSAC_04_03'
+	 --WHEN '6603020200' then 'ZSAC_04_04'
 	 WHEN '6603030000' then 'ZSAC_04_05'
 	 WHEN '6603040000' then 'ZSAC_04_06'
 	 WHEN '6603050000' then 'ZSAC_04_07'
