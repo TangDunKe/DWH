@@ -63,6 +63,7 @@ SELECT MANDT,
        CAST(MAP(SUBJECT_CODE, 'ZCAL_JXSZR', BUDGET, -1 * BUDGET) AS DECIMAL(23, 2)) AS BUDGET
   FROM "BL.Models.Basic::V_BUDGET"
  WHERE SUBJECT_CODE IN ( 'ZCAL_JXSZR',   --净销售总额
+                         'ZCAL_JXSCB',   --减：销售成本
                          'ZCAL_JYJ'      --减：佣金
                        )
 ),
@@ -91,6 +92,7 @@ SELECT MANDT,
        CAST(MAP(SUBJECT_CODE, 'ZCAL_JXSZR', BUDGET, -1 * BUDGET) AS DECIMAL(23, 2)) AS BUDGET
   FROM "BL.Models.Basic::V_BUDGET"
  WHERE SUBJECT_CODE IN ( 'ZCAL_JXSZR',   --净销售总额
+                         'ZCAL_JXSCB',   --减：销售成本
                          'ZCAL_JYJ',     --减：佣金
                          'ZCAL_JYZF'     --减：运杂费
                        )

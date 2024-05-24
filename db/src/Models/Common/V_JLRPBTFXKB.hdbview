@@ -60,8 +60,12 @@ SELECT MANDT,
                 CAST(800 AS INTEGER) AS SUBJECT_INDEX,
                 CAST('其他业务' AS NVARCHAR(100)) AS SUBJECT_NAME,
                 
-                --产品实际销售成本总额 = [销售收入] - ([销售成本] + [内销运费] + [出口运费] + [出口港杂费])
-                SUM(XSSRCB.ZXSSR) - SUM(XSSRCB.ZXSCB + XSSRCB.ZNXYF + XSSRCB.ZCKYF + XSSRCB.ZCKGZF) AS BY_HSL
+                --净利润 = [销售收入] - ([销售成本] + [内销运费] + [出口运费] + [出口港杂费])
+                --SUM(XSSRCB.ZXSSR) - SUM(XSSRCB.ZXSCB + XSSRCB.ZNXYF + XSSRCB.ZCKYF + XSSRCB.ZCKGZF) AS BY_HSL
+                --产品实际调整后销售收入 = [销售收入] - [出口费用-佣金]
+                --产品实际调整后销售成本总额 = [销售成本]
+                --产品实际利润 = 产品实际调整后销售收入 - 产品实际调整后销售成本总额
+                SUM(XSSRCB.ZXSSR - XSSRCB.ZYJ - XSSRCB.ZXSCB) AS BY_HSL
            FROM "BL.DI.Tables.S4::T_ZFIR041" AS XSSRCB
            LEFT OUTER MANY TO ONE JOIN "BL.DI.Tables.S4::T_TIME_DIMENSION_MONTH" AS MONTH
              ON MONTH.YEAR = XSSRCB.GJAHR
@@ -356,10 +360,10 @@ SELECT MANDT,
        SUM(CAL_CPSJYZCBZR) AS CAL_CPSJYZCBZR,
        
        --产品实际调整后销价 = (各产品实际净销售总额 - 当月各产品实际佣金总额)/当月各产品实际销量
-       CAST(ROUND((SUM(ZXSSR) - SUM(ZYJ)) / NULLIF(SUM(ZSRSL), 0), 2) AS DECIMAL(23, 2)) AS CAL_CPSJTZHXJ,
+       CAST(ROUND((SUM(ZXSSR) - SUM(ZYJ)) / NULLIF(SUM(ZSRSL), 0), 8) AS DECIMAL(23, 8)) AS CAL_CPSJTZHXJ,
        
        --产品实际调整后单位成本 = (各产品实际销售成本总额 - 各产品实际运杂成本总额) / 各产品实际销量
-       CAST(ROUND((SUM(CAL_CPSJXSCBZR) - SUM(CAL_CPSJYZCBZR)) / NULLIF(SUM(ZSRSL), 0), 2) AS DECIMAL(23, 2)) AS CAL_CPSJTZHDWCB,
+       CAST(ROUND((SUM(CAL_CPSJXSCBZR) - SUM(CAL_CPSJYZCBZR)) / NULLIF(SUM(ZSRSL), 0), 8) AS DECIMAL(23, 8)) AS CAL_CPSJTZHDWCB,
        
        --产品实际利润
        SUM(CAL_CPSJLR) AS CAL_CPSJLR,
@@ -408,8 +412,8 @@ SELECT ATT.MANDT,
        CAST(0 AS DECIMAL(23, 2)) AS ZYJ,
        CAST(0 AS DECIMAL(23, 2)) AS CAL_CPSJXSCBZR,
        CAST(0 AS DECIMAL(23, 2)) AS CAL_CPSJYZCBZR,
-       CAST(0 AS DECIMAL(23, 2)) AS CAL_CPSJTZHXJ,
-       CAST(0 AS DECIMAL(23, 2)) AS CAL_CPSJTZHDWCB,
+       CAST(0 AS DECIMAL(23, 8)) AS CAL_CPSJTZHXJ,
+       CAST(0 AS DECIMAL(23, 8)) AS CAL_CPSJTZHDWCB,
        CAST(0 AS DECIMAL(23, 2)) AS CAL_CPSJLR,
        CAST(0 AS DECIMAL(23, 2)) AS CAL_SJTZHXSFY
   FROM ATT_LIST AS ATT, MONTH_LIST AS MONTH
