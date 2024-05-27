@@ -1,0 +1,14 @@
+{
+  "role": {
+    "name": "BL.Privileges::Role_AccessDWH",
+    "schema_privileges": [
+      {
+        "reference": "DWH",
+        "privileges": [
+          "SELECT",
+          "EXECUTE"
+        ]
+      }
+    ]
+  }
+}

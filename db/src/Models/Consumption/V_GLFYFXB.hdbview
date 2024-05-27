@@ -1,0 +1,182 @@
+VIEW "BL.Models.Consumption::V_GLFYFXB"
+AS
+
+WITH ACTUAL AS (
+SELECT BUKRS,
+       BUTXT,
+       PRCTR,
+       PRCTR_TXT,
+       GJAHR,
+       MONAT,
+       TIME,
+       FXKJ,
+       FXKJ_TXT,
+       SUM(CAST(MAP(WAERS, 'CNY', QM_DMBTR, ROUND(QM_DMBTR * MONTH_AVG_EXRATE, 2)) AS DECIMAL(23, 2))) AS QM_DMBTR,
+       SUM(CAST(MAP(WAERS, 'CNY', QM_DMBTR_SNTQ, ROUND(QM_DMBTR_SNTQ * SPLY_AVG_EXRATE, 2)) AS DECIMAL(23, 2))) AS QM_DMBTR_SNTQ,
+       SUM(CAST(MAP(WAERS, 'CNY', LJ_DMBTR, ROUND(LJ_DMBTR * YEAR_AVG_EXRATE, 2)) AS DECIMAL(23, 2))) AS LJ_DMBTR,
+       SUM(CAST(MAP(WAERS, 'CNY', LJ_DMBTR_SNTQ, ROUND(LJ_DMBTR_SNTQ * ASPLY_AVG_EXRATE, 2)) AS DECIMAL(23, 2))) AS LJ_DMBTR_SNTQ
+  FROM "BL.Models.Common::CV_GLFYFXB" AS LIST
+  LEFT OUTER MANY TO ONE JOIN "BL.Models.Basic::V_EXCHANGERATES" AS EXRATE
+    ON EXRATE.KURST = 'M'
+   AND EXRATE.FCURR = LIST.WAERS
+   AND EXRATE.TCURR = 'CNY'
+   AND EXRATE.YEAR = LIST.GJAHR
+   AND EXRATE.MONTH = LIST.MONAT
+ GROUP BY BUKRS, BUTXT, PRCTR, PRCTR_TXT, GJAHR, MONAT, TIME, FXKJ, FXKJ_TXT
+),
+
+BUDGET AS (
+SELECT VERSION,
+       BUKRS,
+       BUTXT,
+       PRCTR,
+       KTEXT AS PRCTR_TXT,
+       GJAHR,
+       POPER AS MONAT,
+       CALMONTH AS TIME,
+       MAP(SUBJECT_CODE, 'ZSALARYEQUITY',  'ZSAC_02_01',
+                         'ZREPAIR',        'ZSAC_02_02',
+                         'ZDA',            'ZSAC_02_03',
+                         'ZAUDITADVISORY', 'ZSAC_02_04',
+                         'ZOFFICE',        'ZSAC_02_05',
+                         'ZLOAD',          'ZSAC_02_06',
+                         'ZAD',            'ZSAC_02_07',
+                         'ZHOSPITALITY',   'ZSAC_02_08',
+                         'ZRENT',          'ZSAC_02_09',
+                         'ZTRAVEL',        'ZSAC_02_10',
+                         'ZTRANSPORT',     'ZSAC_02_11',
+                         'ZMEETING',       'ZSAC_02_12',
+                         'ZLAWCOMPEN',     'ZSAC_02_13',
+                         'ZINSURANCE',     'ZSAC_02_14',
+                         'ZGREENCLEAN',    'ZSAC_02_15',
+                         'ZLABOR',         'ZSAC_02_16',
+                         'ZOTHER',         'ZSAC_02_98'
+          ) AS FXKJ,
+       BUDGET
+  FROM "BL.Models.Basic::V_BUDGET"
+ WHERE BGTTYPE = 'ZSAC_MGMTEXPBGT'
+   AND SUBJECT_CODE IN ( 'ZSALARYEQUITY',
+                         'ZREPAIR',
+                         'ZDA',
+                         'ZAUDITADVISORY',
+                         'ZOFFICE',
+                         'ZLOAD',
+                         'ZAD',
+                         'ZHOSPITALITY',
+                         'ZRENT',
+                         'ZTRAVEL',
+                         'ZTRANSPORT',
+                         'ZMEETING',
+                         'ZLAWCOMPEN',
+                         'ZINSURANCE',
+                         'ZGREENCLEAN',
+                         'ZLABOR',
+                         'ZOTHER'
+                        )
+ 
+ UNION ALL
+ 
+SELECT VERSION,
+       BUKRS,
+       BUTXT,
+       PRCTR,
+       KTEXT AS PRCTR_TXT,
+       GJAHR,
+       POPER AS MONAT,
+       CALMONTH AS TIME,
+       CAST('ZSAC_02_99' AS nVARCHAR(30)) AS FXKJ,
+       BUDGET
+  FROM "BL.Models.Basic::V_BUDGET"
+ WHERE BGTTYPE = 'ZSAC_MGMTEXPBGT'
+   AND SUBJECT_CODE IN ( 'ZSALARYEQUITY',
+                         'ZREPAIR',
+                         'ZDA',
+                         'ZAUDITADVISORY',
+                         'ZOFFICE',
+                         'ZLOAD',
+                         'ZAD',
+                         'ZHOSPITALITY',
+                         'ZRENT',
+                         'ZTRAVEL',
+                         'ZTRANSPORT',
+                         'ZMEETING',
+                         'ZLAWCOMPEN',
+                         'ZINSURANCE',
+                         'ZGREENCLEAN',
+                         'ZLABOR',
+                         'ZOTHER'
+                        )
+),
+
+BUDGET_AGG AS (
+SELECT LIST.VERSION,
+       LIST.BUKRS,
+       LIST.BUTXT,
+       LIST.PRCTR,
+       LIST.PRCTR_TXT,
+       LIST.GJAHR,
+       LIST.MONAT,
+       LIST.TIME,
+       LIST.FXKJ,
+       CONFIG.SUBSETDESC AS FXKJ_TXT,
+       LIST.BUDGET AS YDFX_YDJH,
+       SUM(BUDGET) OVER(PARTITION BY VERSION, BUKRS, PRCTR, FXKJ, GJAHR ORDER BY MONAT ASC) AS LJFX_NDJH
+  FROM ( SELECT VERSION,
+                BUKRS,
+                BUTXT,
+                PRCTR,
+                PRCTR_TXT,
+                GJAHR,
+                MONAT,
+                TIME,
+                FXKJ,
+                SUM(BUDGET) AS BUDGET
+           FROM BUDGET
+          GROUP BY VERSION, BUKRS, BUTXT, PRCTR, PRCTR_TXT, GJAHR, MONAT, TIME, FXKJ
+        ) AS LIST
+  LEFT JOIN ( SELECT SUBSETNAME, SUBSETDESC
+                FROM "BL.Models.Basic::V_CONFIG"
+               WHERE SETNAME = 'ZSAC_02'
+               GROUP BY SUBSETNAME, SUBSETDESC
+               ORDER BY SUBSETNAME, SUBSETDESC
+             ) AS CONFIG
+    ON CONFIG.SUBSETNAME = LIST.FXKJ
+)
+
+SELECT CAST('Actual' AS NVARCHAR(6)) AS VERSION,
+       BUKRS,
+       BUTXT,
+       PRCTR,
+       PRCTR_TXT,
+       GJAHR,
+       MONAT,
+       TIME,
+       FXKJ,
+       FXKJ_TXT,
+       QM_DMBTR,
+       QM_DMBTR_SNTQ,
+       LJ_DMBTR,
+       LJ_DMBTR_SNTQ,
+       CAST(NULL AS DECIMAL(23, 2)) AS YDFX_YDJH,
+       CAST(NULL AS DECIMAL(23, 2)) AS LJFX_NDJH
+  FROM ACTUAL
+ 
+ UNION ALL
+ 
+SELECT VERSION,
+       BUKRS,
+       BUTXT,
+       PRCTR,
+       PRCTR_TXT,
+       GJAHR,
+       MONAT,
+       TIME,
+       FXKJ,
+       FXKJ_TXT,
+       CAST(NULL AS DECIMAL(23, 2)) AS QM_DMBTR,
+       CAST(NULL AS DECIMAL(23, 2)) AS QM_DMBTR_SNTQ,
+       CAST(NULL AS DECIMAL(23, 2)) AS LJ_DMBTR,
+       CAST(NULL AS DECIMAL(23, 2)) AS LJ_DMBTR_SNTQ,
+       YDFX_YDJH,
+       LJFX_NDJH
+  FROM BUDGET_AGG;

@@ -1,0 +1,12 @@
+{
+  "BL.Privileges::Role_AccessCompany1000": {
+    "DWH": {
+      "schema": "DWH_HDI_DB_1"
+    }
+  },
+  "BL.Privileges::Role_AccessDWH": {
+    "DWH": {
+      "schema": "DWH_HDI_DB_1"
+    }
+  }
+}

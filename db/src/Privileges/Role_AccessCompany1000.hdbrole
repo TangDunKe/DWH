@@ -1,0 +1,22 @@
+{
+  "role": {
+    "name": "BL.Privileges::Role_AccessCompany1000",
+    "object_privileges": [
+      {
+        "name": "BL.Models.ScriptModel::CV_003_CLIENT_TEST",
+        "type": "VIEW",
+        "privileges": [
+          "SELECT"
+        ]
+      }
+    ],
+    "schema_analytic_privileges": [
+      {
+        "schema_reference": "DWH",
+        "privileges": [
+          "BL.Privileges::AnalyticPrivilege_AccessCompany1000"
+        ]
+      }
+    ]
+  }
+}

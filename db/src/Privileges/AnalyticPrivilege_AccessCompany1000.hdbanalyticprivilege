@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Privilege:analyticPrivilege xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Privilege="http://www.sap.com/ndb/BiModelPrivilege.ecore" id="BL.Privileges::AnalyticPrivilege_AccessCompany1000" privilegeType="SQL_ANALYTIC_PRIVILEGE" schemaVersion="1.1">
+    <descriptions defaultDescription="Just Access Company 1000"/>
+    <securedModels>
+      <modelUri>BL.Models.ScriptModel::CV_003_CLIENT_TEST</modelUri>
+    </securedModels>
+<validity xsi:type="AccessControl:SingleValueFilter" operator="GE" including="true" value="2024-05-24"/>
+
+<restriction>
+  <filter attributeName="BUKRS" xsi:type="Privilege:AttributeFilter">
+    <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1000"/>
+  </filter>
+  <attributeName>BUKRS</attributeName>
+  <originInformationModelUri>BL.Models.ScriptModel::CV_003_CLIENT_TEST</originInformationModelUri>
+</restriction>
+</Privilege:analyticPrivilege>

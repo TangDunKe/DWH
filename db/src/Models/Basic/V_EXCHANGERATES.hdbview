@@ -11,6 +11,7 @@ SELECT MANDT,
   FROM "BL.DI.Tables.S4::T_TCURR"
 ),
 
+/*
 EXRATE_Z1 AS (
 SELECT MANDT,
        KURST,
@@ -40,6 +41,7 @@ SELECT MANDT,
        YEAR_AVG_EXRATE       --当年累计汇率
   FROM EXRATE_Z1
 ),
+*/
 
 EXRATE_M AS (
 SELECT MANDT,
@@ -225,10 +227,10 @@ SELECT MANDT,
        CAST(SUM(MONTH_AVG_EXRATE) AS DECIMAL(9, 5)) AS MONTH_AVG_EXRATE,      --当月平均汇率
        CAST(SUM(SPLY_AVG_EXRATE) AS DECIMAL(9, 5)) AS SPLY_AVG_EXRATE,        --去年同期平均汇率
        CAST(SUM(YEAR_AVG_EXRATE) AS DECIMAL(9, 5)) AS YEAR_AVG_EXRATE,         --当年累计汇率
-       CAST(SUM(ASPLY_AVG_EXRATE) AS DECIMAL(9, 5)) AS ASPLY_AVG_EXRATE        --去年当期累计汇率
+       CAST(SUM(ASPLY_AVG_EXRATE) AS DECIMAL(9, 5)) AS ASPLY_AVG_EXRATE        --去年累计同期汇率
   FROM EXRATE_ALL
  GROUP BY MANDT, KURST, FCURR, TCURR, YEAR, MONTH, CALMONTH
- 
+/*
  UNION ALL
  
 SELECT MANDT,
@@ -242,5 +244,7 @@ SELECT MANDT,
        MONTH_AVG_EXRATE,                   --当月平均汇率
        SPLY_AVG_EXRATE,                    --去年同期平均汇率
        YEAR_AVG_EXRATE,                    --当年累计汇率
-       SPLY_AVG_EXRATE AS ASPLY_AVG_EXRATE --去年当期累计汇率
-  FROM EXRATE_Z1_SPLY;
+       SPLY_AVG_EXRATE AS ASPLY_AVG_EXRATE --去年累计同期汇率
+  FROM EXRATE_Z1_SPLY
+  */
+  ;
