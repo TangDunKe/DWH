@@ -1,21 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="BL.Models.Consumption::CV_YSGLB" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
 <descriptions defaultDescription="应收管理表"/>
-<localVariables/>
+<localVariables>
+  <variable id="IP_CALMONTH" parameter="true">
+    <descriptions defaultDescription="输入年月"/>
+    <variableProperties datatype="NVARCHAR" length="6" scale="NaN" mandatory="false" defaultExpressionLanguage="SQL">
+      <valueDomain type="AttributeValue">
+        <externalLikeStructureName>BL.Models.Basic::CV_MONTH</externalLikeStructureName>
+        <externalLikeStructureType>CALCULATION_VIEW</externalLikeStructureType>
+        <externalLikeElementName>CALMONTH</externalLikeElementName>
+      </valueDomain>
+      <selection multiLine="false" type="SingleValue"/>
+      <defaultExpression>TO_NVARCHAR(ADD_MONTHS(CURRENT_DATE, -1), 'YYYYMM')</defaultExpression>
+    </variableProperties>
+  </variable>
+</localVariables>
 <variableMappings/>
-<dataSources/>
+<dataSources>
+  <DataSource id="BL.DI.Tables.S4::T_ACDOCA_N">
+    <resourceUri>BL.DI.Tables.S4::T_ACDOCA_N</resourceUri>
+  </DataSource>
+</dataSources>
 <snapshotProcedures/>
 <calculationViews>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
-    <viewAttributes/>
-    <calculatedViewAttributes/>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="RCLNT"/>
+      <viewAttribute id="RACCT"/>
+      <viewAttribute id="AUGBL"/>
+      <viewAttribute id="DRCRK"/>
+      <viewAttribute id="BLDAT"/>
+      <viewAttribute id="RBUKRS"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="RCNTR"/>
+      <viewAttribute id="KUNNR"/>
+      <viewAttribute id="RWCUR"/>
+      <viewAttribute id="WSL"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_BEGIN_DATE" datatype="NVARCHAR" length="8" expressionLanguage="SQL">
+        <formula>CONCAT('$$IP_CALMONTH$$', '01')</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_END_DATE" datatype="NVARCHAR" length="8" expressionLanguage="SQL">
+        <formula>TO_DATS(LAST_DAY(TO_DATE(&quot;CC_BEGIN_DATE&quot;, 'YYYYMMDD')))</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_ZL" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>DAYS_BETWEEN(TO_DATE(&quot;BLDAT&quot;, 'YYYYMMDD'), TO_DATE(&quot;CC_END_DATE&quot;, 'YYYYMMDD'))</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="BL.DI.Tables.S4::T_ACDOCA_N"/>
+    <filter>(&quot;RACCT&quot; LIKE '1122%' OR &quot;RACCT&quot; LIKE '1221%') AND &quot;AUGBL&quot; = '' AND &quot;DRCRK&quot; = 'S' AND &quot;BLDAT&quot; &lt;= &quot;CC_END_DATE&quot;</filter>
   </calculationView>
 </calculationViews>
 
-<logicalModel>
-  <attributes/>
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="RCLNT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RCLNT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="RCLNT"/>
+    </attribute>
+    <attribute id="PRCTR" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PRCTR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PRCTR"/>
+    </attribute>
+    <attribute id="RCNTR" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RCNTR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="RCNTR"/>
+    </attribute>
+    <attribute id="KUNNR" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="KUNNR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="KUNNR"/>
+    </attribute>
+    <attribute id="RWCUR" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RWCUR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="RWCUR"/>
+    </attribute>
+    <attribute id="CC_END_DATE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CC_END_DATE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CC_END_DATE"/>
+    </attribute>
+    <attribute id="BLDAT" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BLDAT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BLDAT"/>
+    </attribute>
+  
+    <attribute id="CC_ZL" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CC_ZL"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CC_ZL"/>
+    </attribute>
+  </attributes>
   <calculatedAttributes/>
-  <baseMeasures/>
+  <baseMeasures>
+    <measure id="WSL" order="9" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="WSL"/>
+      <measureMapping columnObjectName="Projection_1" columnName="WSL"/>
+      <exceptionAggregationMetadata/>
+    </measure></baseMeasures>
   <calculatedMeasures/>
   <restrictedMeasures/>
   <localDimensions/>
@@ -23,12 +103,14 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="40" y="85"/>
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
     </shape>
     
   
     <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="-163" y="216"/>
+      <upperLeftCorner x="92" y="217"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   </shapes>
