@@ -1,0 +1,230 @@
+VIEW "BL.Models.Consumption::V_FYFXHZB"
+AS
+
+WITH ACTUAL AS (
+SELECT BUKRS,
+       BUTXT,
+       PRCTR,
+       PRCTR_TXT,
+       GJAHR,
+       POPER AS MONAT,
+       TIME,
+       FXKJ,
+       FXKJ_TXT,
+       SUM(CAST(MAP(WAERS, 'CNY', DY_JE, ROUND(DY_JE * MONTH_AVG_EXRATE, 2)) AS DECIMAL(23, 2))) AS QM_DMBTR,
+       SUM(CAST(MAP(WAERS, 'CNY', SNTQ_DY_JE, ROUND(SNTQ_DY_JE * SPLY_AVG_EXRATE, 2)) AS DECIMAL(23, 2))) AS QM_DMBTR_SNTQ,
+       SUM(CAST(MAP(WAERS, 'CNY', LJ_JE, ROUND(LJ_JE * YEAR_AVG_EXRATE, 2)) AS DECIMAL(23, 2))) AS LJ_DMBTR,
+       SUM(CAST(MAP(WAERS, 'CNY', SNTQ_LJ_JE, ROUND(SNTQ_LJ_JE * ASPLY_AVG_EXRATE, 2)) AS DECIMAL(23, 2))) AS LJ_DMBTR_SNTQ
+  FROM "BL.Models.Common::CV_FYFXHZB" AS LIST
+  LEFT OUTER MANY TO ONE JOIN "BL.Models.Basic::V_EXCHANGERATES" AS EXRATE
+    ON EXRATE.KURST = 'M'
+   AND EXRATE.FCURR = LIST.WAERS
+   AND EXRATE.TCURR = 'CNY'
+   AND EXRATE.YEAR = LIST.GJAHR
+   AND EXRATE.MONTH = LIST.POPER
+ GROUP BY BUKRS, BUTXT, PRCTR, PRCTR_TXT, GJAHR, POPER, TIME, FXKJ, FXKJ_TXT
+),
+
+BUDGET AS (
+SELECT VERSION,
+       BUKRS,
+       BUTXT,
+       PRCTR,
+       KTEXT AS PRCTR_TXT,
+       GJAHR,
+       POPER AS MONAT,
+       CALMONTH AS TIME,
+       MAP(SUBJECT_CODE, 'SALESEXP',    '00016_1',
+                         'MGMTEXP',     '00017',
+                         'RDEXP',       '00018',
+                         'FINEXP',      '00019'
+          ) AS FXKJ,
+       MAP(SUBJECT_CODE, 'SALESEXP',    '其中：财报销售费用',
+                         'MGMTEXP',     '           管理费用',
+                         'RDEXP',       '           研发费用',
+                         'FINEXP',      '财务费用'
+          ) AS FXKJ_TXT,
+       BUDGET
+  FROM "BL.Models.Basic::V_BUDGET"
+ WHERE BGTTYPE = 'ZSAC_FINRPTBGT'
+   AND SUBJECT_CODE IN ( 'SALESEXP',
+                         'MGMTEXP',
+                         'RDEXP',
+                         'FINEXP'
+                       )
+ 
+ UNION ALL
+ 
+SELECT VERSION,
+       BUKRS,
+       BUTXT,
+       PRCTR,
+       KTEXT AS PRCTR_TXT,
+       GJAHR,
+       POPER AS MONAT,
+       CALMONTH AS TIME,
+       MAP(SUBJECT_CODE, 'ZCOGSINSHIP',      '00016_2',
+                         'ZCOGSOUTSHIP',     '00016_3',
+                         'ZCOGSOUTPORTMISC', '00016_4'
+          ) AS FXKJ,
+       MAP(SUBJECT_CODE, 'ZCOGSINSHIP',      '     主营业务成本内销运费',
+                         'ZCOGSOUTSHIP',     '     主营业务成本出口运费',
+                         'ZCOGSOUTPORTMISC', '     主营业务成本出口港杂费'
+          ) AS FXKJ_TXT,
+       BUDGET
+  FROM "BL.Models.Basic::V_BUDGET"
+ WHERE BGTTYPE = 'ZSAC_COSTBGT'
+   AND SUBJECT_CODE IN ( 'ZCOGSINSHIP',
+                         'ZCOGSOUTSHIP',
+                         'ZCOGSOUTPORTMISC'
+                       )
+ 
+ UNION ALL
+ 
+SELECT VERSION,
+       BUKRS,
+       BUTXT,
+       PRCTR,
+       KTEXT AS PRCTR_TXT,
+       GJAHR,
+       POPER AS MONAT,
+       CALMONTH AS TIME,
+       MAP(SUBJECT_CODE, 'ZDISCOUNT',      '00019_2'
+          ) AS FXKJ,
+       MAP(SUBJECT_CODE, 'ZDISCOUNT',      '     投资收益贴息'
+          ) AS FXKJ_TXT,
+       BUDGET
+  FROM "BL.Models.Basic::V_BUDGET"
+ WHERE BGTTYPE = 'ZSAC_FINEXPBGT'
+   AND SUBJECT_CODE IN ( 'ZDISCOUNT')
+),
+
+BUDGET_ALL AS (
+SELECT VERSION,
+       BUKRS,
+       BUTXT,
+       PRCTR,
+       PRCTR_TXT,
+       GJAHR,
+       MONAT,
+       TIME,
+       FXKJ,
+       FXKJ_TXT,
+       BUDGET
+  FROM BUDGET
+ 
+ UNION ALL
+ 
+SELECT VERSION,
+       BUKRS,
+       BUTXT,
+       PRCTR,
+       PRCTR_TXT,
+       GJAHR,
+       MONAT,
+       TIME,
+       '00020' AS FXKJ,
+       '费用合计' AS FXKJ_TXT,
+       BUDGET
+  FROM BUDGET
+ WHERE FXKJ <> '00019_2'
+ 
+ UNION ALL
+ 
+SELECT VERSION,
+       BUKRS,
+       BUTXT,
+       PRCTR,
+       PRCTR_TXT,
+       GJAHR,
+       MONAT,
+       TIME,
+       '00016' AS FXKJ,
+       '销售费用' AS FXKJ_TXT,
+       BUDGET
+  FROM BUDGET
+ WHERE FXKJ IN ('00016_1', '00016_2', '00016_3', '00016_4')
+ 
+ UNION ALL
+ 
+SELECT VERSION,
+       BUKRS,
+       BUTXT,
+       PRCTR,
+       PRCTR_TXT,
+       GJAHR,
+       MONAT,
+       TIME,
+       '00019_1' AS FXKJ,
+       '其中：财报财务费用' AS FXKJ_TXT,
+       MAP(FXKJ, '00019', BUDGET, -1 * BUDGET) AS BUDGET
+  FROM BUDGET
+ WHERE FXKJ IN ('00019', '00019_2')
+),
+
+BUDGET_AGG AS (
+SELECT LIST.VERSION,
+       LIST.BUKRS,
+       LIST.BUTXT,
+       LIST.PRCTR,
+       LIST.PRCTR_TXT,
+       LIST.GJAHR,
+       LIST.MONAT,
+       LIST.TIME,
+       LIST.FXKJ,
+       LIST.FXKJ_TXT,
+       LIST.BUDGET AS YDFX_YDJH,
+       SUM(BUDGET) OVER(PARTITION BY VERSION, BUKRS, PRCTR, FXKJ, GJAHR ORDER BY MONAT ASC) AS LJFX_NDJH
+  FROM ( SELECT VERSION,
+                BUKRS,
+                BUTXT,
+                PRCTR,
+                PRCTR_TXT,
+                GJAHR,
+                MONAT,
+                TIME,
+                FXKJ,
+                FXKJ_TXT,
+                SUM(BUDGET) AS BUDGET
+           FROM BUDGET_ALL
+          GROUP BY VERSION, BUKRS, BUTXT, PRCTR, PRCTR_TXT, GJAHR, MONAT, TIME, FXKJ, FXKJ_TXT
+        ) AS LIST
+)
+
+SELECT CAST('Actual' AS NVARCHAR(6)) AS VERSION,
+       BUKRS,
+       BUTXT,
+       PRCTR,
+       PRCTR_TXT,
+       GJAHR,
+       MONAT,
+       TIME,
+       FXKJ,
+       FXKJ_TXT,
+       QM_DMBTR,
+       QM_DMBTR_SNTQ,
+       LJ_DMBTR,
+       LJ_DMBTR_SNTQ,
+       CAST(NULL AS DECIMAL(23, 2)) AS YDFX_YDJH,
+       CAST(NULL AS DECIMAL(23, 2)) AS LJFX_NDJH
+  FROM ACTUAL
+ 
+ UNION ALL
+ 
+SELECT VERSION,
+       BUKRS,
+       BUTXT,
+       PRCTR,
+       PRCTR_TXT,
+       GJAHR,
+       MONAT,
+       TIME,
+       FXKJ,
+       FXKJ_TXT,
+       CAST(NULL AS DECIMAL(23, 2)) AS QM_DMBTR,
+       CAST(NULL AS DECIMAL(23, 2)) AS QM_DMBTR_SNTQ,
+       CAST(NULL AS DECIMAL(23, 2)) AS LJ_DMBTR,
+       CAST(NULL AS DECIMAL(23, 2)) AS LJ_DMBTR_SNTQ,
+       YDFX_YDJH,
+       LJFX_NDJH
+  FROM BUDGET_AGG;

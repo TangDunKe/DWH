@@ -95,24 +95,22 @@
     <calculatedViewAttributes>
       <calculatedViewAttribute id="FXKJ" datatype="NVARCHAR" length="30" expressionLanguage="SQL">
         <formula>CASE &quot;HKONT&quot;
-	 WHEN '6603010100' then 'ZSAC_04_01'
-	 --WHEN '6603010200' then 'ZSAC_04_02'
-	 WHEN '6603010200' then 'ZSAC_04_01'
-	 WHEN '6603020100' then 'ZSAC_04_03'
-	 WHEN '6603020200' then 'ZSAC_04_03'
-	 --WHEN '6603020200' then 'ZSAC_04_04'
-	 WHEN '6603030000' then 'ZSAC_04_05'
-	 WHEN '6603040000' then 'ZSAC_04_06'
-	 WHEN '6603050000' then 'ZSAC_04_07'
-	 WHEN '6603060000' then 'ZSAC_04_08'
-	 WHEN '6603070000' then 'ZSAC_04_09'
-	 WHEN '6603080000' then 'ZSAC_04_10'
-	 WHEN '6603090000' then 'ZSAC_04_11'
-	 WHEN '6603100000' then 'ZSAC_04_12'
-	 WHEN '6603110000' then 'ZSAC_04_13'
-	 WHEN '6603120000' then 'ZSAC_04_14'
-	 WHEN '6603130000' then 'ZSAC_04_15'
-	 WHEN '6603990000' then 'ZSAC_04_98'
+	 WHEN '6603010100' then 'ZSAC_06_01'
+	 WHEN '6603010200' then 'ZSAC_06_01'
+	 WHEN '6603020100' then 'ZSAC_06_02'
+	 WHEN '6603020200' then 'ZSAC_06_02'
+	 WHEN '6603030000' then 'ZSAC_06_03'
+	 WHEN '6603040000' then 'ZSAC_06_04'
+	 WHEN '6603050000' then 'ZSAC_06_05'
+	 WHEN '6603060000' then 'ZSAC_06_06'
+	 WHEN '6603070000' then 'ZSAC_06_07'
+	 WHEN '6603080000' then 'ZSAC_06_08'
+	 WHEN '6603090000' then 'ZSAC_06_09'
+	 WHEN '6603100000' then 'ZSAC_06_10'
+	 WHEN '6603110000' then 'ZSAC_06_11'
+	 WHEN '6603120000' then 'ZSAC_06_12'
+	 WHEN '6603130000' then 'ZSAC_06_13'
+	 WHEN '6603990000' then 'ZSAC_06_98'
 	 ELSE ''
  END</formula>
       </calculatedViewAttribute>
@@ -522,7 +520,7 @@
         <formula>IFNULL(&quot;LJ_DMBTR_SNTQ_Y&quot;,0)</formula>
       </calculatedViewAttribute>
       <calculatedViewAttribute id="FXKJ" datatype="NVARCHAR" length="30" expressionLanguage="SQL">
-        <formula>'ZSAC_04_99'</formula>
+        <formula>'ZSAC_06_99'</formula>
       </calculatedViewAttribute>
       <calculatedViewAttribute id="FXKJ_TXT" datatype="NVARCHAR" length="30" expressionLanguage="SQL">
         <formula>'财务费用合计'</formula>

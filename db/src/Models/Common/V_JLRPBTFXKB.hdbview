@@ -60,12 +60,10 @@ SELECT MANDT,
                 CAST(800 AS INTEGER) AS SUBJECT_INDEX,
                 CAST('其他业务' AS NVARCHAR(100)) AS SUBJECT_NAME,
                 
-                --净利润 = [销售收入] - ([销售成本] + [内销运费] + [出口运费] + [出口港杂费])
-                --SUM(XSSRCB.ZXSSR) - SUM(XSSRCB.ZXSCB + XSSRCB.ZNXYF + XSSRCB.ZCKYF + XSSRCB.ZCKGZF) AS BY_HSL
-                --产品实际调整后销售收入 = [销售收入] - [出口费用-佣金]
+                --产品实际调整后销售收入 = [销售收入] + [销售收入-国内返利] - [出口费用-佣金]
                 --产品实际调整后销售成本总额 = [销售成本]
                 --产品实际利润 = 产品实际调整后销售收入 - 产品实际调整后销售成本总额
-                SUM(XSSRCB.ZXSSR - XSSRCB.ZYJ - XSSRCB.ZXSCB) AS BY_HSL
+                SUM(XSSRCB.ZXSSR + XSSRCB.ZGNFL - XSSRCB.ZYJ - XSSRCB.ZXSCB) AS BY_HSL
            FROM "BL.DI.Tables.S4::T_ZFIR041" AS XSSRCB
            LEFT OUTER MANY TO ONE JOIN "BL.DI.Tables.S4::T_TIME_DIMENSION_MONTH" AS MONTH
              ON MONTH.YEAR = XSSRCB.GJAHR
@@ -216,8 +214,8 @@ SELECT XSSRCB.MANDT,
        MAPPING.PROD,
        --产品实际销量 = [收入数量]
        SUM(XSSRCB.ZSRSL) AS ZSRSL,
-       --产品实际净销售总额 = [销售收入]
-       SUM(XSSRCB.ZXSSR) AS ZXSSR,
+       --产品实际净销售总额 = [销售收入] + [销售收入-国内返利]
+       SUM(XSSRCB.ZXSSR +  ZGNFL) AS CAL_CPSJJXSZR,
        --产品实际调整后销售成本总额 = [销售成本]
        SUM(XSSRCB.ZXSCB) AS ZXSCB,
        --产品实际佣金总额 = [出口费用-佣金]
@@ -228,10 +226,10 @@ SELECT XSSRCB.MANDT,
        --产品实际运杂成本总额 = [内销运费] + [出口运费] + [出口港杂费]
        SUM(XSSRCB.ZNXYF + XSSRCB.ZCKYF + XSSRCB.ZCKGZF) AS CAL_CPSJYZCBZR,
        
-       --产品实际调整后销售收入 = [销售收入] - [出口费用-佣金]
+       --产品实际调整后销售收入 = [销售收入] + [销售收入-国内返利] - [出口费用-佣金]
        --产品实际调整后销售成本总额 = [销售成本]
        --产品实际利润 = 产品实际调整后销售收入 - 产品实际调整后销售成本总额
-       SUM(XSSRCB.ZXSSR - XSSRCB.ZYJ - XSSRCB.ZXSCB) AS CAL_CPSJLR,
+       SUM(XSSRCB.ZXSSR + XSSRCB.ZGNFL - XSSRCB.ZYJ - XSSRCB.ZXSCB) AS CAL_CPSJLR,
        
        --实际销售费用总额 = [销售费用-其他] + [出口费用-佣金] + [出口费用-保险费] + [出口费用-其他]
        --产品实际佣金总额 = [出口费用-佣金]
@@ -274,7 +272,7 @@ SELECT XSSRCB.MANDT,
        MAPPING.PRODTYPE,
        MAPPING.PROD,
        XSSRCB.ZSRSL,
-       XSSRCB.ZXSSR,
+       XSSRCB.CAL_CPSJJXSZR,
        XSSRCB.ZXSCB,
        XSSRCB.ZYJ,
        XSSRCB.CAL_CPSJXSCBZR,
@@ -308,7 +306,7 @@ SELECT XSSRCB.MANDT,
        MAPPING.PRODTYPE,
        MAPPING.PROD,
        XSSRCB.ZSRSL,
-       XSSRCB.ZXSSR,
+       XSSRCB.CAL_CPSJJXSZR,
        XSSRCB.ZXSCB,
        XSSRCB.ZYJ,
        XSSRCB.CAL_CPSJXSCBZR,
@@ -348,8 +346,8 @@ SELECT MANDT,
        PROD,
        --产品实际销量 = [收入数量]
        SUM(ZSRSL) AS ZSRSL,
-       --产品实际净销售总额 = [销售收入]
-       SUM(ZXSSR) AS ZXSSR,
+       --产品实际净销售总额 = [销售收入] + [销售收入-国内返利]
+       SUM(CAL_CPSJJXSZR) AS CAL_CPSJJXSZR,
        --产品实际佣金总额 = [出口费用-佣金]
        SUM(ZYJ) AS ZYJ,
        
@@ -360,7 +358,7 @@ SELECT MANDT,
        SUM(CAL_CPSJYZCBZR) AS CAL_CPSJYZCBZR,
        
        --产品实际调整后销价 = (各产品实际净销售总额 - 当月各产品实际佣金总额)/当月各产品实际销量
-       CAST(ROUND((SUM(ZXSSR) - SUM(ZYJ)) / NULLIF(SUM(ZSRSL), 0), 8) AS DECIMAL(23, 8)) AS CAL_CPSJTZHXJ,
+       CAST(ROUND((SUM(CAL_CPSJJXSZR) - SUM(ZYJ)) / NULLIF(SUM(ZSRSL), 0), 8) AS DECIMAL(23, 8)) AS CAL_CPSJTZHXJ,
        
        --产品实际调整后单位成本 = (各产品实际销售成本总额 - 各产品实际运杂成本总额) / 各产品实际销量
        CAST(ROUND((SUM(CAL_CPSJXSCBZR) - SUM(CAL_CPSJYZCBZR)) / NULLIF(SUM(ZSRSL), 0), 8) AS DECIMAL(23, 8)) AS CAL_CPSJTZHDWCB,
@@ -408,7 +406,7 @@ SELECT ATT.MANDT,
        ATT.PRODTYPE,
        ATT.PROD,
        CAST(0 AS DECIMAL(23, 2)) AS ZSRSL,
-       CAST(0 AS DECIMAL(23, 2)) AS ZXSSR,
+       CAST(0 AS DECIMAL(23, 2)) AS CAL_CPSJJXSZR,
        CAST(0 AS DECIMAL(23, 2)) AS ZYJ,
        CAST(0 AS DECIMAL(23, 2)) AS CAL_CPSJXSCBZR,
        CAST(0 AS DECIMAL(23, 2)) AS CAL_CPSJYZCBZR,
@@ -438,7 +436,7 @@ SELECT MANDT,
        PRODTYPE,
        PROD,
        SUM(ZSRSL) AS ZSRSL,
-       SUM(ZXSSR) AS ZXSSR,
+       SUM(CAL_CPSJJXSZR) AS CAL_CPSJJXSZR,
        SUM(ZYJ) AS ZYJ,
        SUM(CAL_CPSJXSCBZR) AS CAL_CPSJXSCBZR,
        SUM(CAL_CPSJYZCBZR) AS CAL_CPSJYZCBZR,
