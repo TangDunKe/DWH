@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="BL.Models.Consumption::CV_WLQKFXKB_ZL" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="往来情况分析看板-账龄"/>
+<localVariables>
+  <variable id="IP_CALMONTH" parameter="true">
+    <descriptions defaultDescription="输入年月"/>
+    <variableProperties datatype="NVARCHAR" length="6" scale="NaN" mandatory="false" defaultExpressionLanguage="SQL">
+      <valueDomain type="AttributeValue">
+        <externalLikeStructureName>BL.Models.Basic::CV_MONTH</externalLikeStructureName>
+        <externalLikeStructureType>CALCULATION_VIEW</externalLikeStructureType>
+        <externalLikeElementName>CALMONTH</externalLikeElementName>
+      </valueDomain>
+      <selection multiLine="false" type="SingleValue"/>
+      <defaultExpression>TO_NVARCHAR(ADD_MONTHS(CURRENT_DATE, -1), 'YYYYMM')</defaultExpression>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="BL.Models.Consumption::CV_YSGLB">
+    <targetVariable name="IP_CALMONTH" resourceUri="BL.Models.Consumption::CV_YSGLB"/>
+    <localVariable>IP_CALMONTH</localVariable>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="BL.Models.Consumption::CV_YSGLB">
+    <resourceUri>BL.Models.Consumption::CV_YSGLB</resourceUri>
+  </DataSource>
+  <DataSource id="BL.Models.Basic::V_EXCHANGERATES_DATE">
+    <resourceUri>BL.Models.Basic::V_EXCHANGERATES_DATE</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Aging">
+    <viewAttributes>
+      <viewAttribute id="RCLNT"/>
+      <viewAttribute id="RBUKRS"/>
+      <viewAttribute id="BUTXT"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="PKTEXT"/>
+      <viewAttribute id="RCNTR"/>
+      <viewAttribute id="CKTEXT"/>
+      <viewAttribute id="KATR4"/>
+      <viewAttribute id="VTEXT4"/>
+      <viewAttribute id="KATR2"/>
+      <viewAttribute id="VTEXT2"/>
+      <viewAttribute id="KUNNR"/>
+      <viewAttribute id="NAME1"/>
+      <viewAttribute id="RWCUR"/>
+      <viewAttribute id="WKTEXT"/>
+      <viewAttribute id="CC_ZL"/>
+      <viewAttribute id="WSL"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_END_DATE" datatype="NVARCHAR" length="8" expressionLanguage="SQL">
+        <formula>TO_DATS(LAST_DAY(TO_DATE(CONCAT('$$IP_CALMONTH$$', '01'), 'YYYYMMDD')))</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="BL.Models.Consumption::CV_YSGLB"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="ExchangeRate" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="KURST"/>
+      <viewAttribute id="FCURR"/>
+      <viewAttribute id="TCURR"/>
+      <viewAttribute id="CALDATE"/>
+      <viewAttribute id="DATE_POINT_EXRATE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="BL.Models.Basic::V_EXCHANGERATES_DATE"/>
+    <filter>&quot;TCURR&quot;='CNY' AND &quot;KURST&quot; = 'M'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="GetExchangeRate" cardinality="CN_1" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="RCLNT"/>
+      <viewAttribute id="RBUKRS"/>
+      <viewAttribute id="BUTXT"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="PKTEXT"/>
+      <viewAttribute id="RCNTR"/>
+      <viewAttribute id="CKTEXT"/>
+      <viewAttribute id="KATR4"/>
+      <viewAttribute id="VTEXT4"/>
+      <viewAttribute id="KATR2"/>
+      <viewAttribute id="VTEXT2"/>
+      <viewAttribute id="KUNNR"/>
+      <viewAttribute id="NAME1"/>
+      <viewAttribute id="RWCUR"/>
+      <viewAttribute id="WKTEXT"/>
+      <viewAttribute id="CC_ZL" aggregationType="sum"/>
+      <viewAttribute id="WSL" aggregationType="sum"/>
+      <viewAttribute id="DATE_POINT_EXRATE" aggregationType="sum"/>
+      <viewAttribute hidden="true" id="JOIN$RCLNT$MANDT"/>
+      <viewAttribute hidden="true" id="JOIN$RWCUR$FCURR"/>
+      <viewAttribute hidden="true" id="JOIN$CC_END_DATE$CALDATE"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_EXRATE" datatype="DECIMAL" length="9" scale="5" expressionLanguage="SQL">
+        <formula>MAP(&quot;RWCUR&quot;, 'CNY', 1, &quot;DATE_POINT_EXRATE&quot;)</formula>
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="CC_WSL_CNY" datatype="DECIMAL" length="23" scale="2" expressionLanguage="SQL">
+        <formula>ROUND(&quot;WSL&quot; * &quot;CC_EXRATE&quot;, 2)</formula>
+      </calculatedViewAttribute></calculatedViewAttributes>
+    <input node="Aging">
+      <mapping xsi:type="Calculation:AttributeMapping" target="RCLNT" source="RCLNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RBUKRS" source="RBUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUTXT" source="BUTXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PKTEXT" source="PKTEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RCNTR" source="RCNTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CKTEXT" source="CKTEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="KATR4" source="KATR4"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VTEXT4" source="VTEXT4"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="KATR2" source="KATR2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VTEXT2" source="VTEXT2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="KUNNR" source="KUNNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME1" source="NAME1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RWCUR" source="RWCUR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WKTEXT" source="WKTEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CC_ZL" source="CC_ZL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WSL" source="WSL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RCLNT$MANDT" source="RCLNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RWCUR$FCURR" source="RWCUR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CC_END_DATE$CALDATE" source="CC_END_DATE"/>
+    </input>
+    <input node="ExchangeRate">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DATE_POINT_EXRATE" source="DATE_POINT_EXRATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RCLNT$MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RWCUR$FCURR" source="FCURR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CC_END_DATE$CALDATE" source="CALDATE"/>
+    </input>
+    <joinAttribute name="JOIN$RCLNT$MANDT"/>
+    <joinAttribute name="JOIN$RWCUR$FCURR"/>
+    <joinAttribute name="JOIN$CC_END_DATE$CALDATE"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="GetExchangeRate">
+  <attributes>
+    <attribute id="RCLNT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="客户端"/>
+      <keyMapping columnObjectName="GetExchangeRate" columnName="RCLNT"/>
+    </attribute>
+    <attribute id="RBUKRS" order="2" descriptionColumnName="BUTXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="公司代码"/>
+      <keyMapping columnObjectName="GetExchangeRate" columnName="RBUKRS"/>
+    </attribute>
+    <attribute id="BUTXT" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="公司名称"/>
+      <keyMapping columnObjectName="GetExchangeRate" columnName="BUTXT"/>
+    </attribute>
+    <attribute id="PRCTR" order="4" descriptionColumnName="PKTEXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="利润中心"/>
+      <keyMapping columnObjectName="GetExchangeRate" columnName="PRCTR"/>
+    </attribute>
+    <attribute id="PKTEXT" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="利润中心描述"/>
+      <keyMapping columnObjectName="GetExchangeRate" columnName="PKTEXT"/>
+    </attribute>
+    <attribute id="RCNTR" order="6" descriptionColumnName="CKTEXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="成本中心"/>
+      <keyMapping columnObjectName="GetExchangeRate" columnName="RCNTR"/>
+    </attribute>
+    <attribute id="CKTEXT" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="成本中心描述"/>
+      <keyMapping columnObjectName="GetExchangeRate" columnName="CKTEXT"/>
+    </attribute>
+    <attribute id="KATR4" order="8" descriptionColumnName="VTEXT4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="客户类型"/>
+      <keyMapping columnObjectName="GetExchangeRate" columnName="KATR4"/>
+    </attribute>
+    <attribute id="VTEXT4" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="客户类型描述"/>
+      <keyMapping columnObjectName="GetExchangeRate" columnName="VTEXT4"/>
+    </attribute>
+    <attribute id="KATR2" order="10" descriptionColumnName="VTEXT2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="集团客户"/>
+      <keyMapping columnObjectName="GetExchangeRate" columnName="KATR2"/>
+    </attribute>
+    <attribute id="VTEXT2" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="集团客户名称"/>
+      <keyMapping columnObjectName="GetExchangeRate" columnName="VTEXT2"/>
+    </attribute>
+    <attribute id="KUNNR" order="12" descriptionColumnName="NAME1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="客户编码"/>
+      <keyMapping columnObjectName="GetExchangeRate" columnName="KUNNR"/>
+    </attribute>
+    <attribute id="NAME1" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="客户名称"/>
+      <keyMapping columnObjectName="GetExchangeRate" columnName="NAME1"/>
+    </attribute>
+    <attribute id="RWCUR" order="14" descriptionColumnName="WKTEXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="货币编码"/>
+      <keyMapping columnObjectName="GetExchangeRate" columnName="RWCUR"/>
+    </attribute>
+    <attribute id="WKTEXT" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="货币描述"/>
+      <keyMapping columnObjectName="GetExchangeRate" columnName="WKTEXT"/>
+    </attribute>
+    <attribute id="CC_ZL" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="账龄"/>
+      <keyMapping columnObjectName="GetExchangeRate" columnName="CC_ZL"/>
+    </attribute>
+    <attribute id="CC_EXRATE" order="18">
+      <descriptions defaultDescription="月末时点汇率"/>
+      <keyMapping columnObjectName="GetExchangeRate" columnName="CC_EXRATE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="WSL" order="17" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="交易币金额"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="WSL"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="CC_WSL_CNY" order="19" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="人民币金额"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="CC_WSL_CNY"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="221" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Aging" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="356"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ExchangeRate" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="356"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="GetExchangeRate" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="221" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Aging" modelObjectNameSpace="GetExchangeRate" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="131"/>
+    </shape>
+    <shape modelObjectName="ExchangeRate" modelObjectNameSpace="GetExchangeRate" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="146"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
