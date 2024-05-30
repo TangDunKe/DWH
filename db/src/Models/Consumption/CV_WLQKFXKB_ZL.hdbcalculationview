@@ -101,7 +101,9 @@
       </calculatedViewAttribute>
     
       <calculatedViewAttribute id="CC_WSL_CNY" datatype="DECIMAL" length="23" scale="2" expressionLanguage="SQL">
+    
         <formula>ROUND(&quot;WSL&quot; * &quot;CC_EXRATE&quot;, 2)</formula>
+    
       </calculatedViewAttribute></calculatedViewAttributes>
     <input node="Aging">
       <mapping xsi:type="Calculation:AttributeMapping" target="RCLNT" source="RCLNT"/>
@@ -203,7 +205,7 @@
       <descriptions defaultDescription="账龄"/>
       <keyMapping columnObjectName="GetExchangeRate" columnName="CC_ZL"/>
     </attribute>
-    <attribute id="CC_EXRATE" order="18">
+    <attribute id="CC_EXRATE" order="18" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="月末时点汇率"/>
       <keyMapping columnObjectName="GetExchangeRate" columnName="CC_EXRATE"/>
     </attribute>
