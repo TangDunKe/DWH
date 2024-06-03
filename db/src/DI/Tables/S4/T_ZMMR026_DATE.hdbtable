@@ -1,0 +1,23 @@
+COLUMN TABLE "BL.DI.Tables.S4::T_ZMMR026_DATE" (
+    MANDT       NVARCHAR(3),
+    BUDAT       NVARCHAR(8),
+    BUKRS       NVARCHAR(4),
+    BUTXT       NVARCHAR(25),
+    WERKS       NVARCHAR(4),
+    NAME1       NVARCHAR(30),
+    ZCPLX       NVARCHAR(255),
+    MATKL       NVARCHAR(9),
+    WGBEZ       NVARCHAR(20),
+    LGORT       NVARCHAR(4),
+    LGOBE       NVARCHAR(16),
+    ZKHZT       DECIMAL(17,3),
+    ZZKZT       DECIMAL(17,3),
+    ZYCCH       DECIMAL(17,3),
+    ZSCSH       DECIMAL(17,3),
+    ZZKSH       DECIMAL(17,3),
+    ZXSCK       DECIMAL(17,3),
+    ZZKOM       DECIMAL(17,3),
+    ZXSOM       DECIMAL(17,3),
+    ZQT         DECIMAL(17,3),
+    ZDRCH       DECIMAL(17,3)
+);

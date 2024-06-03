@@ -1,0 +1,112 @@
+PROCEDURE "BL.DI.Procedures.S4::P_ZFM_SAC_FII011_DATE"( IN IV_DATE  NVARCHAR(8) )
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   --READS SQL DATA 
+   AS
+BEGIN
+  
+  DECLARE V_SYSTEM NVARCHAR(20);
+  DECLARE V_OBJECT NVARCHAR(150);
+  DECLARE V_START_TIME TIMESTAMP;
+  DECLARE V_END_TIME TIMESTAMP;
+  DECLARE V_RUN_TIMES INTEGER;
+  DECLARE V_RECORDS INTEGER;
+  DECLARE V_STATUS NVARCHAR(2);
+  
+  DECLARE V_MESSAGE NVARCHAR(5000);
+  DECLARE V_TYPE NVARCHAR(1);
+  
+  DECLARE V_BUDAT NVARCHAR(8);
+  
+  DECLARE EXIT HANDLER FOR SQLEXCEPTION
+  BEGIN
+    
+    ROLLBACK;
+    
+    V_END_TIME := UTCTOLOCAL(CURRENT_TIMESTAMP, 'Asia/Beijing');
+    V_RUN_TIMES := SECONDS_BETWEEN(:V_START_TIME, :V_END_TIME);
+    V_MESSAGE := CAST(::SQL_ERROR_MESSAGE AS NVARCHAR(5000));
+    
+    INSERT INTO "BL.DI.Tables.S4::T_DI_LOG"(SYSTEM, OBJECT, START_TIME, END_TIME, RUN_TIMES, DATE_FROM, DATE_TO, RECORDS, STATUS, MESSAGE)
+    VALUES(:V_SYSTEM, :V_OBJECT, :V_START_TIME, :V_END_TIME, :V_RUN_TIMES, :V_BUDAT, :V_BUDAT, 0, 'F', :V_MESSAGE);
+    
+  END;
+  
+  V_SYSTEM := 'S4';
+  V_OBJECT := 'ZFM_SAC_FII011_DATE';
+  
+  LT_COMP_LIST =
+  SELECT SIGN,
+         OPTION,
+         LOW,
+         HIGH
+    FROM "BL.Models.Basic::V_COMPANY";
+  
+  LT_PLANT_LIST =
+  SELECT SIGN,
+         OPTION,
+         LOW,
+         HIGH
+    FROM "BL.DI.Tables.S4::T_WERKS"
+   WHERE 1 <> 1;
+  
+  LT_MATGROUP = 
+  SELECT CAST('I' AS NVARCHAR(1)) AS SIGN,
+         CAST('EQ' AS NVARCHAR(2)) AS OPTION,
+         MATKL AS LOW,
+         CAST('' AS NVARCHAR(9)) AS HIGH
+    FROM "BL.DI.Tables.S4::T_T023T"
+   WHERE 1 <> 1;
+  
+  V_START_TIME := UTCTOLOCAL(CURRENT_TIMESTAMP, 'Asia/Beijing');
+  V_BUDAT := IFNULL(:IV_DATE, TO_NVARCHAR(ADD_DAYS(CURRENT_DATE, -1), 'YYYYMMDD'));
+  
+  CALL "BL.DI.VirtualProcedure::V_ZFM_SAC_FII011"( IR_BUKRS => :LT_COMP_LIST,
+                                                   IR_MATKL => :LT_MATGROUP,
+                                                   IR_WERKS => :LT_PLANT_LIST,
+                                                   IV_BUDAT => :V_BUDAT,
+                                                   ET_OUTPUT => LT_RESULT,
+                                                   EV_MESSAGE => V_MESSAGE,
+                                                   EV_TYPE => V_TYPE
+                                                 );
+  
+  SELECT COUNT(1) AS NUM INTO V_RECORDS FROM :LT_RESULT;
+  V_END_TIME := UTCTOLOCAL(CURRENT_TIMESTAMP, 'Asia/Beijing');
+  V_RUN_TIMES := SECONDS_BETWEEN(:V_START_TIME, :V_END_TIME);
+  V_STATUS := :V_TYPE;
+  
+  INSERT INTO "BL.DI.Tables.S4::T_DI_LOG"(SYSTEM, OBJECT, START_TIME, END_TIME, RUN_TIMES, DATE_FROM, DATE_TO, RECORDS, STATUS, MESSAGE)
+  VALUES(:V_SYSTEM, :V_OBJECT, :V_START_TIME, :V_END_TIME, :V_RUN_TIMES, :V_BUDAT, :V_BUDAT, :V_RECORDS, :V_STATUS, :V_MESSAGE);
+  IF :V_STATUS = 'S' THEN
+    
+    DELETE FROM "BL.DI.Tables.S4::T_ZMMR026_DATE" WHERE BUDAT = :V_BUDAT;
+    INSERT INTO "BL.DI.Tables.S4::T_ZMMR026_DATE"
+    SELECT MANDT,
+           :V_BUDAT AS BUDAT,
+           BUKRS,
+           BUTXT,
+           WERKS,
+           NAME1,
+           ZCPLX,
+           MATKL,
+           WGBEZ,
+           LGORT,
+           LGOBE,
+           ZKHZT,
+           ZZKZT,
+           ZYCCH,
+           ZSCSH,
+           ZZKSH,
+           ZXSCK,
+           ZZKOM,
+           ZXSOM,
+           ZQT,
+           ZDRCH
+      FROM :LT_RESULT;
+    
+  END IF;
+  
+  COMMIT;
+  
+END;

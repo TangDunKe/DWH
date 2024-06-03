@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="BL.Models.Consumption::CV_CCPCHMXB" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="产成品存货明细表"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="BL.DI.Tables.S4::T_ZMMR026_DATE">
+    <resourceUri>BL.DI.Tables.S4::T_ZMMR026_DATE</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews/>
+
+<logicalModel id="BL.DI.Tables.S4::T_ZMMR026_DATE">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="客户端"/>
+      <keyMapping columnObjectName="T_ZMMR026_DATE" columnName="MANDT"/>
+    </attribute>
+    <attribute id="BUDAT" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="过账日期"/>
+      <keyMapping columnObjectName="T_ZMMR026_DATE" columnName="BUDAT"/>
+    </attribute>
+    <attribute id="BUKRS" order="3" descriptionColumnName="BUTXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="公司代码"/>
+      <keyMapping columnObjectName="T_ZMMR026_DATE" columnName="BUKRS"/>
+    </attribute>
+    <attribute id="BUTXT" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="公司名称"/>
+      <keyMapping columnObjectName="T_ZMMR026_DATE" columnName="BUTXT"/>
+    </attribute>
+    <attribute id="WERKS" order="5" descriptionColumnName="NAME1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="工厂代码"/>
+      <keyMapping columnObjectName="T_ZMMR026_DATE" columnName="WERKS"/>
+    </attribute>
+    <attribute id="NAME1" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="工厂名称"/>
+      <keyMapping columnObjectName="T_ZMMR026_DATE" columnName="NAME1"/>
+    </attribute>
+    <attribute id="ZCPLX" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="产品类型"/>
+      <keyMapping columnObjectName="T_ZMMR026_DATE" columnName="ZCPLX"/>
+    </attribute>
+    <attribute id="MATKL" order="8" descriptionColumnName="WGBEZ" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="物料组"/>
+      <keyMapping columnObjectName="T_ZMMR026_DATE" columnName="MATKL"/>
+    </attribute>
+    <attribute id="WGBEZ" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="物料组描述"/>
+      <keyMapping columnObjectName="T_ZMMR026_DATE" columnName="WGBEZ"/>
+    </attribute>
+    <attribute id="LGORT" order="10" descriptionColumnName="LGOBE" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="存储地点"/>
+      <keyMapping columnObjectName="T_ZMMR026_DATE" columnName="LGORT"/>
+    </attribute>
+    <attribute id="LGOBE" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="存储地点描述"/>
+      <keyMapping columnObjectName="T_ZMMR026_DATE" columnName="LGOBE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="ZKHZT" order="12" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="当日客户在途余量"/>
+      <measureMapping columnObjectName="T_ZMMR026_DATE" columnName="ZKHZT"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="ZZKZT" order="13" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="当日转库在途余量"/>
+      <measureMapping columnObjectName="T_ZMMR026_DATE" columnName="ZZKZT"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="ZYCCH" order="14" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="月初存货余量"/>
+      <measureMapping columnObjectName="T_ZMMR026_DATE" columnName="ZYCCH"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="ZSCSH" order="15" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="当月累计生产收货量"/>
+      <measureMapping columnObjectName="T_ZMMR026_DATE" columnName="ZSCSH"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="ZZKSH" order="16" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="当月累计转库收货量"/>
+      <measureMapping columnObjectName="T_ZMMR026_DATE" columnName="ZZKSH"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="ZXSCK" order="17" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="当月累计销售出库量"/>
+      <measureMapping columnObjectName="T_ZMMR026_DATE" columnName="ZXSCK"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="ZZKOM" order="18" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="当月累计转库欧美公司量"/>
+      <measureMapping columnObjectName="T_ZMMR026_DATE" columnName="ZZKOM"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="ZXSOM" order="19" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="当月累计销售欧美公司量"/>
+      <measureMapping columnObjectName="T_ZMMR026_DATE" columnName="ZXSOM"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="ZQT" order="20" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="其他"/>
+      <measureMapping columnObjectName="T_ZMMR026_DATE" columnName="ZQT"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="ZDRCH" order="21" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="当日存货余量"/>
+      <measureMapping columnObjectName="T_ZMMR026_DATE" columnName="ZDRCH"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  </shapes>
+</layout>
+</Calculation:scenario>

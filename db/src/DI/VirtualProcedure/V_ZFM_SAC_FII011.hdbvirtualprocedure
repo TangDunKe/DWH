@@ -1,0 +1,55 @@
+VIRTUAL PROCEDURE "BL.DI.VirtualProcedure::V_ZFM_SAC_FII011" (
+ IN IR_BUKRS TABLE (
+    SIGN        NVARCHAR(1),
+    OPTION      NVARCHAR(2),
+    LOW         NVARCHAR(4),
+    HIGH        NVARCHAR(4)
+    ),
+ IN IR_MATKL TABLE (
+    SIGN        NVARCHAR(1),
+    OPTION      NVARCHAR(2),
+    LOW         NVARCHAR(9),
+    HIGH        NVARCHAR(9)
+    ),
+ IN IR_WERKS TABLE (
+    SIGN        NVARCHAR(1),
+    OPTION      NVARCHAR(2),
+    LOW         NVARCHAR(4),
+    HIGH        NVARCHAR(4)
+    ),
+ IN IV_BUDAT    NVARCHAR(8),
+OUT ET_OUTPUT TABLE (
+    MANDT       NVARCHAR(3),
+    BUKRS       NVARCHAR(4),
+    BUTXT       NVARCHAR(25),
+    WERKS       NVARCHAR(4),
+    NAME1       NVARCHAR(30),
+    ZCPLX       NVARCHAR(255),
+    MATKL       NVARCHAR(9),
+    WGBEZ       NVARCHAR(20),
+    LGORT       NVARCHAR(4),
+    LGOBE       NVARCHAR(16),
+    ZKHZT       DECIMAL(17,3),
+    ZZKZT       DECIMAL(17,3),
+    ZYCCH       DECIMAL(17,3),
+    ZSCSH       DECIMAL(17,3),
+    ZZKSH       DECIMAL(17,3),
+    ZXSCK       DECIMAL(17,3),
+    ZZKOM       DECIMAL(17,3),
+    ZXSOM       DECIMAL(17,3),
+    ZQT         DECIMAL(17,3),
+    ZDRCH       DECIMAL(17,3)
+	),
+OUT EV_MESSAGE  NVARCHAR(255),
+OUT EV_TYPE     NVARCHAR(1)
+)  CONFIGURATION '
+{
+    "__DP_UNIQUE_NAME__": "ZFM_SAC_FII011",
+    "__DP_HAS_NESTED_PARAMETERS__": false,
+    "__DP_USER_DEFINED_PROPERTIES__": {},
+    "__DP_INPUT_PARAMETER_PROPERTIES_": [],
+    "__DP_RETURN_PARAMETER_PROPERTIES_": [],
+    "__DP_VIRTUAL_PROCEDURE__": true,
+    "__DP_HAS_INTERNAL_OUTPUT_PARMETER__": false,
+    "__DP_DEFAULT_OUTPUT_PARAMETER_INDEX__": 0
+}' AT "DS4_ABAP";

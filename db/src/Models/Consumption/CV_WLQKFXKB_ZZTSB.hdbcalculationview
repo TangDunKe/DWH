@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="BL.Models.Consumption::CV_WLQKFXKB_ZZTSB" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="往来情况分析看板-周转天数表"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="BL.Models.Consumption::V_WLQKFXKB_ZZTSB">
+    <resourceUri>BL.Models.Consumption::V_WLQKFXKB_ZZTSB</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews/>
+
+<logicalModel id="BL.Models.Consumption::V_WLQKFXKB_ZZTSB">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="客户端"/>
+      <keyMapping columnObjectName="V_WLQKFXKB_ZZTSB" columnName="MANDT"/>
+    </attribute>
+    <attribute id="GJAHR" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="会计年度"/>
+      <keyMapping columnObjectName="V_WLQKFXKB_ZZTSB" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="POPER" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="会计期间"/>
+      <keyMapping columnObjectName="V_WLQKFXKB_ZZTSB" columnName="POPER"/>
+    </attribute>
+    <attribute id="CALMONTH" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="会计年月"/>
+      <keyMapping columnObjectName="V_WLQKFXKB_ZZTSB" columnName="CALMONTH"/>
+    </attribute>
+    <attribute id="BUKRS" order="5" descriptionColumnName="BUTXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="公司代码"/>
+      <keyMapping columnObjectName="V_WLQKFXKB_ZZTSB" columnName="BUKRS"/>
+    </attribute>
+    <attribute id="BUTXT" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="公司名称"/>
+      <keyMapping columnObjectName="V_WLQKFXKB_ZZTSB" columnName="BUTXT"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="YSZKZZTS" order="7" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="应收账款周转天数表"/>
+      <measureMapping columnObjectName="V_WLQKFXKB_ZZTSB" columnName="YSZKZZTS"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="YFZKZZTS1" order="8" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="预付账款周转天数表"/>
+      <measureMapping columnObjectName="V_WLQKFXKB_ZZTSB" columnName="YFZKZZTS1"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="YFZKZZTS2" order="9" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="应付账款周转天数表"/>
+      <measureMapping columnObjectName="V_WLQKFXKB_ZZTSB" columnName="YFZKZZTS2"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  </shapes>
+</layout>
+</Calculation:scenario>
