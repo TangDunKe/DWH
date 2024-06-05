@@ -99,16 +99,16 @@ SELECT MANDT,
        MATKL,
 	   
        --附加指标
-       SUM(ZXSSR + ZGNFL) AS ZCAL_MXSZE,                                                                                --毛销售总额 = 销售收入 + 销售收入-国内返利
-       SUM(ZGNFL) AS ZCAL_JFL,                                                                                          --减：返利
-       SUM(ZXSSR) AS ZCAL_JXSZR,                                                                                        --净销售总额
+       SUM(ZXSSR) AS ZCAL_MXSZE,                                                                                        --毛销售总额 = 销售收入
+       SUM(-1 * ZGNFL) AS ZCAL_JFL,                                                                                     --减：返利
+       SUM(ZXSSR + ZGNFL) AS ZCAL_JXSZR,                                                                                --净销售总额 = 销售收入 - 销售收入-国内返利
        SUM(ZXSCB) AS ZCAL_JXSCB,                                                                                        --减：销售成本
        SUM(ZYJ) AS ZCAL_JYJ,                                                                                            --减：佣金
-       SUM(ZXSSR - ZXSCB -ZYJ) AS ZCAL_XSMLE1,                                                                          --销售毛利额1
-       CAST(ROUND(SUM(ZXSSR - ZXSCB - ZYJ) / NULLIF(SUM(ZXSSR + ZGNFL), 0) * 100, 2) AS DECIMAL(23, 2)) AS ZCAL_XSMLL1, --销售毛利率1 = (销售收入 - 销售成本 - 出口费用-佣金) / (销售收入 + 销售收入-国内返利)
+       SUM(ZXSSR + ZGNFL - ZXSCB -ZYJ) AS ZCAL_XSMLE1,                                                                  --销售毛利额1 = 销售收入 - 销售收入-国内返利 - 销售成本 - 佣金
+       CAST(ROUND(SUM(ZXSSR + ZGNFL - ZXSCB - ZYJ) / NULLIF(SUM(ZXSSR), 0) * 100, 2) AS DECIMAL(23, 2)) AS ZCAL_XSMLL1, --销售毛利率1 = (销售收入 - 销售收入-国内返利 - 销售成本 - 出口费用-佣金) / 销售收入
        SUM(ZNXYF + ZCKYF + ZCKGZF) AS ZCAL_JYZF,                                                                        --减：运杂费 = 内销运费 + 出口运费 + 出口港杂费
-       SUM((ZXSSR - ZXSCB - ZYJ) - (ZNXYF + ZCKYF + ZCKGZF)) AS ZCAL_XSMLE2,                                            --销售毛利额2 = (销售收入 - 销售成本 - 出口费用-佣金) - (内销运费 + 出口运费 + 出口港杂费)
-       CAST(ROUND(SUM((ZXSSR - ZXSCB - ZYJ) - (ZNXYF + ZCKYF + ZCKGZF)) / NULLIF(SUM(ZXSSR + ZGNFL), 0) * 100, 2) AS DECIMAL(23, 2)) AS ZCAL_XSMLL2  --销售毛利率2
+       SUM((ZXSSR + ZGNFL - ZXSCB - ZYJ) - (ZNXYF + ZCKYF + ZCKGZF)) AS ZCAL_XSMLE2,                                    --销售毛利额2 = (销售收入 - 销售收入-国内返利 - 销售成本 - 出口费用-佣金) - (内销运费 + 出口运费 + 出口港杂费)
+       CAST(ROUND(SUM((ZXSSR + ZGNFL - ZXSCB - ZYJ) - (ZNXYF + ZCKYF + ZCKGZF)) / NULLIF(SUM(ZXSSR), 0) * 100, 2) AS DECIMAL(23, 2)) AS ZCAL_XSMLL2  --销售毛利率2
   FROM "BL.DI.Tables.S4::T_ZFIR041_DATE"
  WHERE TYPE = 'MTD'
    AND BLART = 'Z1'
