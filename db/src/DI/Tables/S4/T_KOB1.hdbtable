@@ -1,0 +1,12 @@
+COLUMN TABLE "BL.DI.Tables.S4::T_KOB1" (
+    MANDT       NVARCHAR(3),
+    BUKRS       NVARCHAR(4),
+    GJAHR       NVARCHAR(4),
+    PERIO       NVARCHAR(3),
+    BUDAT       NVARCHAR(8),
+    ORGVG       NVARCHAR(4),
+    WRGBTR      DECIMAL(23,2),
+    GKONT       NVARCHAR(10),
+    AUFNR       NVARCHAR(12),
+    OBJ_TXT     NVARCHAR(60)
+);
