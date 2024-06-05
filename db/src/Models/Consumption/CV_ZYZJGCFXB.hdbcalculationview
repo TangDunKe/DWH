@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="BL.Models.Consumption::CV_ZYZJGCFXB" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="重要在建工程分析表"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="BL.Models.Consumption::V_ZYZJGCFXB">
+    <resourceUri>BL.Models.Consumption::V_ZYZJGCFXB</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews/>
+
+<logicalModel id="BL.Models.Consumption::V_ZYZJGCFXB">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="客户端"/>
+      <keyMapping columnObjectName="V_ZYZJGCFXB" columnName="MANDT"/>
+    </attribute>
+    <attribute id="BUKRS" order="2" descriptionColumnName="BUTXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="公司代码"/>
+      <keyMapping columnObjectName="V_ZYZJGCFXB" columnName="BUKRS"/>
+    </attribute>
+    <attribute id="BUTXT" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="公司名称"/>
+      <keyMapping columnObjectName="V_ZYZJGCFXB" columnName="BUTXT"/>
+    </attribute>
+    <attribute id="PRCTR" order="4" descriptionColumnName="KTEXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="利润中心"/>
+      <keyMapping columnObjectName="V_ZYZJGCFXB" columnName="PRCTR"/>
+    </attribute>
+    <attribute id="KTEXT" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="利润中心描述"/>
+      <keyMapping columnObjectName="V_ZYZJGCFXB" columnName="KTEXT"/>
+    </attribute>
+    <attribute id="CALMONTH" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="财务年月"/>
+      <keyMapping columnObjectName="V_ZYZJGCFXB" columnName="CALMONTH"/>
+    </attribute>
+    <attribute id="PSPID" order="7" descriptionColumnName="POST1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="项目编码"/>
+      <keyMapping columnObjectName="V_ZYZJGCFXB" columnName="PSPID"/>
+    </attribute>
+    <attribute id="POST1" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="项目名称"/>
+      <keyMapping columnObjectName="V_ZYZJGCFXB" columnName="POST1"/>
+    </attribute>
+    <attribute id="MONTH_AVG_EXRATE" order="9">
+      <descriptions defaultDescription="当月平均汇率"/>
+      <keyMapping columnObjectName="V_ZYZJGCFXB" columnName="MONTH_AVG_EXRATE"/>
+    </attribute>
+    <attribute id="YEAR_AVG_EXRATE" order="10">
+      <descriptions defaultDescription="当年累计汇率"/>
+      <keyMapping columnObjectName="V_ZYZJGCFXB" columnName="YEAR_AVG_EXRATE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="MONTH_BEGIN_AMT" order="11" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="月初余额"/>
+      <measureMapping columnObjectName="V_ZYZJGCFXB" columnName="MONTH_BEGIN_AMT"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="MONTH_INCREASE_AMT" order="12" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="本月新增"/>
+      <measureMapping columnObjectName="V_ZYZJGCFXB" columnName="MONTH_INCREASE_AMT"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="MONTH_DECREASE_AMT" order="13" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="本月转固"/>
+      <measureMapping columnObjectName="V_ZYZJGCFXB" columnName="MONTH_DECREASE_AMT"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="MONTH_END_AMT" order="14" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="本月余额"/>
+      <measureMapping columnObjectName="V_ZYZJGCFXB" columnName="MONTH_END_AMT"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="YEAR_BEGIN_AMT" order="15" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="年初余额"/>
+      <measureMapping columnObjectName="V_ZYZJGCFXB" columnName="YEAR_BEGIN_AMT"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="YEAR_INCREASE_AMT" order="16" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="本年新增"/>
+      <measureMapping columnObjectName="V_ZYZJGCFXB" columnName="YEAR_INCREASE_AMT"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="YEAR_DECREASE_AMT" order="17" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="本年转固"/>
+      <measureMapping columnObjectName="V_ZYZJGCFXB" columnName="YEAR_DECREASE_AMT"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="YEAR_END_AMT" order="18" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="本年余额"/>
+      <measureMapping columnObjectName="V_ZYZJGCFXB" columnName="YEAR_END_AMT"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  </shapes>
+</layout>
+</Calculation:scenario>
