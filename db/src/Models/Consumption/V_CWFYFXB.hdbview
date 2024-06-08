@@ -127,7 +127,7 @@ SELECT LIST.VERSION,
         ) AS LIST
   LEFT JOIN ( SELECT SUBSETNAME, SUBSETDESC
                 FROM "BL.Models.Basic::V_CONFIG"
-               WHERE SETNAME = 'ZSAC_02'
+               WHERE SETNAME = 'ZSAC_06'
                GROUP BY SUBSETNAME, SUBSETDESC
                ORDER BY SUBSETNAME, SUBSETDESC
              ) AS CONFIG

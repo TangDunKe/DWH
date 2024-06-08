@@ -45,11 +45,11 @@
       <descriptions defaultDescription="项目名称"/>
       <keyMapping columnObjectName="V_ZYZJGCFXB" columnName="POST1"/>
     </attribute>
-    <attribute id="MONTH_AVG_EXRATE" order="9">
+    <attribute id="MONTH_AVG_EXRATE" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="当月平均汇率"/>
       <keyMapping columnObjectName="V_ZYZJGCFXB" columnName="MONTH_AVG_EXRATE"/>
     </attribute>
-    <attribute id="YEAR_AVG_EXRATE" order="10">
+    <attribute id="YEAR_AVG_EXRATE" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="当年累计汇率"/>
       <keyMapping columnObjectName="V_ZYZJGCFXB" columnName="YEAR_AVG_EXRATE"/>
     </attribute>

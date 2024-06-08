@@ -109,11 +109,7 @@
       <viewAttribute id="BUTXT"/>
       <viewAttribute id="LAND1"/>
     </viewAttributes>
-    <calculatedViewAttributes>
-      <calculatedViewAttribute id="CC_KOKRS" datatype="NVARCHAR" length="4" expressionLanguage="SQL">
-        <formula>MAP(&quot;LAND1&quot;, 'CN', 'LBCN', 'LBHW')</formula>
-      </calculatedViewAttribute>
-    </calculatedViewAttributes>
+    <calculatedViewAttributes/>
     <input node="BL.DI.Tables.S4::T_T001"/>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="ProfitCenter" filterExpressionLanguage="SQL">
@@ -563,7 +559,7 @@
       <viewAttribute id="RCLNT"/>
       <viewAttribute id="RBUKRS"/>
       <viewAttribute id="BUTXT"/>
-      <viewAttribute id="CC_KOKRS"/>
+      <viewAttribute id="LAND1"/>
       <viewAttribute id="PRCTR"/>
       <viewAttribute id="RCNTR"/>
       <viewAttribute id="KATR4"/>
@@ -583,7 +579,11 @@
       <viewAttribute hidden="true" id="JOIN$RCLNT$MANDT"/>
       <viewAttribute hidden="true" id="JOIN$RBUKRS$BUKRS"/>
     </viewAttributes>
-    <calculatedViewAttributes/>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_KOKRS" datatype="NVARCHAR" length="4" expressionLanguage="SQL">
+        <formula>MAP(&quot;LAND1&quot;, 'CN', 'LBCN', 'LBHW')</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
     <input node="GetGroupCustomer">
       <mapping xsi:type="Calculation:AttributeMapping" target="RCLNT" source="RCLNT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="RBUKRS" source="RBUKRS"/>
@@ -608,19 +608,18 @@
     </input>
     <input node="Company">
       <mapping xsi:type="Calculation:AttributeMapping" target="BUTXT" source="BUTXT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CC_KOKRS" source="CC_KOKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LAND1" source="LAND1"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RCLNT$MANDT" source="MANDT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RBUKRS$BUKRS" source="BUKRS"/>
     </input>
     <joinAttribute name="JOIN$RCLNT$MANDT"/>
     <joinAttribute name="JOIN$RBUKRS$BUKRS"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:NonEquiJoinView" id="GetProfitCenter" cardinality="CN_1" joinType="leftOuter">
+  <calculationView xsi:type="Calculation:JoinView" id="GetProfitCenter" cardinality="CN_1" joinType="leftOuter" filterExpressionLanguage="SQL">
     <viewAttributes>
       <viewAttribute id="RCLNT"/>
       <viewAttribute id="RBUKRS"/>
       <viewAttribute id="BUTXT"/>
-      <viewAttribute id="CC_KOKRS"/>
       <viewAttribute id="PRCTR"/>
       <viewAttribute id="KTEXT"/>
       <viewAttribute id="RCNTR"/>
@@ -633,19 +632,22 @@
       <viewAttribute id="RWCUR"/>
       <viewAttribute id="CC_ZL" aggregationType="sum"/>
       <viewAttribute id="CC_END_DATE"/>
-    
       <viewAttribute id="WSL" aggregationType="sum"/>
       <viewAttribute id="BEGIN_AMT" aggregationType="sum"/>
       <viewAttribute id="INCREASE_AMT" aggregationType="sum"/>
       <viewAttribute id="DECREASE_AMT" aggregationType="sum"/>
       <viewAttribute id="END_AMT" aggregationType="sum"/>
+      <viewAttribute id="CC_KOKRS"/>
+      <viewAttribute id="DATBI"/>
+      <viewAttribute hidden="true" id="JOIN$RCLNT$MANDT"/>
+      <viewAttribute hidden="true" id="JOIN$PRCTR$PRCTR"/>
+      <viewAttribute hidden="true" id="JOIN$CC_KOKRS$KOKRS"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="GetCompany">
       <mapping xsi:type="Calculation:AttributeMapping" target="RCLNT" source="RCLNT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="RBUKRS" source="RBUKRS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="BUTXT" source="BUTXT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CC_KOKRS" source="CC_KOKRS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="RCNTR" source="RCNTR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="KATR4" source="KATR4"/>
@@ -655,30 +657,35 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="KUNNR" source="KUNNR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="NAME1" source="NAME1"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="RWCUR" source="RWCUR"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="WSL" source="WSL"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CC_ZL" source="CC_ZL"/>
-    
+      <mapping xsi:type="Calculation:AttributeMapping" target="CC_END_DATE" source="CC_END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WSL" source="WSL"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="BEGIN_AMT" source="BEGIN_AMT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="INCREASE_AMT" source="INCREASE_AMT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DECREASE_AMT" source="DECREASE_AMT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="END_AMT" source="END_AMT"/>
-    
-      <mapping xsi:type="Calculation:AttributeMapping" target="CC_END_DATE" source="CC_END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CC_KOKRS" source="CC_KOKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RCLNT$MANDT" source="RCLNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PRCTR$PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CC_KOKRS$KOKRS" source="CC_KOKRS"/>
     </input>
     <input node="ProfitCenter">
       <mapping xsi:type="Calculation:AttributeMapping" target="KTEXT" source="KTEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DATBI" source="DATBI"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RCLNT$MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PRCTR$PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CC_KOKRS$KOKRS" source="KOKRS"/>
     </input>
-    <joinAttribute leftColumn="PRCTR" rightColumn="PRCTR" operator="EQ"/>
-    <joinAttribute leftColumn="RCLNT" rightColumn="MANDT" operator="EQ"/>
-    <joinAttribute leftColumn="CC_KOKRS" rightColumn="KOKRS" operator="EQ"/>
-    <joinAttribute leftColumn="CC_END_DATE" rightColumn="DATBI" operator="LE"/>
+    <filter>&quot;CC_END_DATE&quot; &lt;= &quot;DATBI&quot; OR &quot;DATBI&quot; IS NULL</filter>
+    <joinAttribute name="JOIN$RCLNT$MANDT"/>
+    <joinAttribute name="JOIN$PRCTR$PRCTR"/>
+    <joinAttribute name="JOIN$CC_KOKRS$KOKRS"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:NonEquiJoinView" id="GetCostCenter" cardinality="CN_1" joinType="leftOuter">
+  <calculationView xsi:type="Calculation:JoinView" id="GetCostCenter" cardinality="CN_1" joinType="leftOuter" filterExpressionLanguage="SQL">
     <viewAttributes>
       <viewAttribute id="RCLNT"/>
       <viewAttribute id="RBUKRS"/>
       <viewAttribute id="BUTXT"/>
-      <viewAttribute id="CC_KOKRS"/>
       <viewAttribute id="PRCTR"/>
       <viewAttribute id="PKTEXT"/>
       <viewAttribute id="RCNTR"/>
@@ -691,19 +698,23 @@
       <viewAttribute id="NAME1"/>
       <viewAttribute id="RWCUR"/>
       <viewAttribute id="CC_ZL" aggregationType="sum"/>
-    
+      <viewAttribute id="CC_END_DATE"/>
       <viewAttribute id="WSL" aggregationType="sum"/>
       <viewAttribute id="BEGIN_AMT" aggregationType="sum"/>
       <viewAttribute id="INCREASE_AMT" aggregationType="sum"/>
       <viewAttribute id="DECREASE_AMT" aggregationType="sum"/>
       <viewAttribute id="END_AMT" aggregationType="sum"/>
+      <viewAttribute id="CC_KOKRS"/>
+      <viewAttribute id="DATBI"/>
+      <viewAttribute hidden="true" id="JOIN$RCLNT$MANDT"/>
+      <viewAttribute hidden="true" id="JOIN$RCNTR$KOSTL"/>
+      <viewAttribute hidden="true" id="JOIN$CC_KOKRS$KOKRS"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="GetProfitCenter">
       <mapping xsi:type="Calculation:AttributeMapping" target="RCLNT" source="RCLNT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="RBUKRS" source="RBUKRS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="BUTXT" source="BUTXT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CC_KOKRS" source="CC_KOKRS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PKTEXT" source="KTEXT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="RCNTR" source="RCNTR"/>
@@ -714,21 +725,29 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="KUNNR" source="KUNNR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="NAME1" source="NAME1"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="RWCUR" source="RWCUR"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="WSL" source="WSL"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CC_ZL" source="CC_ZL"/>
-    
+      <mapping xsi:type="Calculation:AttributeMapping" target="CC_END_DATE" source="CC_END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WSL" source="WSL"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="BEGIN_AMT" source="BEGIN_AMT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="INCREASE_AMT" source="INCREASE_AMT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DECREASE_AMT" source="DECREASE_AMT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="END_AMT" source="END_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CC_KOKRS" source="CC_KOKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RCLNT$MANDT" source="RCLNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RCNTR$KOSTL" source="RCNTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CC_KOKRS$KOKRS" source="CC_KOKRS"/>
     </input>
     <input node="CostCenter">
       <mapping xsi:type="Calculation:AttributeMapping" target="CKTEXT" source="KTEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DATBI" source="DATBI"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RCLNT$MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RCNTR$KOSTL" source="KOSTL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CC_KOKRS$KOKRS" source="KOKRS"/>
     </input>
-    <joinAttribute leftColumn="RCLNT" rightColumn="MANDT" operator="EQ"/>
-    <joinAttribute leftColumn="CC_KOKRS" rightColumn="KOKRS" operator="EQ"/>
-    <joinAttribute leftColumn="RCNTR" rightColumn="KOSTL" operator="EQ"/>
-    <joinAttribute leftColumn="CC_END_DATE" rightColumn="DATBI" operator="LE"/>
+    <filter>&quot;CC_END_DATE&quot; &lt;= &quot;DATBI&quot; OR &quot;DATBI&quot; IS NULL</filter>
+    <joinAttribute name="JOIN$RCLNT$MANDT"/>
+    <joinAttribute name="JOIN$RCNTR$KOSTL"/>
+    <joinAttribute name="JOIN$CC_KOKRS$KOKRS"/>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="GetCurreny" cardinality="CN_1" joinType="leftOuter">
     <viewAttributes>
@@ -896,79 +915,79 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="648" y="112"/>
+      <upperLeftCorner x="648.7248447575407" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
     
   
     <shape expanded="true" modelObjectName="Details" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="511" y="1831"/>
+      <upperLeftCorner x="511.99999999999966" y="1831.999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="Customer" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="582" y="1336"/>
+      <upperLeftCorner x="582.4853041317781" y="1336.9999916553497"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="CustomerType" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="639" y="1176"/>
+      <upperLeftCorner x="639.4210946684962" y="1176.9999928474426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="GroupCustomer" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="730" y="1016"/>
+      <upperLeftCorner x="730.4618684500854" y="1016.9999940395355"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Company" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="433" y="856"/>
+      <upperLeftCorner x="433.9651115765049" y="856.9999952316284"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="ProfitCenter" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="719" y="696"/>
+      <upperLeftCorner x="719.4092378401548" y="696.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="CostCenter" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="478" y="536"/>
+      <upperLeftCorner x="478.0988650694732" y="536.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Curreny" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="715" y="376"/>
+      <upperLeftCorner x="715.3482820146426" y="376.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="Aging" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="721" y="1666"/>
+      <upperLeftCorner x="721.9999999999997" y="1666.999989271164"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="OpeningBalance" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="931" y="1666"/>
+      <upperLeftCorner x="931.9999999999998" y="1666.999989271164"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="ClosingBalance" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="511" y="1666"/>
+      <upperLeftCorner x="511.9999999999996" y="1666.999989271164"/>
       <rectangleSize width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Increase" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="91" y="1666"/>
+      <upperLeftCorner x="91.99999999999983" y="1666.999989271164"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Decrease" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="301" y="1666"/>
+      <upperLeftCorner x="301.99999999999955" y="1666.999989271164"/>
       <rectangleSize width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="UnionAll" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="511" y="1461"/>
+      <upperLeftCorner x="511.99999999999966" y="1461.9999904632568"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Agg" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="372" y="1336"/>
+      <upperLeftCorner x="372.48530413177815" y="1336.9999916553497"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
   
     <shape expanded="true" modelObjectName="GetCustomer" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="399" y="1176"/>
+      <upperLeftCorner x="399.1519707984448" y="1176.9999928474426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Agg" modelObjectNameSpace="GetCustomer" modelObjectType="JoinNodeInput">
@@ -980,7 +999,7 @@
       <rectangleSize width="136"/>
     </shape>
     <shape expanded="true" modelObjectName="GetCustomerType" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="425" y="1016"/>
+      <upperLeftCorner x="425.81863746511146" y="1016.9999940395355"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="GetCustomer" modelObjectNameSpace="GetCustomerType" modelObjectType="JoinNodeInput">
@@ -992,7 +1011,7 @@
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="GetGroupCustomer" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="645" y="856"/>
+      <upperLeftCorner x="645.937011973293" y="856.9999952316284"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="GetCustomerType" modelObjectNameSpace="GetGroupCustomer" modelObjectType="JoinNodeInput">
@@ -1004,7 +1023,7 @@
       <rectangleSize width="156"/>
     </shape>
     <shape expanded="true" modelObjectName="GetCompany" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="460" y="696"/>
+      <upperLeftCorner x="460.63177824317154" y="696.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="GetGroupCustomer" modelObjectNameSpace="GetCompany" modelObjectType="JoinNodeInput">
@@ -1016,31 +1035,32 @@
       <rectangleSize width="146"/>
     </shape>
     <shape expanded="true" modelObjectName="GetProfitCenter" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="692" y="536"/>
+      <upperLeftCorner x="692.7425711734882" y="536.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="GetCompany" modelObjectNameSpace="GetProfitCenter" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="176"/>
+      <rectangleSize width="175"/>
     </shape>
     <shape modelObjectName="ProfitCenter" modelObjectNameSpace="GetProfitCenter" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="133"/>
     </shape>
     <shape expanded="true" modelObjectName="GetCostCenter" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="504" y="376"/>
+      <upperLeftCorner x="504.7655317361399" y="376.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="GetProfitCenter" modelObjectNameSpace="GetCostCenter" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="176"/>
+      <rectangleSize width="250"/>
     </shape>
     <shape modelObjectName="CostCenter" modelObjectNameSpace="GetCostCenter" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="128"/>
+      <rectangleSize width="250"/>
     </shape>
+  
     <shape expanded="true" modelObjectName="GetCurreny" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="648" y="217"/>
+      <upperLeftCorner x="648.7248447575407" y="217"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="GetCostCenter" modelObjectNameSpace="GetCurreny" modelObjectType="JoinNodeInput">
