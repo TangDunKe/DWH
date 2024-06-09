@@ -38,6 +38,12 @@
   <DataSource id="BL.DI.Tables.S4::T_CEPCT">
     <resourceUri>BL.DI.Tables.S4::T_CEPCT</resourceUri>
   </DataSource>
+  <DataSource id="BL.DI.Tables.S4::T_ACDOCA_N">
+    <resourceUri>BL.DI.Tables.S4::T_ACDOCA_N</resourceUri>
+  </DataSource>
+  <DataSource id="BL.DI.Tables.S4::T_EKKO">
+    <resourceUri>BL.DI.Tables.S4::T_EKKO</resourceUri>
+  </DataSource>
 </dataSources>
 <snapshotProcedures/>
 <calculationViews>
@@ -49,19 +55,27 @@
       <viewAttribute id="MANDT"/>
       <viewAttribute id="BUKRS"/>
       <viewAttribute id="LIFNR"/>
+      <viewAttribute id="UMSKS"/>
+    
+      <viewAttribute id="UMSKZ"/>
+      <viewAttribute id="AUGDT"/>
+      <viewAttribute id="AUGBL"/>
+      <viewAttribute id="ZUONR"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="BELNR"/>
+      <viewAttribute id="BUZEI"/>
+    
       <viewAttribute id="BUDAT"/>
       <viewAttribute id="SHKZG"/>
       <viewAttribute id="HKONT"/>
       <viewAttribute id="PRCTR"/>
-      <viewAttribute id="ZUONR"/>
-      <viewAttribute id="DMBTR"/>
-    </viewAttributes>
+      <viewAttribute id="DMBTR"/></viewAttributes>
     <calculatedViewAttributes>
-      <calculatedViewAttribute id="TIME_DATE" datatype="DATE" expressionLanguage="SQL">
-        <formula>&quot;TIME&quot;</formula>
-      </calculatedViewAttribute>
       <calculatedViewAttribute id="TIME" datatype="NVARCHAR" length="6" expressionLanguage="SQL">
         <formula>'$$IP_CALMONTH$$'</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TIME_DATE" datatype="DATE" expressionLanguage="SQL">
+        <formula>TO_DATE(CONCAT(&quot;TIME&quot;, '01'), 'YYYYMMDD')</formula>
       </calculatedViewAttribute>
       <calculatedViewAttribute id="TIME_DATE_LAST" datatype="DATE" expressionLanguage="SQL">
         <formula>LAST_DAY(&quot;TIME_DATE&quot;)</formula>
@@ -75,9 +89,15 @@
 	 ELSE &quot;DMBTR&quot; 
  END</formula>
       </calculatedViewAttribute>
-    </calculatedViewAttributes>
+    
+      <calculatedViewAttribute id="CC_BELNR" datatype="NVARCHAR" length="10" expressionLanguage="SQL">
+    
+        <formula>RIGHT(&quot;ZUONR&quot;, 10)</formula>
+    
+      </calculatedViewAttribute></calculatedViewAttributes>
     <input node="BL.DI.Tables.S4::T_BSIK"/>
-    <filter>&quot;HKONT&quot; IN ('2202020301','2202020302','2202010301','2202010302') AND &quot;BUDAT_DATE&quot; &lt;= &quot;TIME_DATE_LAST&quot; AND &quot;SHKZG&quot; = 'H'</filter>
+    <filter>&quot;HKONT&quot; IN ('2202020301','2202020302','2202010301','2202010302') AND &quot;BUDAT_DATE&quot; &lt;= &quot;TIME_DATE_LAST&quot; AND &quot;SHKZG&quot; = 'H'
+AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
     <viewAttributes>
@@ -157,6 +177,181 @@
     <calculatedViewAttributes/>
     <input node="BL.DI.Tables.S4::T_CEPCT"/>
   </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="DocItems" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="RCLNT"/>
+      <viewAttribute id="RBUKRS"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="BELNR"/>
+      <viewAttribute id="RACCT"/>
+      <viewAttribute id="ZUONR"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="BL.DI.Tables.S4::T_ACDOCA_N"/>
+    <filter>&quot;RACCT&quot; LIKE '1401%' AND &quot;ZUONR&quot; &lt;&gt; ''</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="PurchasingDoc">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="EBELN"/>
+      <viewAttribute id="ZZHTH"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="BL.DI.Tables.S4::T_EKKO"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="GetAssignmentNumber" cardinality="CN_1" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="LIFNR"/>
+      <viewAttribute id="UMSKS"/>
+      <viewAttribute id="UMSKZ"/>
+      <viewAttribute id="AUGDT"/>
+      <viewAttribute id="AUGBL"/>
+      <viewAttribute id="ZUONR"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="BELNR"/>
+      <viewAttribute id="BUZEI"/>
+      <viewAttribute id="BUDAT"/>
+      <viewAttribute id="SHKZG"/>
+      <viewAttribute id="HKONT"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="DMBTR" aggregationType="sum"/>
+      <viewAttribute id="TIME"/>
+      <viewAttribute id="TIME_DATE_LAST"/>
+      <viewAttribute id="BUDAT_DATE"/>
+      <viewAttribute id="DMBTR_N" aggregationType="sum"/>
+      <viewAttribute id="ZUONR_N"/>
+      <viewAttribute hidden="true" id="JOIN$MANDT$RCLNT"/>
+      <viewAttribute hidden="true" id="JOIN$BUKRS$RBUKRS"/>
+      <viewAttribute hidden="true" id="JOIN$GJAHR$GJAHR"/>
+      <viewAttribute hidden="true" id="JOIN$CC_BELNR$BELNR"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_EBELN" datatype="NVARCHAR" length="10" expressionLanguage="SQL">
+        <formula>LEFT(&quot;ZUONR_N&quot;, 10)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LIFNR" source="LIFNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUDAT" source="BUDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SHKZG" source="SHKZG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HKONT" source="HKONT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZUONR" source="ZUONR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DMBTR" source="DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME_DATE_LAST" source="TIME_DATE_LAST"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUDAT_DATE" source="BUDAT_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DMBTR_N" source="DMBTR_N"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UMSKS" source="UMSKS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UMSKZ" source="UMSKZ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AUGDT" source="AUGDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AUGBL" source="AUGBL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BELNR" source="BELNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUZEI" source="BUZEI"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$RCLNT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BUKRS$RBUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$GJAHR$GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CC_BELNR$BELNR" source="CC_BELNR"/>
+    </input>
+    <input node="DocItems">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZUONR_N" source="ZUONR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$RCLNT" source="RCLNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BUKRS$RBUKRS" source="RBUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$GJAHR$GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CC_BELNR$BELNR" source="BELNR"/>
+    </input>
+    <joinAttribute name="JOIN$MANDT$RCLNT"/>
+    <joinAttribute name="JOIN$BUKRS$RBUKRS"/>
+    <joinAttribute name="JOIN$GJAHR$GJAHR"/>
+    <joinAttribute name="JOIN$CC_BELNR$BELNR"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="GetContract" cardinality="CN_1" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="LIFNR"/>
+      <viewAttribute id="UMSKS"/>
+      <viewAttribute id="UMSKZ"/>
+      <viewAttribute id="AUGDT"/>
+      <viewAttribute id="AUGBL"/>
+      <viewAttribute id="ZUONR"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="BELNR"/>
+      <viewAttribute id="BUZEI"/>
+      <viewAttribute id="BUDAT"/>
+      <viewAttribute id="SHKZG"/>
+      <viewAttribute id="HKONT"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="ZZHTH"/>
+      <viewAttribute id="DMBTR" aggregationType="sum"/>
+      <viewAttribute id="TIME"/>
+      <viewAttribute id="TIME_DATE_LAST"/>
+      <viewAttribute id="BUDAT_DATE"/>
+      <viewAttribute id="DMBTR_N" aggregationType="sum"/>
+      <viewAttribute hidden="true" id="JOIN$MANDT$MANDT"/>
+      <viewAttribute hidden="true" id="JOIN$CC_EBELN$EBELN"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="GetAssignmentNumber">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LIFNR" source="LIFNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUDAT" source="BUDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SHKZG" source="SHKZG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HKONT" source="HKONT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DMBTR" source="DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME_DATE_LAST" source="TIME_DATE_LAST"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUDAT_DATE" source="BUDAT_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DMBTR_N" source="DMBTR_N"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UMSKS" source="UMSKS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UMSKZ" source="UMSKZ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AUGDT" source="AUGDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AUGBL" source="AUGBL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZUONR" source="ZUONR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BELNR" source="BELNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUZEI" source="BUZEI"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CC_EBELN$EBELN" source="CC_EBELN"/>
+    </input>
+    <input node="PurchasingDoc">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZZHTH" source="ZZHTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CC_EBELN$EBELN" source="EBELN"/>
+    </input>
+    <joinAttribute name="JOIN$MANDT$MANDT"/>
+    <joinAttribute name="JOIN$CC_EBELN$EBELN"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_2">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="LIFNR"/>
+      <viewAttribute id="UMSKS"/>
+      <viewAttribute id="UMSKZ"/>
+      <viewAttribute id="AUGDT"/>
+      <viewAttribute id="AUGBL"/>
+      <viewAttribute id="ZUONR"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="BELNR"/>
+      <viewAttribute id="BUZEI"/>
+      <viewAttribute id="PRCTR"/>
+      <viewAttribute id="HKONT"/>
+      <viewAttribute id="ZZHTH"/>
+      <viewAttribute id="BUDAT"/>
+      <viewAttribute id="DMBTR"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="GetContract"/>
+  </calculationView>
   <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
     <viewAttributes>
       <viewAttribute id="MANDT"/>
@@ -169,7 +364,9 @@
       <viewAttribute id="DMBTR" aggregationType="sum"/></viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="Projection_1"/>
+    <input node="Aggregation_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZUONR" source="ZZHTH"/>
+    </input>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_9">
     <viewAttributes>
@@ -562,51 +759,89 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="171" y="112"/>
+      <upperLeftCorner x="397" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
     
   
     <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="144" y="1491"/>
+      <upperLeftCorner x="135" y="1996"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="391" y="1281"/>
+      <upperLeftCorner x="466" y="1301"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="135" y="1121"/>
+      <upperLeftCorner x="379" y="1141"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="485" y="961"/>
+      <upperLeftCorner x="247" y="981"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="260" y="801"/>
+      <upperLeftCorner x="92" y="821"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_6" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="192" y="641"/>
+      <upperLeftCorner x="328" y="661"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_7" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="481"/>
+      <upperLeftCorner x="426" y="501"/>
       <rectangleSize height="30" width="160"/>
     </shape>
+    <shape expanded="true" modelObjectName="DocItems" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="345" y="1996"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="PurchasingDoc" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="449" y="1836"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="GetAssignmentNumber" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="161" y="1836"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="GetAssignmentNumber" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="41" y="30"/>
+      <rectangleSize width="180"/>
+    </shape>
+    <shape modelObjectName="DocItems" modelObjectNameSpace="GetAssignmentNumber" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="131"/>
+    </shape>
+    <shape expanded="true" modelObjectName="GetContract" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="423" y="1676"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="GetAssignmentNumber" modelObjectNameSpace="GetContract" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="198"/>
+    </shape>
+    <shape modelObjectName="PurchasingDoc" modelObjectNameSpace="GetContract" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="152"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="469" y="1551"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+  
     <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="144" y="1386"/>
+      <upperLeftCorner x="565" y="1426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_9" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="144" y="1281"/>
+      <upperLeftCorner x="676" y="1301"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="354" y="1121"/>
+      <upperLeftCorner x="589" y="1141"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Projection_9" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
@@ -618,7 +853,7 @@
       <rectangleSize width="136"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="274" y="961"/>
+      <upperLeftCorner x="457" y="981"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_2" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
@@ -630,7 +865,7 @@
       <rectangleSize width="180"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="470" y="801"/>
+      <upperLeftCorner x="431" y="821"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_3" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
@@ -642,7 +877,7 @@
       <rectangleSize width="136"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="402" y="641"/>
+      <upperLeftCorner x="118" y="661"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_4" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
@@ -654,7 +889,7 @@
       <rectangleSize width="136"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_6" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="481"/>
+      <upperLeftCorner x="145" y="501"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_5" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
@@ -666,7 +901,7 @@
       <rectangleSize width="136"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_7" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="171" y="322"/>
+      <upperLeftCorner x="375" y="341"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_6" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
@@ -678,7 +913,7 @@
       <rectangleSize width="136"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_8" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="171" y="217"/>
+      <upperLeftCorner x="375" y="236"/>
       <rectangleSize height="30" width="160"/>
     </shape></shapes>
 </layout>

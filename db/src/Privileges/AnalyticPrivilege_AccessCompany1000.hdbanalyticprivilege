@@ -4,13 +4,7 @@
     <securedModels>
       <modelUri>BL.Models.ScriptModel::CV_003_CLIENT_TEST</modelUri>
     </securedModels>
-<validity xsi:type="AccessControl:SingleValueFilter" operator="GE" including="true" value="2024-05-24"/>
-
-<restriction>
-  <filter attributeName="BUKRS" xsi:type="Privilege:AttributeFilter">
-    <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1000"/>
-  </filter>
-  <attributeName>BUKRS</attributeName>
-  <originInformationModelUri>BL.Models.ScriptModel::CV_003_CLIENT_TEST</originInformationModelUri>
-</restriction>
+<whereSql>(((&quot;MANDT&quot; = SESSION_CONTEXT('CLIENT')))
+AND (&quot;BUKRS&quot; = '1000'))
+AND (CURRENT_DATE &gt;= '2024-06-09 00:00:00.000') </whereSql>
 </Privilege:analyticPrivilege>
