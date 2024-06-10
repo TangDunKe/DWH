@@ -1,6 +1,6 @@
 {
   "role": {
-    "name": "BL.Privileges::Role_AccessCompany1000",
+    "name": "BL.Privileges::Role_AccessCompanyAll",
     "schema_privileges": [
       {
         "reference": "DWH",
@@ -13,7 +13,7 @@
       {
         "schema_reference": "DWH",
         "privileges": [
-          "BL.Privileges::AnalyticPrivilege_AccessCompany1000"
+          "BL.Privileges::AnalyticPrivilege_AccessCompanyAll"
         ]
       }
     ]

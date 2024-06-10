@@ -4,6 +4,21 @@
       "schema": "DWH_HDI_DB_1"
     }
   },
+  "BL.Privileges::Role_AccessCompany2040": {
+    "DWH": {
+      "schema": "DWH_HDI_DB_1"
+    }
+  },
+  "BL.Privileges::Role_AccessCompany1000_2040": {
+    "DWH": {
+      "schema": "DWH_HDI_DB_1"
+    }
+  },
+  "BL.Privileges::Role_AccessCompanyAll": {
+    "DWH": {
+      "schema": "DWH_HDI_DB_1"
+    }
+  },
   "BL.Privileges::Role_AccessDWH": {
     "DWH": {
       "schema": "DWH_HDI_DB_1"

@@ -915,79 +915,79 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="648.7248447575407" y="112"/>
+      <upperLeftCorner x="648" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
     
   
     <shape expanded="true" modelObjectName="Details" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="511.99999999999966" y="1831.999988079071"/>
+      <upperLeftCorner x="511" y="1831"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="Customer" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="582.4853041317781" y="1336.9999916553497"/>
+      <upperLeftCorner x="582" y="1336"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="CustomerType" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="639.4210946684962" y="1176.9999928474426"/>
+      <upperLeftCorner x="639" y="1176"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="GroupCustomer" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="730.4618684500854" y="1016.9999940395355"/>
+      <upperLeftCorner x="730" y="1016"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Company" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="433.9651115765049" y="856.9999952316284"/>
+      <upperLeftCorner x="433" y="856"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="ProfitCenter" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="719.4092378401548" y="696.9999964237213"/>
+      <upperLeftCorner x="719" y="696"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="CostCenter" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="478.0988650694732" y="536.9999976158142"/>
+      <upperLeftCorner x="478" y="536"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Curreny" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="715.3482820146426" y="376.9999988079071"/>
+      <upperLeftCorner x="715" y="376"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="Aging" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="721.9999999999997" y="1666.999989271164"/>
+      <upperLeftCorner x="721" y="1666"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="OpeningBalance" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="931.9999999999998" y="1666.999989271164"/>
+      <upperLeftCorner x="931" y="1666"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="ClosingBalance" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="511.9999999999996" y="1666.999989271164"/>
+      <upperLeftCorner x="511" y="1666"/>
       <rectangleSize width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Increase" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="91.99999999999983" y="1666.999989271164"/>
+      <upperLeftCorner x="91" y="1666"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Decrease" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="301.99999999999955" y="1666.999989271164"/>
+      <upperLeftCorner x="301" y="1666"/>
       <rectangleSize width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="UnionAll" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="511.99999999999966" y="1461.9999904632568"/>
+      <upperLeftCorner x="511" y="1461"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Agg" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="372.48530413177815" y="1336.9999916553497"/>
+      <upperLeftCorner x="372" y="1336"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
   
     <shape expanded="true" modelObjectName="GetCustomer" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="399.1519707984448" y="1176.9999928474426"/>
+      <upperLeftCorner x="399" y="1176"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Agg" modelObjectNameSpace="GetCustomer" modelObjectType="JoinNodeInput">
@@ -999,7 +999,7 @@
       <rectangleSize width="136"/>
     </shape>
     <shape expanded="true" modelObjectName="GetCustomerType" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="425.81863746511146" y="1016.9999940395355"/>
+      <upperLeftCorner x="425" y="1016"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="GetCustomer" modelObjectNameSpace="GetCustomerType" modelObjectType="JoinNodeInput">
@@ -1011,7 +1011,7 @@
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="GetGroupCustomer" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="645.937011973293" y="856.9999952316284"/>
+      <upperLeftCorner x="645" y="856"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="GetCustomerType" modelObjectNameSpace="GetGroupCustomer" modelObjectType="JoinNodeInput">
@@ -1023,7 +1023,7 @@
       <rectangleSize width="156"/>
     </shape>
     <shape expanded="true" modelObjectName="GetCompany" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="460.63177824317154" y="696.9999964237213"/>
+      <upperLeftCorner x="460" y="696"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="GetGroupCustomer" modelObjectNameSpace="GetCompany" modelObjectType="JoinNodeInput">
@@ -1035,7 +1035,7 @@
       <rectangleSize width="146"/>
     </shape>
     <shape expanded="true" modelObjectName="GetProfitCenter" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="692.7425711734882" y="536.9999976158142"/>
+      <upperLeftCorner x="692" y="536"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="GetCompany" modelObjectNameSpace="GetProfitCenter" modelObjectType="JoinNodeInput">
@@ -1047,7 +1047,7 @@
       <rectangleSize width="133"/>
     </shape>
     <shape expanded="true" modelObjectName="GetCostCenter" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="504.7655317361399" y="376.9999988079071"/>
+      <upperLeftCorner x="504" y="376"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="GetProfitCenter" modelObjectNameSpace="GetCostCenter" modelObjectType="JoinNodeInput">
@@ -1060,7 +1060,7 @@
     </shape>
   
     <shape expanded="true" modelObjectName="GetCurreny" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="648.7248447575407" y="217"/>
+      <upperLeftCorner x="648" y="217"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="GetCostCenter" modelObjectNameSpace="GetCurreny" modelObjectType="JoinNodeInput">

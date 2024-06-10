@@ -55,6 +55,14 @@
                         "DROP"
                     ]
                 }
+            ],
+			//为当前容器账号DWH_HDI_DB_1_44KU97UN4RV0U8O1DULI9SH4B_RT附加Analytic Privilege，可在Security and User Management -> Role Assignment -> Inherited Roles中查看到
+            "schema_roles" : [
+                {
+                  "schema" : "DWH_HDI_DB_1",   // optional; override schema defined in grantor service
+                  "roles" : [ "BL.Privileges::Role_AccessCompany1000", "BL.Privileges::Role_AccessCompany2040", "BL.Privileges::Role_AccessCompany1000_2040", "BL.Privileges::Role_AccessCompanyAll" ],
+                  "roles_with_admin_option" : [ "BL.Privileges::Role_AccessCompany1000", "BL.Privileges::Role_AccessCompany2040", "BL.Privileges::Role_AccessCompany1000_2040", "BL.Privileges::Role_AccessCompanyAll" ]
+                }
             ]
         },
         "application_user": {
@@ -95,6 +103,13 @@
                         "ALTER",
                         "DROP"
                     ]
+                }
+            ],
+            "schema_roles" : [
+                {
+                  "schema" : "DWH_HDI_DB_1",   // optional; override schema defined in grantor service
+                  "roles" : [ "BL.Privileges::Role_AccessCompany1000", "BL.Privileges::Role_AccessCompany2040", "BL.Privileges::Role_AccessCompany1000_2040", "BL.Privileges::Role_AccessCompanyAll" ],
+                  "roles_with_admin_option" : [ "BL.Privileges::Role_AccessCompany1000", "BL.Privileges::Role_AccessCompany2040", "BL.Privileges::Role_AccessCompany1000_2040", "BL.Privileges::Role_AccessCompanyAll" ]
                 }
             ]
         }

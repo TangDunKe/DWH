@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Privilege:analyticPrivilege xmlns:Privilege="http://www.sap.com/ndb/BiModelPrivilege.ecore" id="BL.Privileges::AnalyticPrivilege_AccessCompany2040" privilegeType="SQL_ANALYTIC_PRIVILEGE" schemaVersion="1.1">
+    <descriptions defaultDescription="Just Access Company 2040"/>
+    <securedModels>
+      <modelUri>BL.Models.ScriptModel::CV_003_CLIENT_TEST</modelUri>
+      <modelUri>BL.Models.Consumption::CV_YFFXB_MX</modelUri>
+    </securedModels>
+
+<whereSql>(
+ ((SESSION_CONTEXT('CLIENT') &lt;&gt; '' AND &quot;MANDT&quot; = SESSION_CONTEXT('CLIENT')) OR (SESSION_CONTEXT('CLIENT') = '' AND &quot;MANDT&quot; IN ('300', '800'))) AND
+ (&quot;BUKRS&quot; = '2040')
+)</whereSql>
+</Privilege:analyticPrivilege>
