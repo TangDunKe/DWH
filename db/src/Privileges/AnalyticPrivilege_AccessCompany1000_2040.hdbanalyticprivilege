@@ -2,10 +2,7 @@
 <Privilege:analyticPrivilege xmlns:Privilege="http://www.sap.com/ndb/BiModelPrivilege.ecore" id="BL.Privileges::AnalyticPrivilege_AccessCompany1000_2040" privilegeType="SQL_ANALYTIC_PRIVILEGE" schemaVersion="1.1">
     <descriptions defaultDescription="Just Access Company 1000 And 2040"/>
     <securedModels>
-      <modelUri>BL.Models.ScriptModel::CV_003_CLIENT_TEST</modelUri>
-      <modelUri>BL.Models.Consumption::CV_YFFXB_MX</modelUri>
-    </securedModels>
-
+      <modelUri>BL.Models.ScriptModel::CV_003_CLIENT_TEST</modelUri></securedModels>
 <whereSql>(
  ((SESSION_CONTEXT('CLIENT') &lt;&gt; '' AND &quot;MANDT&quot; = SESSION_CONTEXT('CLIENT')) OR (SESSION_CONTEXT('CLIENT') = '' AND &quot;MANDT&quot; IN ('300', '800'))) AND
  (&quot;BUKRS&quot; IN ('1000', '2040'))

@@ -4,114 +4,88 @@
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="BL.DI.Tables.S4::T_YFXMTRFXB">
-    <resourceUri>BL.DI.Tables.S4::T_YFXMTRFXB</resourceUri>
+  <DataSource id="BL.Models.Common::V_YFXMTRFXB">
+    <resourceUri>BL.Models.Common::V_YFXMTRFXB</resourceUri>
   </DataSource>
 </dataSources>
 <snapshotProcedures/>
 <calculationViews/>
 
-<logicalModel id="BL.DI.Tables.S4::T_YFXMTRFXB">
+<logicalModel id="BL.Models.Common::V_YFXMTRFXB">
   <attributes>
     <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="客户端"/>
-      <keyMapping columnObjectName="T_YFXMTRFXB" columnName="MANDT"/>
+      <keyMapping columnObjectName="V_YFXMTRFXB" columnName="MANDT"/>
     </attribute>
-    <attribute id="GJAHR" order="2" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="年度"/>
-      <keyMapping columnObjectName="T_YFXMTRFXB" columnName="GJAHR"/>
-    </attribute>
-    <attribute id="POPER" order="3" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="期间"/>
-      <keyMapping columnObjectName="T_YFXMTRFXB" columnName="POPER"/>
-    </attribute>
-    <attribute id="BUKRS" order="4" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="BUKRS" order="2" descriptionColumnName="BUTXT" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="公司代码"/>
-      <keyMapping columnObjectName="T_YFXMTRFXB" columnName="BUKRS"/>
+      <keyMapping columnObjectName="V_YFXMTRFXB" columnName="BUKRS"/>
     </attribute>
-    <attribute id="BUTXT" order="5" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="公司描述"/>
-      <keyMapping columnObjectName="T_YFXMTRFXB" columnName="BUTXT"/>
+    <attribute id="BUTXT" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="公司名称"/>
+      <keyMapping columnObjectName="V_YFXMTRFXB" columnName="BUTXT"/>
     </attribute>
-    <attribute id="PSPID" order="6" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="项目定义"/>
-      <keyMapping columnObjectName="T_YFXMTRFXB" columnName="PSPID"/>
-    </attribute>
-    <attribute id="POST1" order="7" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="项目描述"/>
-      <keyMapping columnObjectName="T_YFXMTRFXB" columnName="POST1"/>
-    </attribute>
-    <attribute id="AUFNR" order="8" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="内部订单"/>
-      <keyMapping columnObjectName="T_YFXMTRFXB" columnName="AUFNR"/>
-    </attribute>
-    <attribute id="KTEXT_AUF" order="9" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="内部订单描述"/>
-      <keyMapping columnObjectName="T_YFXMTRFXB" columnName="KTEXT_AUF"/>
-    </attribute>
-    <attribute id="PRCTR" order="10" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PRCTR" order="4" descriptionColumnName="KTEXT" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="利润中心"/>
-      <keyMapping columnObjectName="T_YFXMTRFXB" columnName="PRCTR"/>
+      <keyMapping columnObjectName="V_YFXMTRFXB" columnName="PRCTR"/>
     </attribute>
-    <attribute id="KTEXT" order="11" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="KTEXT" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="利润中心描述"/>
-      <keyMapping columnObjectName="T_YFXMTRFXB" columnName="KTEXT"/>
+      <keyMapping columnObjectName="V_YFXMTRFXB" columnName="KTEXT"/>
     </attribute>
-    <attribute id="WAERS" order="12" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="GJAHR" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="会计年度"/>
+      <keyMapping columnObjectName="V_YFXMTRFXB" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="POPER" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="会计期间"/>
+      <keyMapping columnObjectName="V_YFXMTRFXB" columnName="POPER"/>
+    </attribute>
+    <attribute id="CALMONTH" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="查询年月"/>
+      <keyMapping columnObjectName="V_YFXMTRFXB" columnName="CALMONTH"/>
+    </attribute>
+    <attribute id="SUBJECT_CODE" order="9" descriptionColumnName="SUBJECT_NAME" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="指标编码"/>
+      <keyMapping columnObjectName="V_YFXMTRFXB" columnName="SUBJECT_CODE"/>
+    </attribute>
+    <attribute id="SUBJECT_NAME" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="指标描述"/>
+      <keyMapping columnObjectName="V_YFXMTRFXB" columnName="SUBJECT_NAME"/>
+    </attribute>
+    <attribute id="WAERS" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="货币"/>
-      <keyMapping columnObjectName="T_YFXMTRFXB" columnName="WAERS"/>
+      <keyMapping columnObjectName="V_YFXMTRFXB" columnName="WAERS"/>
+    </attribute>
+    <attribute id="MONTH_AVG_EXRATE" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="月度平均汇率"/>
+      <keyMapping columnObjectName="V_YFXMTRFXB" columnName="MONTH_AVG_EXRATE"/>
+    </attribute>
+    <attribute id="YEAR_AVG_EXRATE" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="年度累计平均汇率"/>
+      <keyMapping columnObjectName="V_YFXMTRFXB" columnName="YEAR_AVG_EXRATE"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="ZCL" order="13" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
-      <descriptions defaultDescription="材料"/>
-      <measureMapping columnObjectName="T_YFXMTRFXB" columnName="ZCL"/>
+    <measure id="AMT" order="12" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="当月金额"/>
+      <measureMapping columnObjectName="V_YFXMTRFXB" columnName="AMT"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="ZRL" order="14" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
-      <descriptions defaultDescription="燃料"/>
-      <measureMapping columnObjectName="T_YFXMTRFXB" columnName="ZRL"/>
+    <measure id="AMT_CNY" order="14" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="当月金额(人民币)"/>
+      <measureMapping columnObjectName="V_YFXMTRFXB" columnName="AMT_CNY"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="ZDL" order="15" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
-      <descriptions defaultDescription="动力"/>
-      <measureMapping columnObjectName="T_YFXMTRFXB" columnName="ZDL"/>
+    <measure id="CYC_AMT" order="15" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="年度累计金额"/>
+      <measureMapping columnObjectName="V_YFXMTRFXB" columnName="CYC_AMT"/>
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="ZGZXJ" order="16" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
-      <descriptions defaultDescription="工资薪金"/>
-      <measureMapping columnObjectName="T_YFXMTRFXB" columnName="ZGZXJ"/>
-      <exceptionAggregationMetadata/>
-    </measure>
-    <measure id="ZWXYJ" order="17" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
-      <descriptions defaultDescription="五险一金"/>
-      <measureMapping columnObjectName="T_YFXMTRFXB" columnName="ZWXYJ"/>
-      <exceptionAggregationMetadata/>
-    </measure>
-    <measure id="ZZJ" order="18" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
-      <descriptions defaultDescription="折旧"/>
-      <measureMapping columnObjectName="T_YFXMTRFXB" columnName="ZZJ"/>
-      <exceptionAggregationMetadata/>
-    </measure>
-    <measure id="ZQT" order="19" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
-      <descriptions defaultDescription="其它"/>
-      <measureMapping columnObjectName="T_YFXMTRFXB" columnName="ZQT"/>
-      <exceptionAggregationMetadata/>
-    </measure>
-    <measure id="ZHJ" order="20" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
-      <descriptions defaultDescription="合计"/>
-      <measureMapping columnObjectName="T_YFXMTRFXB" columnName="ZHJ"/>
-      <exceptionAggregationMetadata/>
-    </measure>
-    <measure id="ZYFCC" order="21" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
-      <descriptions defaultDescription="含研发产出合计"/>
-      <measureMapping columnObjectName="T_YFXMTRFXB" columnName="ZYFCC"/>
-      <exceptionAggregationMetadata/>
-    </measure>
-    <measure id="ZCCHJ" order="22" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
-      <descriptions defaultDescription="ZCCHJ"/>
-      <measureMapping columnObjectName="T_YFXMTRFXB" columnName="ZCCHJ"/>
+    <measure id="CYC_AMT_CNY" order="17" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="年度累计金额(人民币)"/>
+      <measureMapping columnObjectName="V_YFXMTRFXB" columnName="CYC_AMT_CNY"/>
       <exceptionAggregationMetadata/>
     </measure>
   </baseMeasures>

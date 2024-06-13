@@ -1,6 +1,6 @@
 VIEW "BL.Models.Common::V_YFXMTRFXB"
 AS
-
+/*
 WITH CONFIG AS ( 
 SELECT MANDT,
        SETNAME,
@@ -166,6 +166,154 @@ SELECT LIST.MANDT,
        CAST(MAP(T001.WAERS, 'CNY', LIST.CYC_AMT, LIST.CYC_AMT * EXRATE.YEAR_AVG_EXRATE) AS DECIMAL(23, 2)) AS CYC_AMT_CNY
   FROM LIST_ALL AS LIST
    
+  LEFT OUTER MANY TO ONE JOIN "BL.DI.Tables.S4::T_T001" AS T001
+    ON T001.MANDT = LIST.MANDT
+   AND T001.BUKRS = LIST.BUKRS
+  LEFT OUTER MANY TO ONE JOIN "BL.DI.Tables.S4::T_CEPCT" AS CEPC
+    ON CEPC.MANDT = LIST.MANDT
+   AND CEPC.PRCTR = LIST.PRCTR
+   AND CEPC.KOKRS = MAP(T001.LAND1, 'CN', 'LBCN', 'LBHW')
+   AND CEPC.DATBI >= TO_NVARCHAR(CURRENT_DATE, 'YYYYMMDD')
+   AND CEPC.SPRAS = '1'
+  LEFT OUTER MANY TO ONE JOIN "BL.DI.Tables.S4::T_TIME_DIMENSION_MONTH" AS MONTH
+    ON MONTH.YEAR = LIST.GJAHR
+   AND MONTH.MONTH = LIST.POPER
+  LEFT OUTER MANY TO ONE JOIN "BL.Models.Basic::V_EXCHANGERATES" AS EXRATE
+    ON EXRATE.MANDT = LIST.MANDT
+   AND EXRATE.KURST = 'M'
+   AND EXRATE.FCURR = T001.WAERS
+   AND EXRATE.TCURR = 'CNY'
+   AND EXRATE.YEAR = LIST.GJAHR
+   AND EXRATE.MONTH = LIST.POPER
+ ORDER BY LIST.MANDT, LIST.BUKRS, LIST.PRCTR, LIST.GJAHR, LIST.POPER, LIST.SUBJECT_CODE;
+ 
+*/
+
+WITH LIST_AGG AS (
+SELECT MANDT,
+       GJAHR,
+       POPER,
+       BUKRS,
+       PRCTR,
+       --WAERS,
+       SUM(ZCL) AS ZCL,
+       SUM(ZRL) AS ZRL,
+       SUM(ZDL) AS ZDL,
+       SUM(ZGZXJ) AS ZGZXJ,
+       SUM(ZWXYJ) AS ZWXYJ,
+       SUM(ZZJ) AS ZZJ,
+       SUM(ZQT) AS ZQT,
+       SUM(ZHJ) AS ZHJ,
+       SUM(ZYFCC) AS ZYFCC,
+       SUM(ZCCHJ) AS ZCCHJ
+  FROM "BL.DI.Tables.S4::T_YFXMTRFXB"
+ GROUP BY MANDT, GJAHR, POPER, BUKRS, PRCTR
+),
+
+LIST_CTL AS (
+SELECT MANDT,
+       GJAHR,
+       POPER,
+       BUKRS,
+       PRCTR,
+       CAST( MAP( ELEMENT_NUMBER, 1,  'ZSAC_03_01',
+                                  2,  'ZSAC_03_02',
+                                  3,  'ZSAC_03_03',
+                                  4,  'ZSAC_03_04',
+                                  5,  'ZSAC_03_05',
+                                  6,  'ZSAC_03_06',
+                                  7,  'ZSAC_03_07',
+                                  8,  'ZSAC_03_08',
+                                  9, 'ZSAC_03_09',
+                                  10, 'ZSAC_03_10'
+           ) AS NVARCHAR(50)) AS SUBJECT_CODE,
+       CAST( MAP( ELEMENT_NUMBER, 1,  '材料',
+                                  2,  '燃料',
+                                  3,  '动力',
+                                  4,  '工资薪金',
+                                  5,  '五险一金',
+                                  6,  '折旧',
+                                  7,  '其它',
+                                  8,  '合计',
+                                  9,  '研发产出',
+                                  10, '含研发产出合计'
+           ) AS NVARCHAR(100)) AS SUBJECT_NAME,
+       CAST( MAP( ELEMENT_NUMBER, 1,  ZCL,
+                                  2,  ZRL,
+                                  3,  ZDL,
+                                  4,  ZGZXJ,
+                                  5,  ZWXYJ,
+                                  6,  ZZJ,
+                                  7,  ZQT,
+                                  8,  ZHJ,
+                                  9,  ZYFCC,
+                                  10, ZCCHJ
+           ) AS DECIMAL(23, 2)) AS AMT
+  FROM LIST_AGG,
+	   SERIES_GENERATE_INTEGER(1, 6, 16)  --转换行起始列序号 至 转换行截至列序号 + 1
+ ORDER BY ELEMENT_NUMBER
+),
+
+LIST_CYC AS (
+SELECT MANDT,
+       GJAHR,
+       POPER,
+       BUKRS,
+       PRCTR,
+       SUBJECT_CODE,
+       SUBJECT_NAME,
+       AMT, --当月金额
+       SUM(AMT) OVER(PARTITION BY MANDT, BUKRS, PRCTR, SUBJECT_CODE, SUBJECT_NAME, GJAHR ORDER BY POPER ASC) AS CYC_AMT --年度累计金额
+  FROM LIST_CTL
+),
+
+LIST_ALL AS (
+SELECT MANDT,
+       GJAHR,
+       POPER,
+       BUKRS,
+       PRCTR,
+       SUBJECT_CODE,
+       SUBJECT_NAME,
+       AMT,
+       CYC_AMT
+  FROM LIST_CYC
+ 
+ UNION ALL
+ 
+SELECT MANDT,
+       GJAHR,
+       RIGHT(POPER, 2) AS POPER,
+       BUKRS,
+       PRCTR,
+       'ZSAC_03_99' AS SUBJECT_CODE,
+       '销售收入' AS SUBJECT_NAME,
+       BY_HSL AS AMT,
+       BN_HSL AS CYC_AMT
+  FROM "BL.DI.Tables.S4::T_ZFIR003"
+ WHERE HC = '00002'
+)
+
+SELECT LIST.MANDT,
+       LIST.BUKRS,
+       T001.BUTXT,
+       LIST.PRCTR,
+       CEPC.KTEXT,
+       LIST.GJAHR,
+       LIST.POPER,
+       MONTH.CALMONTH,
+       LIST.SUBJECT_CODE,
+       LIST.SUBJECT_NAME,
+       T001.WAERS,
+       
+       LIST.AMT,
+       MAP(T001.WAERS, 'CNY', 1, EXRATE.MONTH_AVG_EXRATE) AS MONTH_AVG_EXRATE,
+       CAST(MAP(T001.WAERS, 'CNY', LIST.AMT, LIST.AMT * EXRATE.MONTH_AVG_EXRATE) AS DECIMAL(23, 2)) AS AMT_CNY,
+       
+       LIST.CYC_AMT,
+       MAP(T001.WAERS, 'CNY', 1, EXRATE.YEAR_AVG_EXRATE) AS YEAR_AVG_EXRATE,
+       CAST(MAP(T001.WAERS, 'CNY', LIST.CYC_AMT, LIST.CYC_AMT * EXRATE.YEAR_AVG_EXRATE) AS DECIMAL(23, 2)) AS CYC_AMT_CNY
+  FROM LIST_ALL AS LIST
   LEFT OUTER MANY TO ONE JOIN "BL.DI.Tables.S4::T_T001" AS T001
     ON T001.MANDT = LIST.MANDT
    AND T001.BUKRS = LIST.BUKRS
