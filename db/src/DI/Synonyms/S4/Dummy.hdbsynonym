@@ -1,0 +1,8 @@
+{
+    "BL.DI.Synonyms.S4::Dummy": {
+        "target": {
+            "object": "DUMMY",
+            "schema": "SYS"
+        }
+    }
+}

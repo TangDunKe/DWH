@@ -1,0 +1,8 @@
+{
+    "BL.DI.Synonyms.S4::Tables": {
+        "target": {
+            "object": "TABLES",
+            "schema": "SYS"
+        }
+    }
+}

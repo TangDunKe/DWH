@@ -15,6 +15,13 @@
                     "privileges": [
                         "SELECT"
                     ]
+                },
+                {
+                    "schema": "SYS",
+                    "name": "DUMMY",
+                    "privileges": [
+                        "SELECT"
+                    ]
                 }
             ],
             "global_object_privileges": [

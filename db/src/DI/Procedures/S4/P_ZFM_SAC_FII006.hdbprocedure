@@ -25,7 +25,7 @@ BEGIN
   DECLARE V_RECORDS INTEGER;
   DECLARE V_STATUS NVARCHAR(2);
   
-  DECLARE V_MESSAGE NVARCHAR(5000);
+  DECLARE V_MESSAGE NVARCHAR(255);
   DECLARE V_TYPE NVARCHAR(1);
   
   DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -51,7 +51,7 @@ BEGIN
   LT_SECTION_DELTA =
   SELECT IFNULL(:V_GJAHR, IFNULL(TO_NVARCHAR(NEXT_DATE, 'YYYY'), :V_MIN_GJAHR)) AS GJAHR,
          IFNULL(:V_POPER, IFNULL(TO_NVARCHAR(NEXT_DATE, 'MM'), :V_MIN_POPER)) AS POPER
-    FROM ( SELECT ADD_MONTHS(TO_DATE(MAX(BDATJ) || RIGHT(MAX(POPER), 2) || '01', 'YYYYMMDD'), 1) AS NEXT_DATE
+    FROM ( SELECT ADD_MONTHS(TO_DATE(MAX(BDATJ) || RIGHT(MAX(MAP(POPER, '013', '012', POPER)), 2) || '01', 'YYYYMMDD'), 1) AS NEXT_DATE
              FROM "BL.DI.Tables.S4::T_ZFM_SAC_FII006"
             WHERE BDATJ IN (SELECT MAX(BDATJ) AS BDATJ FROM "BL.DI.Tables.S4::T_ZFM_SAC_FII006")
          );
@@ -81,7 +81,22 @@ BEGIN
            OPTION,
            LOW,
            HIGH
-      FROM "BL.Models.Basic::V_COMPANY";
+      FROM "BL.DI.Tables.S4::T_WERKS";
+    
+    LT_BKLAS_LIST =
+    SELECT CAST('' AS NVARCHAR(1)) AS SIGN,
+           CAST('' AS NVARCHAR(2)) AS OPTION,
+           CAST('' AS NVARCHAR(4)) AS LOW,
+           CAST('' AS NVARCHAR(4)) AS HIGH
+      FROM "BL.DI.Synonyms.S4::Dummy";
+    
+    LT_MATKL_LIST =
+    SELECT CAST('' AS NVARCHAR(1)) AS SIGN,
+           CAST('' AS NVARCHAR(2)) AS OPTION,
+           CAST('' AS NVARCHAR(9)) AS LOW,
+           CAST('' AS NVARCHAR(9)) AS HIGH
+      FROM "BL.DI.Tables.S4::T_WERKS"
+     WHERE 1 <> 1;
     
     WHILE :V_INDEX <= :V_NUM DO
       
@@ -89,13 +104,15 @@ BEGIN
       V_GJAHR := :LT_SECTION_LIST.YEAR[:V_INDEX];
       V_POPER := :LT_SECTION_LIST.MONTH[:V_INDEX];
       
-      CALL "BL.DI.VirtualProcedure::V_ZFM_SAC_FII006"( IR_WERKS => :LT_PLANT_LIST,
-	                                                   IV_BDATJ => :V_GJAHR,
-	                                                   IV_CURTP => '10',
-	                                                   IV_POPER => LPAD(:V_POPER, 3, '0'),
-	                                                   ET_OUTPUT => LT_RESULT,
-	                                                   EV_MESSAGE => V_MESSAGE,
-	                                                   EV_TYPE => V_TYPE
+      CALL "BL.DI.VirtualProcedure::V_ZFM_SAC_FII006"( IR_BKLAS => :LT_BKLAS_LIST,
+                                                       IR_MATKL => :LT_MATKL_LIST,
+                                                       IR_WERKS => :LT_PLANT_LIST,
+                                                       IV_BDATJ => :V_GJAHR,
+                                                       IV_CURTP => '10',
+                                                       IV_POPER => LPAD(:V_POPER, 3, '0'),
+                                                       ET_OUTPUT => LT_RESULT,
+                                                       EV_MESSAGE => V_MESSAGE,
+                                                       EV_TYPE => V_TYPE
                                                      );
       
       SELECT COUNT(1) AS NUM INTO V_RECORDS FROM :LT_RESULT;

@@ -894,7 +894,7 @@
       <descriptions defaultDescription="货币描述"/>
       <keyMapping columnObjectName="GetCurreny" columnName="WKTEXT"/>
     </attribute>
-    <attribute id="CC_TYPE" hidden="true" order="18" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="CC_TYPE" order="18" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="分类(应收预收/应付预付)"/>
       <keyMapping columnObjectName="GetCurreny" columnName="CC_TYPE"/>
     </attribute>

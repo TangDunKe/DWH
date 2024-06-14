@@ -810,55 +810,55 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="466.93847004923543" y="112"/>
+      <upperLeftCorner x="466" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
     
   
     <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="91.99999999999994" y="2011.9999868869781"/>
+      <upperLeftCorner x="91" y="2011"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="445.2910224636121" y="1301.9999916553497"/>
+      <upperLeftCorner x="445" y="1301"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="534.6541800837564" y="1141.9999928474426"/>
+      <upperLeftCorner x="534" y="1141"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="240.1527984198753" y="981.9999940395355"/>
+      <upperLeftCorner x="240" y="981"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="525.5593660710323" y="821.9999952316284"/>
+      <upperLeftCorner x="525" y="821"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_6" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="277.40027897142966" y="661.9999964237213"/>
+      <upperLeftCorner x="277" y="661"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_7" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="514.6496959165991" y="501.9999976158142"/>
+      <upperLeftCorner x="514" y="501"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="PurchasingDoc" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="479.25837598566517" y="1691.999989271164"/>
+      <upperLeftCorner x="479" y="1691"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="DocHeader" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="2011.9999868869781"/>
+      <upperLeftCorner x="302" y="2011"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="EKBE" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="382.3221863320795" y="1851.999988079071"/>
+      <upperLeftCorner x="382" y="1851"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="GetAssignmentNumber" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="118.66666666666657" y="1851.999988079071"/>
+      <upperLeftCorner x="118" y="1851"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Projection_1" modelObjectNameSpace="GetAssignmentNumber" modelObjectType="JoinNodeInput">
@@ -870,7 +870,7 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
       <rectangleSize width="127"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_8" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="145.3333333333332" y="1691.999989271164"/>
+      <upperLeftCorner x="145" y="1691"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="GetAssignmentNumber" modelObjectNameSpace="Join_8" modelObjectType="JoinNodeInput">
@@ -883,7 +883,7 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
     </shape>
   
     <shape expanded="true" modelObjectName="GetContract" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="322.7265524600965" y="1531.9999904632568"/>
+      <upperLeftCorner x="322" y="1531"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_8" modelObjectNameSpace="GetContract" modelObjectType="JoinNodeInput">
@@ -897,16 +897,16 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
   
   
     <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="322.7265524600965" y="1426.9999904632568"/>
+      <upperLeftCorner x="322" y="1426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_9" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="235.29102246361202" y="1301.9999916553497"/>
+      <upperLeftCorner x="235" y="1301"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="261.9576891302787" y="1141.9999928474426"/>
+      <upperLeftCorner x="261" y="1141"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Projection_9" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
@@ -918,7 +918,7 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
       <rectangleSize width="136"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="453.5138489349488" y="981.9999940395355"/>
+      <upperLeftCorner x="453" y="981"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_2" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
@@ -930,7 +930,7 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
       <rectangleSize width="180"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="266.819465086542" y="821.9999952316284"/>
+      <upperLeftCorner x="266" y="821"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_3" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
@@ -942,7 +942,7 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
       <rectangleSize width="136"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="498.8926994043656" y="661.9999964237213"/>
+      <upperLeftCorner x="498" y="661"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_4" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
@@ -954,7 +954,7 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
       <rectangleSize width="136"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_6" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="304.06694563809634" y="501.9999976158142"/>
+      <upperLeftCorner x="304" y="501"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_5" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
@@ -966,7 +966,7 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
       <rectangleSize width="136"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_7" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="449.1858485394413" y="341.9999988079071"/>
+      <upperLeftCorner x="449" y="341"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_6" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
@@ -978,7 +978,7 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
       <rectangleSize width="136"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_8" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="449.1858485394413" y="236.9999988079071"/>
+      <upperLeftCorner x="449" y="236"/>
       <rectangleSize height="30" width="160"/>
     </shape></shapes>
 </layout>

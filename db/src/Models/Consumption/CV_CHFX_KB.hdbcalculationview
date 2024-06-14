@@ -114,7 +114,17 @@
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <input node="BL.DI.Tables.S4::T_ACDOCA_N"/>
-    <filter>&quot;RACCT&quot; IN('1403010000', '1405010000', '1605010000', '1409010000', '1404010000', '1406010000', '1402010000', '1411010000', '1411020000')</filter>
+    <filter>&quot;RACCT&quot; IN (
+'1403010000',
+'1405010000',
+'1605010000',
+'1409010000',
+'1404010000',
+'1406010000',
+'1402010000',
+'1411010000',
+'1411020000'
+)</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
     <descriptions>
@@ -128,10 +138,10 @@
       <viewAttribute id="VBELN"/>
       <viewAttribute id="PSPNR"/>
       <viewAttribute id="SALKV"/>
-      <viewAttribute id="MATKL"/>
     
       <viewAttribute id="POSNR"/>
-    </viewAttributes>
+    
+      <viewAttribute id="MATKL"/></viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="TIME" datatype="NVARCHAR" length="6" expressionLanguage="SQL">
         <formula>CONCAT(&quot;BDATJ&quot;, RIGHT(&quot;POPER&quot;,2))</formula>
@@ -205,7 +215,7 @@
     <restrictedViewAttributes/>
     <input node="Aggregation_2"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_4" cardinality="CN_N" joinType="inner" filterExpressionLanguage="SQL">
+  <calculationView xsi:type="Calculation:JoinView" id="Join_4" cardinality="C1_N" joinType="inner" filterExpressionLanguage="SQL">
     <viewAttributes>
       <viewAttribute id="RCLNT"/>
       <viewAttribute id="WERKS"/>
@@ -243,7 +253,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FXKJ$FXKJ" source="FXKJ"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FXKJ_TXT$FXKJ_TXT" source="FXKJ_TXT"/>
     </input>
-    <filter>&quot;TIME&quot; &gt;= &quot;TIME_N&quot;</filter>
+    <filter>&quot;TIME_N&quot; &lt;= &quot;TIME&quot;</filter>
     <joinAttribute name="JOIN$RCLNT$RCLNT"/>
     <joinAttribute name="JOIN$WERKS$WERKS"/>
     <joinAttribute name="JOIN$FXKJ$FXKJ"/>
@@ -269,14 +279,14 @@
   <calculationView xsi:type="Calculation:UnionView" id="Union_1">
     <viewAttributes>
       <viewAttribute id="MANDT"/>
-      <viewAttribute id="HSL" aggregationType="sum"/>
       <viewAttribute id="WERKS"/>
+      <viewAttribute id="GJAHR"/>
+    
       <viewAttribute id="POPER"/>
       <viewAttribute id="TIME"/>
       <viewAttribute id="FXKJ"/>
       <viewAttribute id="FXKJ_TXT"/>
-      <viewAttribute id="GJAHR"/>
-    </viewAttributes>
+      <viewAttribute id="HSL" aggregationType="sum"/></viewAttributes>
     <calculatedViewAttributes/>
     <input node="Aggregation_4" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="HSL" source="HSL"/>
@@ -469,46 +479,48 @@
       <descriptions defaultDescription="客户端"/>
       <keyMapping columnObjectName="Projection_5" columnName="MANDT"/>
     </attribute>
-    <attribute id="BUTXT" order="2" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="BUKRS" order="2" descriptionColumnName="BUTXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="公司代码"/>
+      <keyMapping columnObjectName="Projection_5" columnName="BUKRS"/>
+    </attribute>
+  
+    <attribute id="BUTXT" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="公司名称"/>
+  
       <keyMapping columnObjectName="Projection_5" columnName="BUTXT"/>
+  
     </attribute>
     <attribute id="WERKS" order="4" descriptionColumnName="WERKS_TXT" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="工厂"/>
       <keyMapping columnObjectName="Projection_5" columnName="WERKS"/>
     </attribute>
-    <attribute id="POPER" order="5" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="过账期间"/>
-      <keyMapping columnObjectName="Projection_5" columnName="POPER"/>
-    </attribute>
-    <attribute id="TIME" order="6" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="TIME"/>
-      <keyMapping columnObjectName="Projection_5" columnName="TIME"/>
-    </attribute>
-    <attribute id="FXKJ" order="7" descriptionColumnName="FXKJ_TXT" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="分析指标"/>
-      <keyMapping columnObjectName="Projection_5" columnName="FXKJ"/>
-    </attribute>
-    <attribute id="FXKJ_TXT" order="8" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="分析指标描述"/>
-      <keyMapping columnObjectName="Projection_5" columnName="FXKJ_TXT"/>
-    </attribute>
-    <attribute id="GJAHR" order="9" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="会计年度"/>
-      <keyMapping columnObjectName="Projection_5" columnName="GJAHR"/>
-    </attribute>
-    <attribute id="WERKS_TXT" order="10" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="WERKS_TXT" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="工厂名称"/>
       <keyMapping columnObjectName="Projection_5" columnName="WERKS_TXT"/>
     </attribute>
-    <attribute id="BUKRS" order="11" descriptionColumnName="BUTXT" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="公司代码"/>
-      <keyMapping columnObjectName="Projection_5" columnName="BUKRS"/>
+    <attribute id="GJAHR" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="会计年度"/>
+      <keyMapping columnObjectName="Projection_5" columnName="GJAHR"/>
     </attribute>
-  </attributes>
+    <attribute id="POPER" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="过账期间"/>
+      <keyMapping columnObjectName="Projection_5" columnName="POPER"/>
+    </attribute>
+    <attribute id="TIME" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="财务年月"/>
+      <keyMapping columnObjectName="Projection_5" columnName="TIME"/>
+    </attribute>
+    <attribute id="FXKJ" order="9" descriptionColumnName="FXKJ_TXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="分析指标"/>
+      <keyMapping columnObjectName="Projection_5" columnName="FXKJ"/>
+    </attribute>
+    <attribute id="FXKJ_TXT" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="分析指标描述"/>
+      <keyMapping columnObjectName="Projection_5" columnName="FXKJ_TXT"/>
+    </attribute></attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="HSL" order="3" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+    <measure id="HSL" order="11" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="以公司代码货币计的金额 "/>
       <measureMapping columnObjectName="Projection_5" columnName="HSL"/>
       <exceptionAggregationMetadata/>
