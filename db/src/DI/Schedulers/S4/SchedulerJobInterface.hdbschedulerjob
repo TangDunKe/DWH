@@ -1,0 +1,4 @@
+--每月1-8日，8时至19时，每5小时执行一次，在1分时启动
+SCHEDULER JOB "BL.DI.Schedulers.S4::SchedulerJobInterface"
+  CRON '* * 17:19 * 0:11/5 1 0' ENABLE PROCEDURE "BL.DI.Procedures.S4::P_ZFM_INTERFACE"
+  --PARAMETERS IV_GJAHR = NULL, IV_POPER = NULL
