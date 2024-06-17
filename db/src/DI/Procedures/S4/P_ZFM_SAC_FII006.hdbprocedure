@@ -7,7 +7,7 @@ PROCEDURE "BL.DI.Procedures.S4::P_ZFM_SAC_FII006"(  IN IV_GJAHR   NVARCHAR(4),
    --DEFAULT SCHEMA <default_schema_name>
    --READS SQL DATA 
    AS
-BEGIN
+BEGIN SEQUENTIAL EXECUTION
   
   DECLARE V_GJAHR NVARCHAR(4);
   DECLARE V_POPER NVARCHAR(2);
@@ -159,12 +159,18 @@ BEGIN
       V_RUN_TIMES := SECONDS_BETWEEN(:V_START_TIME, :V_END_TIME);
       V_STATUS := :V_TYPE;
       
-      INSERT INTO "BL.DI.Tables.S4::T_DI_LOG"(SYSTEM, OBJECT, START_TIME, END_TIME, RUN_TIMES, GJAHR, POPER, RECORDS, STATUS, MESSAGE)
-      VALUES(:V_SYSTEM, :V_OBJECT, :V_START_TIME, :V_END_TIME, :V_RUN_TIMES, :V_GJAHR, :V_POPER, :V_RECORDS, :V_STATUS, :V_MESSAGE);
-      IF :V_STATUS = 'S' THEN
+      IF :V_RECORDS > 0 THEN
+	       
+        INSERT INTO "BL.DI.Tables.S4::T_DI_LOG"(SYSTEM, OBJECT, START_TIME, END_TIME, RUN_TIMES, GJAHR, POPER, RECORDS, STATUS, MESSAGE)
+        VALUES(:V_SYSTEM, :V_OBJECT, :V_START_TIME, :V_END_TIME, :V_RUN_TIMES, :V_GJAHR, :V_POPER, :V_RECORDS, 'S', '查询成功');
         
         DELETE FROM "BL.DI.Tables.S4::T_ZFM_SAC_FII006" WHERE BDATJ = :V_GJAHR AND POPER = LPAD(:V_POPER, 3, '0');
         INSERT INTO "BL.DI.Tables.S4::T_ZFM_SAC_FII006" SELECT * FROM :LT_RESULT;
+		
+      ELSE
+
+        INSERT INTO "BL.DI.Tables.S4::T_DI_LOG"(SYSTEM, OBJECT, START_TIME, END_TIME, RUN_TIMES, GJAHR, POPER, RECORDS, STATUS, MESSAGE)
+        VALUES(:V_SYSTEM, :V_OBJECT, :V_START_TIME, :V_END_TIME, :V_RUN_TIMES, :V_GJAHR, :V_POPER, :V_RECORDS, 'E', '查询无数据');
         
       END IF;
       
@@ -179,6 +185,7 @@ BEGIN
 END;
 */
 
+
 PROCEDURE "BL.DI.Procedures.S4::P_ZFM_SAC_FII006"(  IN IV_GJAHR   NVARCHAR(4),
                                                     IN IV_POPER   NVARCHAR(2)
                                                  )
@@ -187,7 +194,7 @@ PROCEDURE "BL.DI.Procedures.S4::P_ZFM_SAC_FII006"(  IN IV_GJAHR   NVARCHAR(4),
    --DEFAULT SCHEMA <default_schema_name>
    --READS SQL DATA 
    AS
-BEGIN
+BEGIN SEQUENTIAL EXECUTION
   
   DECLARE V_GJAHR NVARCHAR(4);
   DECLARE V_POPER NVARCHAR(2);
@@ -209,7 +216,7 @@ BEGIN
   DECLARE V_MESSAGE NVARCHAR(5000);
   DECLARE V_TYPE NVARCHAR(1);
   
-  DECLARE V_BATCH_NUM INTEGER DEFAULT 5;
+  DECLARE V_BATCH_NUM INTEGER DEFAULT 1;
   DECLARE V_TOTAL_NUM INTEGER;
   DECLARE V_TIMES INTEGER;
   DECLARE V_TABIX INTEGER DEFAULT 0;
@@ -314,14 +321,113 @@ BEGIN
         
         IF :V_TABIX = 0 THEN
           
-          LT_RESULT_ALL = SELECT * FROM :LT_RESULT;
+          LT_RESULT_ALL =
+          SELECT MANDT,
+                 KALNR,
+                 MLAST,
+                 MATNR,
+                 BWKEY,
+                 BWTAR,
+                 SOBKZ,
+                 VBELN,
+                 POSNR,
+                 PSPNR,
+                 BDATJ,
+                 POPER,
+                 ICO_XSETTLE,
+                 ICO_XCLOSE,
+                 CURTP,
+                 RLDNR,
+                 BKLAS,
+                 MTART,
+                 MATKL,
+                 SPART,
+                 KTEXT,
+                 VPRSV,
+                 LBKUM,
+                 MEINS,
+                 SALK3,
+                 SALKV,
+                 EB_DIF,
+                 STPRS,
+                 PVPRS,
+                 PRABW_PRZ,
+                 PEINH,
+                 WAERS
+            FROM :LT_RESULT;
           
         ELSE
           
           LT_RESULT_ALL =
-          SELECT * FROM :LT_RESULT_ALL
+          SELECT MANDT,
+                 KALNR,
+                 MLAST,
+                 MATNR,
+                 BWKEY,
+                 BWTAR,
+                 SOBKZ,
+                 VBELN,
+                 POSNR,
+                 PSPNR,
+                 BDATJ,
+                 POPER,
+                 ICO_XSETTLE,
+                 ICO_XCLOSE,
+                 CURTP,
+                 RLDNR,
+                 BKLAS,
+                 MTART,
+                 MATKL,
+                 SPART,
+                 KTEXT,
+                 VPRSV,
+                 LBKUM,
+                 MEINS,
+                 SALK3,
+                 SALKV,
+                 EB_DIF,
+                 STPRS,
+                 PVPRS,
+                 PRABW_PRZ,
+                 PEINH,
+                 WAERS
+            FROM :LT_RESULT_ALL
+           
            UNION ALL
-          SELECT * FROM :LT_RESULT;
+           
+          SELECT MANDT,
+                 KALNR,
+                 MLAST,
+                 MATNR,
+                 BWKEY,
+                 BWTAR,
+                 SOBKZ,
+                 VBELN,
+                 POSNR,
+                 PSPNR,
+                 BDATJ,
+                 POPER,
+                 ICO_XSETTLE,
+                 ICO_XCLOSE,
+                 CURTP,
+                 RLDNR,
+                 BKLAS,
+                 MTART,
+                 MATKL,
+                 SPART,
+                 KTEXT,
+                 VPRSV,
+                 LBKUM,
+                 MEINS,
+                 SALK3,
+                 SALKV,
+                 EB_DIF,
+                 STPRS,
+                 PVPRS,
+                 PRABW_PRZ,
+                 PEINH,
+                 WAERS
+            FROM :LT_RESULT;
           
         END IF;
         
