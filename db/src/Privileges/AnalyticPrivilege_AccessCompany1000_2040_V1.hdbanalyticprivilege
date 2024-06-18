@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Privilege:analyticPrivilege xmlns:Privilege="http://www.sap.com/ndb/BiModelPrivilege.ecore" id="BL.Privileges::AnalyticPrivilege_AccessCompany1000_2040_V1" privilegeType="SQL_ANALYTIC_PRIVILEGE" schemaVersion="1.1">
+    <descriptions defaultDescription="Just Access Company 1000 And 2040(BUKRS)"/>
+    <securedModels>
+      <modelUri>BL.Models.Consumption::CV_CWFYFX_MX</modelUri>
+      <modelUri>BL.Models.Consumption::CV_FYFX_HZ</modelUri>
+      <modelUri>BL.Models.Consumption::CV_GLFYFX_MX</modelUri>
+      <modelUri>BL.Models.Consumption::CV_JDCBBX_KB</modelUri>
+      <modelUri>BL.Models.Consumption::CV_SDFYFXKB</modelUri>
+      <modelUri>BL.Models.Consumption::CV_XSFYFX_MX</modelUri>
+    </securedModels>
+<whereSql>(&quot;BUKRS&quot; IN ('1000', '2040')</whereSql>
+</Privilege:analyticPrivilege>

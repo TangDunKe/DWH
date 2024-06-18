@@ -13,7 +13,9 @@
       {
         "schema_reference": "DWH",
         "privileges": [
-          "BL.Privileges::AnalyticPrivilege_AccessCompanyAll"
+          "BL.Privileges::AnalyticPrivilege_AccessCompanyAll",
+          "BL.Privileges::AnalyticPrivilege_AccessCompanyAll_V1",
+          "BL.Privileges::AnalyticPrivilege_AccessCompanyAll_V2"
         ]
       }
     ]

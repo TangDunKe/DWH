@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Privilege:analyticPrivilege xmlns:Privilege="http://www.sap.com/ndb/BiModelPrivilege.ecore" id="BL.Privileges::AnalyticPrivilege_AccessCompany1000_2040_V2" privilegeType="SQL_ANALYTIC_PRIVILEGE" schemaVersion="1.1">
+    <descriptions defaultDescription="Just Access Company 1000 And 2040(RCLNT and RBUKRS)"/>
+    <securedModels>
+      <modelUri>BL.Models.Consumption::CV_WLQKFXKB_YEB</modelUri>
+      <modelUri>BL.Models.Consumption::CV_WLQKFXKB_YFZKZG</modelUri>
+      <modelUri>BL.Models.Consumption::CV_WLQKFXKB_ZL</modelUri>
+      <modelUri>BL.Models.Consumption::CV_YSGLB</modelUri>
+    </securedModels>
+<whereSql>(
+ ((SESSION_CONTEXT('CLIENT') &lt;&gt; '' AND &quot;RCLNT&quot; = SESSION_CONTEXT('CLIENT')) OR (SESSION_CONTEXT('CLIENT') = '' AND &quot;RCLNT&quot; IN ('300', '800'))) AND
+ (&quot;RBUKRS&quot; IN ('1000', '2040'))
+)</whereSql>
+</Privilege:analyticPrivilege>

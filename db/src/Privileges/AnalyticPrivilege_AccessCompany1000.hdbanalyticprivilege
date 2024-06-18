@@ -19,7 +19,6 @@
       <modelUri>BL.Models.Consumption::CV_YMMLFXB_CWKJ_SUM</modelUri>
       <modelUri>BL.Models.Consumption::CV_ZDGZCPXSFXKB</modelUri>
       <modelUri>BL.Models.Consumption::CV_ZYZJGCFXB</modelUri>
-    
       <modelUri>BL.Models.Consumption::CV_CPDDDLRFXB</modelUri>
     </securedModels>
 <whereSql>(
