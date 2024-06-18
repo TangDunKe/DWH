@@ -1,4 +1,5 @@
 SCHEDULER JOB "BL.DI.Schedulers.S4::SchedulerJobFlowGraph"
---每天08:01执行
-  CRON '* * * * 0 1 0' ENABLE PROCEDURE "BL.DI.Procedures.S4::P_DataExtract_FlowGraph" 
+--每天8时1分，13时1分和18时1分各执行一次
+  --CRON '* * * * 0 1 0' ENABLE PROCEDURE "BL.DI.Procedures.S4::P_DataExtract_FlowGraph"
+    CRON '* * * * 0,5,10 1 0' ENABLE PROCEDURE "BL.DI.Procedures.S4::P_DataExtract_FlowGraph" 
   --PARAMETERS IV_GJAHR = NULL, IV_POPER = NULL
