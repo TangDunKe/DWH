@@ -19,6 +19,8 @@
       <modelUri>BL.Models.Consumption::CV_YMMLFXB_CWKJ_SUM</modelUri>
       <modelUri>BL.Models.Consumption::CV_ZDGZCPXSFXKB</modelUri>
       <modelUri>BL.Models.Consumption::CV_ZYZJGCFXB</modelUri>
+    
+      <modelUri>BL.Models.Consumption::CV_CPDDDLRFXB</modelUri>
     </securedModels>
 <whereSql>(
  ((SESSION_CONTEXT('CLIENT') &lt;&gt; '' AND &quot;MANDT&quot; = SESSION_CONTEXT('CLIENT')) OR (SESSION_CONTEXT('CLIENT') = '' AND &quot;MANDT&quot; IN ('300', '800'))) AND

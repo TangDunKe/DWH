@@ -188,6 +188,7 @@
   <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_2">
     <viewAttributes>
       <viewAttribute id="RCLNT"/>
+      <viewAttribute id="RBUKRS"/>
       <viewAttribute id="WERKS"/>
       <viewAttribute id="GJAHR"/>
       <viewAttribute id="POPER"/>
@@ -203,6 +204,7 @@
   <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_3">
     <viewAttributes>
       <viewAttribute id="RCLNT"/>
+      <viewAttribute id="RBUKRS"/>
       <viewAttribute id="WERKS"/>
       <viewAttribute id="GJAHR"/>
       <viewAttribute id="POPER"/>
@@ -218,6 +220,7 @@
   <calculationView xsi:type="Calculation:JoinView" id="Join_4" cardinality="C1_N" joinType="inner" filterExpressionLanguage="SQL">
     <viewAttributes>
       <viewAttribute id="RCLNT"/>
+      <viewAttribute id="RBUKRS"/>
       <viewAttribute id="WERKS"/>
       <viewAttribute id="GJAHR"/>
       <viewAttribute id="POPER"/>
@@ -230,6 +233,7 @@
       <viewAttribute hidden="true" id="JOIN$WERKS$WERKS"/>
       <viewAttribute hidden="true" id="JOIN$FXKJ$FXKJ"/>
       <viewAttribute hidden="true" id="JOIN$FXKJ_TXT$FXKJ_TXT"/>
+      <viewAttribute hidden="true" id="JOIN$RBUKRS$RBUKRS"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="Aggregation_2">
@@ -240,10 +244,12 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ" source="FXKJ"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ_TXT" source="FXKJ_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RBUKRS" source="RBUKRS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RCLNT$RCLNT" source="RCLNT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$WERKS$WERKS" source="WERKS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FXKJ$FXKJ" source="FXKJ"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FXKJ_TXT$FXKJ_TXT" source="FXKJ_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RBUKRS$RBUKRS" source="RBUKRS"/>
     </input>
     <input node="Aggregation_3">
       <mapping xsi:type="Calculation:AttributeMapping" target="HSL" source="HSL"/>
@@ -252,16 +258,19 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$WERKS$WERKS" source="WERKS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FXKJ$FXKJ" source="FXKJ"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FXKJ_TXT$FXKJ_TXT" source="FXKJ_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RBUKRS$RBUKRS" source="RBUKRS"/>
     </input>
     <filter>&quot;TIME_N&quot; &lt;= &quot;TIME&quot;</filter>
     <joinAttribute name="JOIN$RCLNT$RCLNT"/>
     <joinAttribute name="JOIN$WERKS$WERKS"/>
     <joinAttribute name="JOIN$FXKJ$FXKJ"/>
     <joinAttribute name="JOIN$FXKJ_TXT$FXKJ_TXT"/>
+    <joinAttribute name="JOIN$RBUKRS$RBUKRS"/>
   </calculationView>
   <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_4">
     <viewAttributes>
       <viewAttribute id="MANDT"/>
+      <viewAttribute id="RBUKRS"/>
       <viewAttribute id="WERKS"/>
       <viewAttribute id="GJAHR"/>
       <viewAttribute id="POPER"/>
@@ -279,6 +288,7 @@
   <calculationView xsi:type="Calculation:UnionView" id="Union_1">
     <viewAttributes>
       <viewAttribute id="MANDT"/>
+      <viewAttribute id="RBUKRS"/>
       <viewAttribute id="WERKS"/>
       <viewAttribute id="GJAHR"/>
     
@@ -298,6 +308,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="RBUKRS" source="RBUKRS"/>
     </input>
     <input node="Projection_2" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="HSL" source="SALKV"/>
@@ -309,6 +321,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="BDATJ"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+    
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="RBUKRS" null="true" value=""/>
     </input>
     <input node="Projection_1" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="HSL" source="SALKV"/>
@@ -320,11 +334,14 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="BDATJ"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+    
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="RBUKRS" null="true" value=""/>
     </input>
   </calculationView>
   <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
     <viewAttributes>
       <viewAttribute id="MANDT"/>
+      <viewAttribute id="RBUKRS"/>
       <viewAttribute id="HSL" aggregationType="sum"/>
       <viewAttribute id="WERKS"/>
       <viewAttribute id="POPER"/>
@@ -337,12 +354,13 @@
     <restrictedViewAttributes/>
     <input node="Union_1"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinType="leftOuter">
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_1" joinType="leftOuter">
     <descriptions>
       <comment text="取工厂描述"/>
     </descriptions>
     <viewAttributes>
       <viewAttribute id="MANDT"/>
+      <viewAttribute id="RBUKRS"/>
       <viewAttribute id="HSL" aggregationType="sum"/>
       <viewAttribute id="WERKS"/>
       <viewAttribute id="POPER"/>
@@ -364,6 +382,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ_TXT" source="FXKJ_TXT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RBUKRS" source="RBUKRS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$WERKS$WERKS" source="WERKS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
     </input>
@@ -381,6 +400,7 @@
     </descriptions>
     <viewAttributes>
       <viewAttribute id="MANDT"/>
+      <viewAttribute id="RBUKRS"/>
       <viewAttribute id="HSL" aggregationType="sum"/>
       <viewAttribute id="WERKS"/>
       <viewAttribute id="POPER"/>
@@ -393,7 +413,11 @@
       <viewAttribute hidden="true" id="JOIN$WERKS$BWKEY"/>
       <viewAttribute hidden="true" id="JOIN$MANDT$MANDT"/>
     </viewAttributes>
-    <calculatedViewAttributes/>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_BUKRS" datatype="NVARCHAR" length="4" expressionLanguage="SQL">
+        <formula>IFNULL(&quot;RBUKRS&quot;,&quot;BUKRS&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
     <input node="Join_1">
       <mapping xsi:type="Calculation:AttributeMapping" target="HSL" source="HSL"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="WERKS" source="WERKS"/>
@@ -404,6 +428,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="WERKS_TXT" source="WERKS_TXT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RBUKRS" source="RBUKRS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$WERKS$BWKEY" source="WERKS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
     </input>
@@ -415,7 +440,7 @@
     <joinAttribute name="JOIN$WERKS$BWKEY"/>
     <joinAttribute name="JOIN$MANDT$MANDT"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_2" cardinality="C1_1" joinType="leftOuter">
+  <calculationView xsi:type="Calculation:JoinView" id="Join_2" joinType="leftOuter">
     <viewAttributes>
       <viewAttribute id="MANDT"/>
       <viewAttribute id="BUTXT"/>
@@ -428,15 +453,10 @@
       <viewAttribute id="GJAHR"/>
       <viewAttribute id="WERKS_TXT"/>
       <viewAttribute id="BUKRS"/>
-      <viewAttribute hidden="true" id="JOIN$BUKRS$BUKRS"/>
       <viewAttribute hidden="true" id="JOIN$MANDT$MANDT"/>
+      <viewAttribute hidden="true" id="JOIN$CC_BUKRS$BUKRS"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="Projection_6">
-      <mapping xsi:type="Calculation:AttributeMapping" target="BUTXT" source="BUTXT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BUKRS$BUKRS" source="BUKRS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
-    </input>
     <input node="Join_3">
       <mapping xsi:type="Calculation:AttributeMapping" target="HSL" source="HSL"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="WERKS" source="WERKS"/>
@@ -446,13 +466,18 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ_TXT" source="FXKJ_TXT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="WERKS_TXT" source="WERKS_TXT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="CC_BUKRS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BUKRS$BUKRS" source="BUKRS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CC_BUKRS$BUKRS" source="CC_BUKRS"/>
     </input>
-    <joinAttribute name="JOIN$BUKRS$BUKRS"/>
+    <input node="Projection_6">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUTXT" source="BUTXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CC_BUKRS$BUKRS" source="BUKRS"/>
+    </input>
     <joinAttribute name="JOIN$MANDT$MANDT"/>
+    <joinAttribute name="JOIN$CC_BUKRS$BUKRS"/>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_5">
     <viewAttributes>
@@ -533,45 +558,45 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="465" y="112"/>
+      <upperLeftCorner x="465.2971087927595" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="1101"/>
+      <upperLeftCorner x="92.00000000000011" y="1101.9999928474426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="452" y="1636"/>
+      <upperLeftCorner x="452.24754794525217" y="1636.999989271164"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="600" y="1101"/>
+      <upperLeftCorner x="600.9812019122542" y="1101.9999928474426"/>
       <rectangleSize width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="484" y="821"/>
+      <upperLeftCorner x="484.889331223744" y="821.9999952316284"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_6" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="334" y="501"/>
+      <upperLeftCorner x="334.89686045417693" y="501.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_7" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="597" y="661"/>
+      <upperLeftCorner x="597.5526873339995" y="661.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="452" y="1531"/>
+      <upperLeftCorner x="452.24754794525217" y="1531.999989271164"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="501" y="1406"/>
+      <upperLeftCorner x="501.7791120391572" y="1406.9999904632568"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="413" y="1246"/>
+      <upperLeftCorner x="413.4457793018703" y="1246.9999916553497"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_2" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
@@ -583,22 +608,22 @@
       <rectangleSize width="148"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="390" y="1111"/>
+      <upperLeftCorner x="390.98120191225416" y="1111.9999928474426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
   
   
     <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="390" y="946"/>
+      <upperLeftCorner x="390.98120191225416" y="946.9999940395355"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="274" y="821"/>
+      <upperLeftCorner x="274.88933122374397" y="821.9999952316284"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="301" y="661"/>
+      <upperLeftCorner x="301.5559978904106" y="661.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
@@ -610,7 +635,7 @@
       <rectangleSize width="153"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="544" y="501"/>
+      <upperLeftCorner x="544.8968604541769" y="501.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_1" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
@@ -622,19 +647,19 @@
       <rectangleSize width="136"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="448" y="341"/>
+      <upperLeftCorner x="448.58389252673925" y="341.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape modelObjectName="Projection_6" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="Join_3" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="323" y="60"/>
       <rectangleSize width="136"/>
     </shape>
-    <shape modelObjectName="Join_3" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="Projection_6" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="623" y="30"/>
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="448" y="236"/>
+      <upperLeftCorner x="448.58389252673925" y="236.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape></shapes>
 </layout>
