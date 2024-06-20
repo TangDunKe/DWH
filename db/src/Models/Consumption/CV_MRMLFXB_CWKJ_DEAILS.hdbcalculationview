@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="BL.Models.Consumption::CV_MRMLFXB_CWKJ_DEAILS" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="BL.Models.Consumption::CV_MRMLFXB_CWKJ_DEAILS" applyPrivilegeType="SQL_ANALYTIC_PRIVILEGE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
 <descriptions defaultDescription="每日毛利分析表-财报口径-明细数据"/>
 <localVariables/>
 <variableMappings/>
@@ -11,7 +11,7 @@
 <snapshotProcedures/>
 <calculationViews/>
 
-<logicalModel filterExpressionLanguage="SQL" id="BL.Models.Common::V_MRMLFXB_CWKJ_ACTUAL_DETAILS">
+<logicalModel id="BL.Models.Common::V_MRMLFXB_CWKJ_ACTUAL_DETAILS">
   <attributes>
     <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="客户端"/>

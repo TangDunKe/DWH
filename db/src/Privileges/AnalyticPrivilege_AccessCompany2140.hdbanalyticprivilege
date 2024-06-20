@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Privilege:analyticPrivilege xmlns:Privilege="http://www.sap.com/ndb/BiModelPrivilege.ecore" id="BL.Privileges::AnalyticPrivilege_AccessCompany2140" privilegeType="SQL_ANALYTIC_PRIVILEGE" schemaVersion="1.1">
+    <descriptions defaultDescription="Just Access Company 2140"/>
+    <securedModels>
+      <modelUri>BL.Models.ScriptModel::CV_003_CLIENT_TEST</modelUri>
+      <modelUri>BL.Models.ScriptModel::CV_YFFXB_MX</modelUri>
+
+      <modelUri>BL.Models.Consumption::CV_CCPCHMXB</modelUri>
+      <modelUri>BL.Models.Consumption::CV_CHFX_KB</modelUri>
+      <modelUri>BL.Models.Consumption::CV_JLRPBTFXKB</modelUri>
+      <modelUri>BL.Models.Consumption::CV_MRMLFXB_CWKJ_DEAILS</modelUri>
+      <modelUri>BL.Models.Consumption::CV_MRMLFXB_CWKJ_SUM</modelUri>
+      <modelUri>BL.Models.Consumption::CV_TBFXSFXKB</modelUri>
+      <modelUri>BL.Models.Consumption::CV_WLQKFXKB_ZZTSB</modelUri>
+      <modelUri>BL.Models.Consumption::CV_YFFXB_MX</modelUri>
+      <modelUri>BL.Models.Consumption::CV_YFXMTRFXB</modelUri>
+      <modelUri>BL.Models.Consumption::CV_YFZGFXB</modelUri>
+      <modelUri>BL.Models.Consumption::CV_YMMLFXB_CWKJ_DEAILS</modelUri>
+      <modelUri>BL.Models.Consumption::CV_YMMLFXB_CWKJ_SUM</modelUri>
+      <modelUri>BL.Models.Consumption::CV_ZDGZCPXSFXKB</modelUri>
+      <modelUri>BL.Models.Consumption::CV_ZYZJGCFXB</modelUri>
+      <modelUri>BL.Models.Consumption::CV_CPDDDLRFXB</modelUri>
+    </securedModels>
+<whereSql>(
+ ((SESSION_CONTEXT('CLIENT') &lt;&gt; '' AND &quot;MANDT&quot; = SESSION_CONTEXT('CLIENT')) OR (SESSION_CONTEXT('CLIENT') = '' AND &quot;MANDT&quot; IN ('300', '800'))) AND
+ (&quot;BUKRS&quot; = '2140')
+)</whereSql>
+</Privilege:analyticPrivilege>

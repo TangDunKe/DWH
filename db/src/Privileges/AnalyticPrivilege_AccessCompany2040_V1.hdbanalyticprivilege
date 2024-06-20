@@ -9,6 +9,5 @@
       <modelUri>BL.Models.Consumption::CV_SDFYFXKB</modelUri>
       <modelUri>BL.Models.Consumption::CV_XSFYFX_MX</modelUri>
     </securedModels>
-
 <whereSql>(&quot;BUKRS&quot; = '2040')</whereSql>
 </Privilege:analyticPrivilege>

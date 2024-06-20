@@ -9,5 +9,5 @@
       <modelUri>BL.Models.Consumption::CV_SDFYFXKB</modelUri>
       <modelUri>BL.Models.Consumption::CV_XSFYFX_MX</modelUri>
     </securedModels>
-<whereSql>(&quot;BUKRS&quot; IN ('1000', '2040')</whereSql>
+<whereSql>(&quot;BUKRS&quot; IN ('1000', '2040'))</whereSql>
 </Privilege:analyticPrivilege>

@@ -4,7 +4,77 @@
       "schema": "DWH_HDI_DB_1"
     }
   },
+  "BL.Privileges::Role_AccessCompany2000": {
+    "DWH": {
+      "schema": "DWH_HDI_DB_1"
+    }
+  },
+  "BL.Privileges::Role_AccessCompany2010": {
+    "DWH": {
+      "schema": "DWH_HDI_DB_1"
+    }
+  },
+  "BL.Privileges::Role_AccessCompany2020": {
+    "DWH": {
+      "schema": "DWH_HDI_DB_1"
+    }
+  },
+  "BL.Privileges::Role_AccessCompany2030": {
+    "DWH": {
+      "schema": "DWH_HDI_DB_1"
+    }
+  },
   "BL.Privileges::Role_AccessCompany2040": {
+    "DWH": {
+      "schema": "DWH_HDI_DB_1"
+    }
+  },
+  "BL.Privileges::Role_AccessCompany2050": {
+    "DWH": {
+      "schema": "DWH_HDI_DB_1"
+    }
+  },
+  "BL.Privileges::Role_AccessCompany2060": {
+    "DWH": {
+      "schema": "DWH_HDI_DB_1"
+    }
+  },
+  "BL.Privileges::Role_AccessCompany2070": {
+    "DWH": {
+      "schema": "DWH_HDI_DB_1"
+    }
+  },
+  "BL.Privileges::Role_AccessCompany2080": {
+    "DWH": {
+      "schema": "DWH_HDI_DB_1"
+    }
+  },
+  "BL.Privileges::Role_AccessCompany2090": {
+    "DWH": {
+      "schema": "DWH_HDI_DB_1"
+    }
+  },
+  "BL.Privileges::Role_AccessCompany2100": {
+    "DWH": {
+      "schema": "DWH_HDI_DB_1"
+    }
+  },
+  "BL.Privileges::Role_AccessCompany2110": {
+    "DWH": {
+      "schema": "DWH_HDI_DB_1"
+    }
+  },
+  "BL.Privileges::Role_AccessCompany2120": {
+    "DWH": {
+      "schema": "DWH_HDI_DB_1"
+    }
+  },
+  "BL.Privileges::Role_AccessCompany2130": {
+    "DWH": {
+      "schema": "DWH_HDI_DB_1"
+    }
+  },
+  "BL.Privileges::Role_AccessCompany2140": {
     "DWH": {
       "schema": "DWH_HDI_DB_1"
     }

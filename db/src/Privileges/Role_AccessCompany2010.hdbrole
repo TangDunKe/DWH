@@ -1,0 +1,23 @@
+{
+  "role": {
+    "name": "BL.Privileges::Role_AccessCompany2010",
+    "schema_privileges": [
+      {
+        "reference": "DWH",
+        "privileges": [
+          "SELECT"
+        ]
+      }
+    ],
+    "schema_analytic_privileges": [
+      {
+        "schema_reference": "DWH",
+        "privileges": [
+          "BL.Privileges::AnalyticPrivilege_AccessCompany2010",
+          "BL.Privileges::AnalyticPrivilege_AccessCompany2010_V1",
+          "BL.Privileges::AnalyticPrivilege_AccessCompany2010_V2"
+        ]
+      }
+    ]
+  }
+}
