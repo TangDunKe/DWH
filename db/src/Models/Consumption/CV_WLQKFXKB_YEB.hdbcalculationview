@@ -65,6 +65,8 @@
       <viewAttribute id="LIFNR"/>
       <viewAttribute id="RWCUR"/>
       <viewAttribute id="WSL"/>
+    
+      <viewAttribute id="AUGDT"/>
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="CC_BEGIN_DATE" datatype="NVARCHAR" length="8" expressionLanguage="SQL">
@@ -74,7 +76,8 @@
         <formula>TO_DATS(LAST_DAY(TO_DATE(&quot;CC_BEGIN_DATE&quot;, 'YYYYMMDD')))</formula>
       </calculatedViewAttribute></calculatedViewAttributes>
     <input node="BL.DI.Tables.S4::T_ACDOCA_N"/>
-    <filter>&quot;AUGBL&quot; = '' AND &quot;BUDAT&quot; &lt;= &quot;CC_END_DATE&quot;</filter>
+    <filter>(&quot;AUGBL&quot; = '' OR (&quot;AUGBL&quot; &lt;&gt; '' AND &quot;AUGDT&quot; &gt; &quot;CC_END_DATE&quot;)) AND
+&quot;BUDAT&quot; &lt;= &quot;CC_END_DATE&quot;</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Customer">
     <viewAttributes>
@@ -182,7 +185,7 @@
     <calculatedViewAttributes/>
     <input node="BL.DI.Tables.S4::T_LFA1"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="YFKZ" filterExpressionLanguage="SQL">
+  <calculationView xsi:type="Calculation:ProjectionView" id="YFZK" filterExpressionLanguage="SQL">
     <viewAttributes>
       <viewAttribute id="RCLNT"/>
       <viewAttribute id="RACCT"/>
@@ -232,7 +235,7 @@
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <input node="Details"/>
-    <filter>&quot;RACCT&quot; LIKE '1122%' OR &quot;RACCT&quot; LIKE '1221%'</filter>
+    <filter>&quot;AUGBL&quot; = '' AND (&quot;RACCT&quot; LIKE '1122%' OR &quot;RACCT&quot; LIKE '1221%')</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:UnionView" id="UnionAll">
     <viewAttributes>
@@ -250,7 +253,7 @@
       <viewAttribute id="CC_TYPE"/>
       <viewAttribute id="WSL" aggregationType="sum"/></viewAttributes>
     <calculatedViewAttributes/>
-    <input node="YFKZ" emptyUnionBehavior="NO_ROW">
+    <input node="YFZK" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="RCLNT" source="RCLNT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="BLDAT" source="BLDAT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="RBUKRS" source="RBUKRS"/>
@@ -976,7 +979,7 @@
     </shape>
   
   
-    <shape expanded="true" modelObjectName="YFKZ" modelObjectNameSpace="CalculationView">
+    <shape expanded="true" modelObjectName="YFZK" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="434" y="1921"/>
       <rectangleSize height="30" width="160"/>
     </shape>

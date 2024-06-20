@@ -68,6 +68,8 @@
       <viewAttribute id="LIFNR"/>
       <viewAttribute id="RWCUR"/>
       <viewAttribute id="WSL"/>
+    
+      <viewAttribute id="AUGDT"/>
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="CC_BEGIN_DATE" datatype="NVARCHAR" length="8" expressionLanguage="SQL">
@@ -77,7 +79,8 @@
         <formula>TO_DATS(LAST_DAY(TO_DATE(&quot;CC_BEGIN_DATE&quot;, 'YYYYMMDD')))</formula>
       </calculatedViewAttribute></calculatedViewAttributes>
     <input node="BL.DI.Tables.S4::T_ACDOCA_N"/>
-    <filter>&quot;AUGBL&quot; = '' AND &quot;BUDAT&quot; &lt;= &quot;CC_END_DATE&quot;</filter>
+    <filter>(&quot;AUGBL&quot; = '' OR (&quot;AUGBL&quot; &lt;&gt; '' AND &quot;AUGDT&quot; &gt; &quot;CC_END_DATE&quot;)) AND
+&quot;BUDAT&quot; &lt;= &quot;CC_END_DATE&quot;</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Customer">
     <viewAttributes>
@@ -185,7 +188,7 @@
     <calculatedViewAttributes/>
     <input node="BL.DI.Tables.S4::T_LFA1"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="YQ" filterExpressionLanguage="SQL">
+  <calculationView xsi:type="Calculation:ProjectionView" id="YQYS" filterExpressionLanguage="SQL">
     <descriptions>
       <comment text="逾期排序表"/>
     </descriptions>
@@ -357,7 +360,7 @@ AND &quot;KUNNR&quot; NOT BETWEEN '0000001000' AND '0000002560'</filter>
       <mapping xsi:type="Calculation:AttributeMapping" target="CC_TYPE" source="CC_TYPE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="LIFNR" source="LIFNR"/>
     </input>
-    <input node="YQ" emptyUnionBehavior="NO_ROW">
+    <input node="YQYS" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="RCLNT" source="MANDT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="BLDAT" source="BLDAT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="BUDAT" source="BUDAT"/>
@@ -1035,83 +1038,83 @@ AND &quot;KUNNR&quot; NOT BETWEEN '0000001000' AND '0000002560'</filter>
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="563" y="112"/>
+      <upperLeftCorner x="563.9860837487968" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
     
   
     <shape expanded="true" modelObjectName="Details" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="416" y="2136"/>
+      <upperLeftCorner x="416.7274230104256" y="2136.9999856948853"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="Customer" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="628" y="1496"/>
+      <upperLeftCorner x="628.6067034315872" y="1496.9999904632568"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="CustomerType" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="510" y="1336"/>
+      <upperLeftCorner x="510.14200867487637" y="1336.9999916553497"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="GroupCustomer" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="345" y="1176"/>
+      <upperLeftCorner x="345.70186298852195" y="1176.9999928474426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Company" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="328" y="856"/>
+      <upperLeftCorner x="328.66666666666663" y="856.9999952316284"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="ProfitCenter" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="389" y="696"/>
+      <upperLeftCorner x="389.3046822712769" y="696.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="CostCenter" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="488" y="536"/>
+      <upperLeftCorner x="488.81578704922424" y="536.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Curreny" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="610" y="376"/>
+      <upperLeftCorner x="610.6211429122618" y="376.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="ExchangeRate" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="878" y="1656"/>
+      <upperLeftCorner x="878.664093545518" y="1656.999989271164"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Vendor" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="1016"/>
+      <upperLeftCorner x="92.00000000000003" y="1016.9999940395355"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape expanded="true" modelObjectName="YQ" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="626" y="1991"/>
+    <shape expanded="true" modelObjectName="YQYS" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="626.7274230104257" y="1991.9999868869781"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
   
     <shape expanded="true" modelObjectName="DK" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="416" y="1991"/>
+      <upperLeftCorner x="416.7274230104256" y="1991.9999868869781"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="GCK" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="836" y="1991"/>
+      <upperLeftCorner x="836.7274230104256" y="1991.9999868869781"/>
       <rectangleSize width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="YF" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="206" y="1991"/>
+      <upperLeftCorner x="206.72742301042572" y="1991.9999868869781"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
   
     <shape expanded="true" modelObjectName="UnionAll" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="610" y="1801"/>
+      <upperLeftCorner x="610.7274230104257" y="1801.999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Agg" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="667" y="1666"/>
+      <upperLeftCorner x="667.961643027941" y="1666.999989271164"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="GetExchangeRate" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="838" y="1496"/>
+      <upperLeftCorner x="838.6067034315873" y="1496.9999904632568"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Agg" modelObjectNameSpace="GetExchangeRate" modelObjectType="JoinNodeInput">
@@ -1125,7 +1128,7 @@ AND &quot;KUNNR&quot; NOT BETWEEN '0000001000' AND '0000002560'</filter>
   
   
     <shape expanded="true" modelObjectName="GetCustomer" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="720" y="1336"/>
+      <upperLeftCorner x="720.1420086748764" y="1336.9999916553497"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="GetExchangeRate" modelObjectNameSpace="GetCustomer" modelObjectType="JoinNodeInput">
@@ -1137,7 +1140,7 @@ AND &quot;KUNNR&quot; NOT BETWEEN '0000001000' AND '0000002560'</filter>
       <rectangleSize width="136"/>
     </shape>
     <shape expanded="true" modelObjectName="GetCustomerType" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="555" y="1176"/>
+      <upperLeftCorner x="555.7018629885218" y="1176.9999928474426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="GetCustomer" modelObjectNameSpace="GetCustomerType" modelObjectType="JoinNodeInput">
@@ -1149,7 +1152,7 @@ AND &quot;KUNNR&quot; NOT BETWEEN '0000001000' AND '0000002560'</filter>
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="GetGroupCustomer" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="372" y="1016"/>
+      <upperLeftCorner x="372.3685296551886" y="1016.9999940395355"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="GetCustomerType" modelObjectNameSpace="GetGroupCustomer" modelObjectType="JoinNodeInput">
@@ -1161,7 +1164,7 @@ AND &quot;KUNNR&quot; NOT BETWEEN '0000001000' AND '0000002560'</filter>
       <rectangleSize width="156"/>
     </shape>
     <shape expanded="true" modelObjectName="GetVendor" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="118" y="856"/>
+      <upperLeftCorner x="118.66666666666666" y="856.9999952316284"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="GetGroupCustomer" modelObjectNameSpace="GetVendor" modelObjectType="JoinNodeInput">
@@ -1173,7 +1176,7 @@ AND &quot;KUNNR&quot; NOT BETWEEN '0000001000' AND '0000002560'</filter>
       <rectangleSize width="104"/>
     </shape>
     <shape expanded="true" modelObjectName="GetCompany" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="145" y="696"/>
+      <upperLeftCorner x="145.3333333333333" y="696.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="GetVendor" modelObjectNameSpace="GetCompany" modelObjectType="JoinNodeInput">
@@ -1186,7 +1189,7 @@ AND &quot;KUNNR&quot; NOT BETWEEN '0000001000' AND '0000002560'</filter>
     </shape>
   
     <shape expanded="true" modelObjectName="GetProfitCenter" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="172" y="536"/>
+      <upperLeftCorner x="171.99999999999997" y="536.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="GetCompany" modelObjectNameSpace="GetProfitCenter" modelObjectType="JoinNodeInput">
@@ -1198,7 +1201,7 @@ AND &quot;KUNNR&quot; NOT BETWEEN '0000001000' AND '0000002560'</filter>
       <rectangleSize width="133"/>
     </shape>
     <shape expanded="true" modelObjectName="GetCostCenter" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="198" y="376"/>
+      <upperLeftCorner x="198.6666666666666" y="376.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="GetProfitCenter" modelObjectNameSpace="GetCostCenter" modelObjectType="JoinNodeInput">
@@ -1210,7 +1213,7 @@ AND &quot;KUNNR&quot; NOT BETWEEN '0000001000' AND '0000002560'</filter>
       <rectangleSize width="128"/>
     </shape>
     <shape expanded="true" modelObjectName="GetCurreny" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="563" y="217"/>
+      <upperLeftCorner x="563.9860837487968" y="217"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="GetCostCenter" modelObjectNameSpace="GetCurreny" modelObjectType="JoinNodeInput">
