@@ -500,58 +500,146 @@
     <calculatedViewAttributes/>
     <input node="Join_2"/>
   </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_8" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="BUTXT"/>
+      <viewAttribute id="HSL"/>
+      <viewAttribute id="WERKS"/>
+      <viewAttribute id="POPER"/>
+      <viewAttribute id="TIME"/>
+      <viewAttribute id="FXKJ"/>
+      <viewAttribute id="FXKJ_TXT"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="WERKS_TXT"/>
+      <viewAttribute id="BUKRS"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_5"/>
+    <filter>&quot;FXKJ&quot; NOT IN ('ZSAC_06_09')</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_9" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="BUTXT"/>
+      <viewAttribute id="HSL"/>
+      <viewAttribute id="WERKS"/>
+      <viewAttribute id="POPER"/>
+      <viewAttribute id="TIME"/>
+      <viewAttribute id="FXKJ"/>
+      <viewAttribute id="FXKJ_TXT"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="WERKS_TXT"/>
+      <viewAttribute id="BUKRS"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_HSL" datatype="DECIMAL" length="15" scale="2" expressionLanguage="SQL">
+        <formula>CASE WHEN &quot;FXKJ&quot; = 'ZSAC_06_09' THEN &quot;HSL&quot; ELSE -1 * &quot;HSL&quot; END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_FXKJ" datatype="NVARCHAR" length="30" expressionLanguage="SQL">
+        <formula>'ZSAC_06_09'</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_FXKJ_TXT" datatype="NVARCHAR" length="30" expressionLanguage="SQL">
+        <formula>'原材料-设备及五金'</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="Projection_5"/>
+    <filter>&quot;FXKJ&quot; IN ('ZSAC_06_03', 'ZSAC_06_09')</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:UnionView" id="Union_2">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="BUTXT"/>
+      <viewAttribute id="HSL" aggregationType="sum"/>
+      <viewAttribute id="WERKS"/>
+      <viewAttribute id="POPER"/>
+      <viewAttribute id="TIME"/>
+      <viewAttribute id="FXKJ"/>
+      <viewAttribute id="FXKJ_TXT"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="WERKS_TXT"/>
+      <viewAttribute id="BUKRS"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_8">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUTXT" source="BUTXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HSL" source="HSL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WERKS" source="WERKS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POPER" source="POPER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ" source="FXKJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ_TXT" source="FXKJ_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WERKS_TXT" source="WERKS_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+    </input>
+    <input node="Projection_9">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUTXT" source="BUTXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HSL" source="CC_HSL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WERKS" source="WERKS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POPER" source="POPER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ" source="CC_FXKJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FXKJ_TXT" source="CC_FXKJ_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WERKS_TXT" source="WERKS_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+    </input>
+  </calculationView>
 </calculationViews>
 
-<logicalModel id="Projection_5">
+<logicalModel id="Union_2">
   <attributes>
     <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="客户端"/>
-      <keyMapping columnObjectName="Projection_5" columnName="MANDT"/>
+      <keyMapping columnObjectName="Union_2" columnName="MANDT"/>
     </attribute>
     <attribute id="BUKRS" order="2" descriptionColumnName="BUTXT" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="公司代码"/>
-      <keyMapping columnObjectName="Projection_5" columnName="BUKRS"/>
+      <keyMapping columnObjectName="Union_2" columnName="BUKRS"/>
     </attribute>
   
     <attribute id="BUTXT" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="公司名称"/>
   
-      <keyMapping columnObjectName="Projection_5" columnName="BUTXT"/>
+      <keyMapping columnObjectName="Union_2" columnName="BUTXT"/>
   
     </attribute>
     <attribute id="WERKS" order="4" descriptionColumnName="WERKS_TXT" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="工厂"/>
-      <keyMapping columnObjectName="Projection_5" columnName="WERKS"/>
+      <keyMapping columnObjectName="Union_2" columnName="WERKS"/>
     </attribute>
     <attribute id="WERKS_TXT" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="工厂名称"/>
-      <keyMapping columnObjectName="Projection_5" columnName="WERKS_TXT"/>
+      <keyMapping columnObjectName="Union_2" columnName="WERKS_TXT"/>
     </attribute>
     <attribute id="GJAHR" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="会计年度"/>
-      <keyMapping columnObjectName="Projection_5" columnName="GJAHR"/>
+      <keyMapping columnObjectName="Union_2" columnName="GJAHR"/>
     </attribute>
     <attribute id="POPER" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="过账期间"/>
-      <keyMapping columnObjectName="Projection_5" columnName="POPER"/>
+      <keyMapping columnObjectName="Union_2" columnName="POPER"/>
     </attribute>
     <attribute id="TIME" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="财务年月"/>
-      <keyMapping columnObjectName="Projection_5" columnName="TIME"/>
+      <keyMapping columnObjectName="Union_2" columnName="TIME"/>
     </attribute>
     <attribute id="FXKJ" order="9" descriptionColumnName="FXKJ_TXT" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="分析指标"/>
-      <keyMapping columnObjectName="Projection_5" columnName="FXKJ"/>
+      <keyMapping columnObjectName="Union_2" columnName="FXKJ"/>
     </attribute>
     <attribute id="FXKJ_TXT" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="分析指标描述"/>
-      <keyMapping columnObjectName="Projection_5" columnName="FXKJ_TXT"/>
+      <keyMapping columnObjectName="Union_2" columnName="FXKJ_TXT"/>
     </attribute></attributes>
   <calculatedAttributes/>
   <baseMeasures>
     <measure id="HSL" order="11" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="以公司代码货币计的金额 "/>
-      <measureMapping columnObjectName="Projection_5" columnName="HSL"/>
+      <measureMapping columnObjectName="Union_2" columnName="HSL"/>
       <exceptionAggregationMetadata/>
     </measure>
   </baseMeasures>
@@ -562,45 +650,45 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="465.2971087927595" y="112"/>
+      <upperLeftCorner x="457.93871650274673" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92.00000000000011" y="1101.9999928474426"/>
+      <upperLeftCorner x="91.99999999999997" y="1366.9999916553497"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="452.24754794525217" y="1636.999989271164"/>
+      <upperLeftCorner x="452.1227713435801" y="1901.999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="600.9812019122542" y="1101.9999928474426"/>
+      <upperLeftCorner x="600.9812019122542" y="1366.9999916553497"/>
       <rectangleSize width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="484.889331223744" y="821.9999952316284"/>
+      <upperLeftCorner x="479.6331667163821" y="1086.9999940395355"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_6" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="334.89686045417693" y="501.9999976158142"/>
+      <upperLeftCorner x="323.3034033830221" y="766.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_7" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="597.5526873339995" y="661.9999964237213"/>
+      <upperLeftCorner x="588.6295930509792" y="926.9999952316284"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="452.24754794525217" y="1531.999989271164"/>
+      <upperLeftCorner x="452.1227713435801" y="1796.999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="501.7791120391572" y="1406.9999904632568"/>
+      <upperLeftCorner x="501.16746070585134" y="1671.999989271164"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="413.4457793018703" y="1246.9999916553497"/>
+      <upperLeftCorner x="412.83412796856453" y="1511.9999904632568"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_2" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
@@ -612,22 +700,22 @@
       <rectangleSize width="148"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="390.98120191225416" y="1111.9999928474426"/>
+      <upperLeftCorner x="390.98120191225405" y="1376.9999916553497"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
   
   
     <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="390.98120191225416" y="946.9999940395355"/>
+      <upperLeftCorner x="390.98120191225405" y="1211.9999928474426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="274.88933122374397" y="821.9999952316284"/>
+      <upperLeftCorner x="269.6331667163821" y="1086.9999940395355"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="301.5559978904106" y="661.9999964237213"/>
+      <upperLeftCorner x="296.29983338304874" y="926.9999952316284"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
@@ -639,7 +727,7 @@
       <rectangleSize width="153"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="544.8968604541769" y="501.9999976158142"/>
+      <upperLeftCorner x="533.3034033830221" y="766.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_1" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
@@ -651,7 +739,7 @@
       <rectangleSize width="136"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="448.58389252673925" y="341.9999988079071"/>
+      <upperLeftCorner x="435.6984889220911" y="606.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_3" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
@@ -663,8 +751,21 @@
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="448.58389252673925" y="236.9999988079071"/>
+      <upperLeftCorner x="435.6984889220911" y="501.9999976158142"/>
       <rectangleSize height="30" width="160"/>
-    </shape></shapes>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_8" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="547.8911519693405" y="356.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_9" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="337.8911519693405" y="356.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Union_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="457.93871650274673" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
 </layout>
 </Calculation:scenario>
