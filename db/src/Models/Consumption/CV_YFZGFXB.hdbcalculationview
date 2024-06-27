@@ -50,7 +50,7 @@
 </dataSources>
 <snapshotProcedures/>
 <calculationViews>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+  <calculationView xsi:type="Calculation:ProjectionView" id="BSIK" filterExpressionLanguage="SQL">
     <descriptions>
       <comment text="筛选【总账科目HKONT】为2202020301、2202020302、2202010301、2202010302，且过账日期BUDAT小于等于查询月最后一天的行 根据借贷标识置反金额"/>
     </descriptions>
@@ -189,7 +189,7 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
     <calculatedViewAttributes/>
     <input node="BL.DI.Tables.S4::T_EKKO"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="DocHeader">
+  <calculationView xsi:type="Calculation:ProjectionView" id="BKPF">
     <viewAttributes>
       <viewAttribute id="MANDT"/>
       <viewAttribute id="BUKRS"/>
@@ -206,6 +206,8 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
       <viewAttribute id="EBELN"/>
       <viewAttribute id="GJAHR"/>
       <viewAttribute id="BELNR"/>
+    
+      <viewAttribute id="DMBTR"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="BL.DI.Tables.S4::T_EKBE"/>
@@ -243,7 +245,7 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
         <formula>LEFT(&quot;AWKEY&quot;, 10)</formula>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
-    <input node="Projection_1">
+    <input node="BSIK">
       <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="LIFNR" source="LIFNR"/>
@@ -269,7 +271,7 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$GJAHR$GJAHR" source="GJAHR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CC_BELNR$BELNR" source="CC_BELNR"/>
     </input>
-    <input node="DocHeader">
+    <input node="BKPF">
       <mapping xsi:type="Calculation:AttributeMapping" target="AWKEY" source="AWKEY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BUKRS$BUKRS" source="BUKRS"/>
@@ -280,6 +282,54 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
     <joinAttribute name="JOIN$BUKRS$BUKRS"/>
     <joinAttribute name="JOIN$GJAHR$GJAHR"/>
     <joinAttribute name="JOIN$CC_BELNR$BELNR"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="AggPO">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="BELNR"/>
+      <viewAttribute id="DMBTR" aggregationType="sum"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="EKBE"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="GetPORate" cardinality="CN_1" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="EBELN"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="BELNR"/>
+      <viewAttribute id="DMBTR" aggregationType="sum"/>
+      <viewAttribute id="DMBTR_AGG" aggregationType="sum"/>
+      <viewAttribute hidden="true" id="JOIN$MANDT$MANDT"/>
+      <viewAttribute hidden="true" id="JOIN$GJAHR$GJAHR"/>
+      <viewAttribute hidden="true" id="JOIN$BELNR$BELNR"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_RATE" datatype="DECIMAL" length="15" scale="10" expressionLanguage="SQL">
+        <formula>&quot;DMBTR&quot; / NULLIF(&quot;DMBTR_AGG&quot;, 0)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="EKBE">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EBELN" source="EBELN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BELNR" source="BELNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DMBTR" source="DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$GJAHR$GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BELNR$BELNR" source="BELNR"/>
+    </input>
+    <input node="AggPO">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DMBTR_AGG" source="DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$GJAHR$GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BELNR$BELNR" source="BELNR"/>
+    </input>
+    <joinAttribute name="JOIN$MANDT$MANDT"/>
+    <joinAttribute name="JOIN$GJAHR$GJAHR"/>
+    <joinAttribute name="JOIN$BELNR$BELNR"/>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_8" cardinality="CN_1" joinType="leftOuter">
     <viewAttributes>
@@ -304,11 +354,16 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
       <viewAttribute id="BUDAT_DATE"/>
       <viewAttribute id="DMBTR_N" aggregationType="sum"/>
       <viewAttribute id="EBELN"/>
+      <viewAttribute id="CC_RATE" aggregationType="sum"/>
       <viewAttribute hidden="true" id="JOIN$MANDT$MANDT"/>
-      <viewAttribute hidden="true" id="JOIN$CC_BELNR$BELNR"/>
       <viewAttribute hidden="true" id="JOIN$GJAHR$GJAHR"/>
+      <viewAttribute hidden="true" id="JOIN$CC_BELNR$BELNR"/>
     </viewAttributes>
-    <calculatedViewAttributes/>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_DMBTR" datatype="DECIMAL" length="30" scale="8" expressionLanguage="SQL">
+        <formula>ROUND(&quot;DMBTR&quot; * &quot;CC_RATE&quot;, 8)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
     <input node="GetAssignmentNumber">
       <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
@@ -325,24 +380,25 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
       <mapping xsi:type="Calculation:AttributeMapping" target="SHKZG" source="SHKZG"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="HKONT" source="HKONT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="DMBTR" source="DMBTR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="TIME_DATE_LAST" source="TIME_DATE_LAST"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="BUDAT_DATE" source="BUDAT_DATE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DMBTR_N" source="DMBTR_N"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DMBTR" source="DMBTR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$GJAHR$GJAHR" source="GJAHR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CC_BELNR$BELNR" source="CC_BELNR"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$GJAHR$GJAHR" source="GJAHR"/>
     </input>
-    <input node="EKBE">
+    <input node="GetPORate">
       <mapping xsi:type="Calculation:AttributeMapping" target="EBELN" source="EBELN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CC_RATE" source="CC_RATE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CC_BELNR$BELNR" source="BELNR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$GJAHR$GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CC_BELNR$BELNR" source="BELNR"/>
     </input>
     <joinAttribute name="JOIN$MANDT$MANDT"/>
-    <joinAttribute name="JOIN$CC_BELNR$BELNR"/>
     <joinAttribute name="JOIN$GJAHR$GJAHR"/>
+    <joinAttribute name="JOIN$CC_BELNR$BELNR"/>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="GetContract" cardinality="CN_1" joinType="leftOuter">
     <viewAttributes>
@@ -379,7 +435,7 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
       <mapping xsi:type="Calculation:AttributeMapping" target="SHKZG" source="SHKZG"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="HKONT" source="HKONT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="DMBTR" source="DMBTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DMBTR" source="CC_DMBTR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="TIME_DATE_LAST" source="TIME_DATE_LAST"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="BUDAT_DATE" source="BUDAT_DATE"/>
@@ -489,7 +545,7 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
       <viewAttribute hidden="true" id="JOIN$CURR$FCURR"/>
     </viewAttributes>
     <calculatedViewAttributes>
-      <calculatedViewAttribute id="CC_DMBTR" datatype="DECIMAL" length="23" scale="2" expressionLanguage="SQL">
+      <calculatedViewAttribute id="CC_DMBTR" datatype="DECIMAL" length="30" scale="8" expressionLanguage="SQL">
         <formula>CASE 
 	 WHEN &quot;UKURS&quot; IS NULL then &quot;DMBTR&quot;
 	 ELSE &quot;DMBTR&quot; * &quot;UKURS&quot;
@@ -810,65 +866,82 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="466" y="112"/>
+      <upperLeftCorner x="395" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
     
   
-    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="91" y="2011"/>
+    <shape expanded="true" modelObjectName="BSIK" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="532" y="2011"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="445" y="1301"/>
+      <upperLeftCorner x="476" y="1301"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="534" y="1141"/>
+      <upperLeftCorner x="154" y="1141"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="240" y="981"/>
+      <upperLeftCorner x="422" y="981"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="525" y="821"/>
+      <upperLeftCorner x="118" y="821"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_6" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="277" y="661"/>
+      <upperLeftCorner x="355" y="661"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_7" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="514" y="501"/>
+      <upperLeftCorner x="449" y="501"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="PurchasingDoc" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="479" y="1691"/>
+      <upperLeftCorner x="437" y="1691"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape expanded="true" modelObjectName="DocHeader" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="2011"/>
+    <shape expanded="true" modelObjectName="BKPF" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="322" y="2011"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="EKBE" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="382" y="1851"/>
+      <upperLeftCorner x="181" y="2156"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="GetAssignmentNumber" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="118" y="1851"/>
+      <upperLeftCorner x="384" y="1851"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape modelObjectName="Projection_1" modelObjectNameSpace="GetAssignmentNumber" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="BSIK" modelObjectNameSpace="GetAssignmentNumber" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="41" y="30"/>
       <rectangleSize width="180"/>
     </shape>
-    <shape modelObjectName="DocHeader" modelObjectNameSpace="GetAssignmentNumber" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="BKPF" modelObjectNameSpace="GetAssignmentNumber" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="341" y="30"/>
       <rectangleSize width="127"/>
     </shape>
+    <shape expanded="true" modelObjectName="AggPO" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="2021"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="GetPORate" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="118" y="1865"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="EKBE" modelObjectNameSpace="GetPORate" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="125"/>
+    </shape>
+    <shape modelObjectName="AggPO" modelObjectNameSpace="GetPORate" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="125"/>
+    </shape>
+  
     <shape expanded="true" modelObjectName="Join_8" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="145" y="1691"/>
       <rectangleSize height="30" width="160"/>
@@ -877,13 +950,13 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
       <upperLeftCorner x="20" y="30"/>
       <rectangleSize width="198"/>
     </shape>
-    <shape modelObjectName="EKBE" modelObjectNameSpace="Join_8" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="GetPORate" modelObjectNameSpace="Join_8" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="125"/>
     </shape>
   
     <shape expanded="true" modelObjectName="GetContract" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="322" y="1531"/>
+      <upperLeftCorner x="308" y="1531"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_8" modelObjectNameSpace="GetContract" modelObjectType="JoinNodeInput">
@@ -897,16 +970,16 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
   
   
     <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="322" y="1426"/>
+      <upperLeftCorner x="308" y="1426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_9" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="235" y="1301"/>
+      <upperLeftCorner x="266" y="1301"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="261" y="1141"/>
+      <upperLeftCorner x="373" y="1141"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Projection_9" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
@@ -918,7 +991,7 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
       <rectangleSize width="136"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="453" y="981"/>
+      <upperLeftCorner x="180" y="981"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_2" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
@@ -930,7 +1003,7 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
       <rectangleSize width="180"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="266" y="821"/>
+      <upperLeftCorner x="395" y="821"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_3" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
@@ -942,7 +1015,7 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
       <rectangleSize width="136"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="498" y="661"/>
+      <upperLeftCorner x="145" y="661"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_4" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
@@ -954,7 +1027,7 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
       <rectangleSize width="136"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_6" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="304" y="501"/>
+      <upperLeftCorner x="172" y="501"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_5" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
@@ -966,7 +1039,7 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
       <rectangleSize width="136"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_7" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="449" y="341"/>
+      <upperLeftCorner x="382" y="341"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_6" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
@@ -978,7 +1051,7 @@ AND &quot;ZUONR&quot; LIKE 'ZF19%'</filter>
       <rectangleSize width="136"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_8" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="449" y="236"/>
+      <upperLeftCorner x="382" y="236"/>
       <rectangleSize height="30" width="160"/>
     </shape></shapes>
 </layout>
