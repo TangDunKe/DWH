@@ -5,7 +5,7 @@ COLUMN TABLE "BL.DI.Tables.S4::T_PRODTYPE" (
     INDEX     INTEGER       COMMENT '序号',
     FIELD     NVARCHAR(20)  COMMENT '约束字段',
     LOW       NVARCHAR(40)  COMMENT '起始值',
-    HIGH      NVARCHAR(40)  COMMENT '截至值',
-    PRIMARY KEY (PRODTYPE, PROD)
+    HIGH      NVARCHAR(40)  COMMENT '截至值'
+    --PRIMARY KEY (PRODTYPE, PROD)
 )
 COMMENT '产品类型配置表'

@@ -13,6 +13,12 @@
   <DataSource id="BL.DI.Tables.S4::T_ZFIR002">
     <resourceUri>BL.DI.Tables.S4::T_ZFIR002</resourceUri>
   </DataSource>
+  <DataSource id="Company$$$$BL.DI.Tables.S4::T_T001$$">
+    <resourceUri>BL.DI.Tables.S4::T_T001</resourceUri>
+  </DataSource>
+  <DataSource id="BL.Models.Basic::V_EXCHANGERATES">
+    <resourceUri>BL.Models.Basic::V_EXCHANGERATES</resourceUri>
+  </DataSource>
 </dataSources>
 <snapshotProcedures/>
 <calculationViews>
@@ -117,6 +123,30 @@
     </calculatedViewAttributes>
     <input node="BL.DI.Tables.S4::T_ZFIR002"/>
     <filter>&quot;HC&quot;IN('00078','00038','00065','00012','00044','00008','00010','00017','00053','00002')</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Company">
+    <viewAttributes>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="WAERS"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Company$$$$BL.DI.Tables.S4::T_T001$$"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="ExchangeRate" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="KURST"/>
+      <viewAttribute id="FCURR"/>
+      <viewAttribute id="TCURR"/>
+      <viewAttribute id="YEAR"/>
+      <viewAttribute id="MONTH"/>
+      <viewAttribute id="CALMONTH"/>
+      <viewAttribute id="MONTH_AVG_EXRATE"/>
+      <viewAttribute id="YEAR_AVG_EXRATE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="BL.Models.Basic::V_EXCHANGERATES"/>
+    <filter>&quot;TCURR&quot;='CNY' AND &quot;KURST&quot; = 'M' AND &quot;MANDT&quot; = '800'</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_5">
     <descriptions>
@@ -2689,509 +2719,977 @@
     <calculatedViewAttributes/>
     <input node="Join_5"/>
   </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="getCompany" cardinality="CN_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="BUTXT"/>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="POPER"/>
+      <viewAttribute id="TIME"/>
+      <viewAttribute id="WAERS"/>
+      <viewAttribute id="JZCSYL_DY" aggregationType="sum"/>
+      <viewAttribute id="JZCSYL_LJ" aggregationType="sum"/>
+      <viewAttribute id="JZCSYL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="JZCSYL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="JZCSYL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="ZZCSYL_DY" aggregationType="sum"/>
+      <viewAttribute id="ZZCSYL_LJ" aggregationType="sum"/>
+      <viewAttribute id="ZZCSYL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="ZZCSYL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="ZZCSYL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="JLRL_DY" aggregationType="sum"/>
+      <viewAttribute id="JLRL_LJ" aggregationType="sum"/>
+      <viewAttribute id="JLRL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="JLRL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="JLRL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="ZCFZL_DY" aggregationType="sum"/>
+      <viewAttribute id="ZCFZL_LJ" aggregationType="sum"/>
+      <viewAttribute id="ZCFZL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="ZCFZL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="ZCFZL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="ZCZZL_DY" aggregationType="sum"/>
+      <viewAttribute id="ZCZZL_LJ" aggregationType="sum"/>
+      <viewAttribute id="ZCZZL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="ZCZZL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="ZCZZL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="QYCS_DY" aggregationType="sum"/>
+      <viewAttribute id="QYCS_LJ" aggregationType="sum"/>
+      <viewAttribute id="QYCS_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="QYCS_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="QYCS_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="YYML_DY" aggregationType="sum"/>
+      <viewAttribute id="YYML_LJ" aggregationType="sum"/>
+      <viewAttribute id="YYML_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="YYML_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="YYML_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="MLL_DY" aggregationType="sum"/>
+      <viewAttribute id="MLL_LJ" aggregationType="sum"/>
+      <viewAttribute id="MLL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="MLL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="MLL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="YFZKZZL_DY" aggregationType="sum"/>
+      <viewAttribute id="YFZKZZL_LJ" aggregationType="sum"/>
+      <viewAttribute id="YFZKZZL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="YFZKZZL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="YFZKZZL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="YYSR_LJ_JE" aggregationType="sum"/>
+      <viewAttribute id="YYSR_DY_JE" aggregationType="sum"/>
+      <viewAttribute id="YSZKZZL_DY" aggregationType="sum"/>
+      <viewAttribute id="YSZKZZL_LJ" aggregationType="sum"/>
+      <viewAttribute id="YSZKZZL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="YSZKZZL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="YSZKZZL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="CHZZL_DY" aggregationType="sum"/>
+      <viewAttribute id="CHZZL_LJ" aggregationType="sum"/>
+      <viewAttribute id="CHZZL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="CHZZL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="CHZZL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="YUFZKZZL_DY" aggregationType="sum"/>
+      <viewAttribute id="YUFZKZZL_LJ" aggregationType="sum"/>
+      <viewAttribute id="YUFZKZZL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="YUFZKZZL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="YUFZKZZL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="LXBZBS_DY" aggregationType="sum"/>
+      <viewAttribute id="LXBZBS_LJ" aggregationType="sum"/>
+      <viewAttribute id="LXBZBS_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="LXBZBS_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="LXBZBS_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="LDBL_DY" aggregationType="sum"/>
+      <viewAttribute id="LDBL_LJ" aggregationType="sum"/>
+      <viewAttribute id="LDBL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="LDBL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="LDBL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="XJBL_DY" aggregationType="sum"/>
+      <viewAttribute id="XJBL_LJ" aggregationType="sum"/>
+      <viewAttribute id="XJBL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="XJBL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="XJBL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="SDBL_DY" aggregationType="sum"/>
+      <viewAttribute id="SDBL_LJ" aggregationType="sum"/>
+      <viewAttribute id="SDBL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="SDBL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="SDBL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="CQBL_DY" aggregationType="sum"/>
+      <viewAttribute id="CQBL_LJ" aggregationType="sum"/>
+      <viewAttribute id="CQBL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="CQBL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="CQBL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="YYSR_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="YYSR_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="YYSR_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="JLR_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="JLR_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="JLR_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="JLR_DY_JE" aggregationType="sum"/>
+      <viewAttribute id="JLR_LJ_JE" aggregationType="sum"/>
+      <viewAttribute hidden="true" id="JOIN$BUKRS$BUKRS"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUTXT" source="BUTXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POPER" source="POPER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JZCSYL_DY" source="JZCSYL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JZCSYL_LJ" source="JZCSYL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JZCSYL_DY_TB" source="JZCSYL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JZCSYL_DY_HB" source="JZCSYL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JZCSYL_LJ_TB" source="JZCSYL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZZCSYL_DY" source="ZZCSYL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZZCSYL_LJ" source="ZZCSYL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZZCSYL_DY_TB" source="ZZCSYL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZZCSYL_DY_HB" source="ZZCSYL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZZCSYL_LJ_TB" source="ZZCSYL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLRL_DY" source="JLRL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLRL_LJ" source="JLRL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLRL_DY_TB" source="JLRL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLRL_LJ_TB" source="JLRL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLRL_DY_HB" source="JLRL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZCFZL_DY" source="ZCFZL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZCFZL_LJ" source="ZCFZL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZCFZL_DY_TB" source="ZCFZL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZCFZL_DY_HB" source="ZCFZL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZCFZL_LJ_TB" source="ZCFZL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZCZZL_DY" source="ZCZZL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZCZZL_LJ" source="ZCZZL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZCZZL_DY_TB" source="ZCZZL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZCZZL_DY_HB" source="ZCZZL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZCZZL_LJ_TB" source="ZCZZL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QYCS_DY" source="QYCS_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QYCS_LJ" source="QYCS_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QYCS_DY_TB" source="QYCS_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QYCS_LJ_TB" source="QYCS_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QYCS_DY_HB" source="QYCS_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YYML_DY" source="YYML_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YYML_LJ" source="YYML_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YYML_DY_TB" source="YYML_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YYML_DY_HB" source="YYML_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YYML_LJ_TB" source="YYML_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MLL_DY" source="MLL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MLL_LJ" source="MLL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MLL_DY_TB" source="MLL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MLL_DY_HB" source="MLL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MLL_LJ_TB" source="MLL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YFZKZZL_DY" source="YFZKZZL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YFZKZZL_LJ" source="YFZKZZL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YFZKZZL_DY_TB" source="YFZKZZL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YFZKZZL_DY_HB" source="YFZKZZL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YFZKZZL_LJ_TB" source="YFZKZZL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YYSR_LJ_JE" source="YYSR_LJ_JE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YYSR_DY_JE" source="YYSR_DY_JE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YSZKZZL_DY" source="YSZKZZL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YSZKZZL_LJ" source="YSZKZZL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YSZKZZL_DY_TB" source="YSZKZZL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YSZKZZL_DY_HB" source="YSZKZZL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YSZKZZL_LJ_TB" source="YSZKZZL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHZZL_DY" source="CHZZL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHZZL_LJ" source="CHZZL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHZZL_DY_TB" source="CHZZL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHZZL_DY_HB" source="CHZZL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHZZL_LJ_TB" source="CHZZL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YUFZKZZL_DY" source="YUFZKZZL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YUFZKZZL_LJ" source="YUFZKZZL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YUFZKZZL_DY_TB" source="YUFZKZZL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YUFZKZZL_DY_HB" source="YUFZKZZL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YUFZKZZL_LJ_TB" source="YUFZKZZL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LXBZBS_DY" source="LXBZBS_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LXBZBS_LJ" source="LXBZBS_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LXBZBS_DY_TB" source="LXBZBS_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LXBZBS_DY_HB" source="LXBZBS_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LXBZBS_LJ_TB" source="LXBZBS_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LDBL_DY" source="LDBL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LDBL_LJ" source="LDBL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LDBL_DY_TB" source="LDBL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LDBL_DY_HB" source="LDBL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LDBL_LJ_TB" source="LDBL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="XJBL_DY" source="XJBL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="XJBL_LJ" source="XJBL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="XJBL_DY_TB" source="XJBL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="XJBL_DY_HB" source="XJBL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="XJBL_LJ_TB" source="XJBL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SDBL_DY" source="SDBL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SDBL_LJ" source="SDBL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SDBL_DY_TB" source="SDBL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SDBL_DY_HB" source="SDBL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SDBL_LJ_TB" source="SDBL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CQBL_DY" source="CQBL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CQBL_LJ" source="CQBL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CQBL_DY_TB" source="CQBL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CQBL_DY_HB" source="CQBL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CQBL_LJ_TB" source="CQBL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YYSR_DY_TB" source="YYSR_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YYSR_DY_HB" source="YYSR_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YYSR_LJ_TB" source="YYSR_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLR_DY_TB" source="JLR_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLR_DY_HB" source="JLR_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLR_LJ_TB" source="JLR_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLR_DY_JE" source="JLR_DY_JE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLR_LJ_JE" source="JLR_LJ_JE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BUKRS$BUKRS" source="BUKRS"/>
+    </input>
+    <input node="Company">
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BUKRS$BUKRS" source="BUKRS"/>
+    </input>
+    <joinAttribute name="JOIN$BUKRS$BUKRS"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="GetExchangeRate" cardinality="CN_1" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="BUTXT"/>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="POPER"/>
+      <viewAttribute id="TIME"/>
+      <viewAttribute id="WAERS"/>
+      <viewAttribute id="JZCSYL_DY" aggregationType="sum"/>
+      <viewAttribute id="JZCSYL_LJ" aggregationType="sum"/>
+      <viewAttribute id="JZCSYL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="JZCSYL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="JZCSYL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="ZZCSYL_DY" aggregationType="sum"/>
+      <viewAttribute id="ZZCSYL_LJ" aggregationType="sum"/>
+      <viewAttribute id="ZZCSYL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="ZZCSYL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="ZZCSYL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="JLRL_DY" aggregationType="sum"/>
+      <viewAttribute id="JLRL_LJ" aggregationType="sum"/>
+      <viewAttribute id="JLRL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="JLRL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="JLRL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="ZCFZL_DY" aggregationType="sum"/>
+      <viewAttribute id="ZCFZL_LJ" aggregationType="sum"/>
+      <viewAttribute id="ZCFZL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="ZCFZL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="ZCFZL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="ZCZZL_DY" aggregationType="sum"/>
+      <viewAttribute id="ZCZZL_LJ" aggregationType="sum"/>
+      <viewAttribute id="ZCZZL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="ZCZZL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="ZCZZL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="QYCS_DY" aggregationType="sum"/>
+      <viewAttribute id="QYCS_LJ" aggregationType="sum"/>
+      <viewAttribute id="QYCS_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="QYCS_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="QYCS_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="YYML_DY" aggregationType="sum"/>
+      <viewAttribute id="YYML_LJ" aggregationType="sum"/>
+      <viewAttribute id="YYML_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="YYML_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="YYML_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="MLL_DY" aggregationType="sum"/>
+      <viewAttribute id="MLL_LJ" aggregationType="sum"/>
+      <viewAttribute id="MLL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="MLL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="MLL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="YFZKZZL_DY" aggregationType="sum"/>
+      <viewAttribute id="YFZKZZL_LJ" aggregationType="sum"/>
+      <viewAttribute id="YFZKZZL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="YFZKZZL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="YFZKZZL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="YYSR_LJ_JE" aggregationType="sum"/>
+      <viewAttribute id="YYSR_DY_JE" aggregationType="sum"/>
+      <viewAttribute id="YSZKZZL_DY" aggregationType="sum"/>
+      <viewAttribute id="YSZKZZL_LJ" aggregationType="sum"/>
+      <viewAttribute id="YSZKZZL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="YSZKZZL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="YSZKZZL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="CHZZL_DY" aggregationType="sum"/>
+      <viewAttribute id="CHZZL_LJ" aggregationType="sum"/>
+      <viewAttribute id="CHZZL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="CHZZL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="CHZZL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="YUFZKZZL_DY" aggregationType="sum"/>
+      <viewAttribute id="YUFZKZZL_LJ" aggregationType="sum"/>
+      <viewAttribute id="YUFZKZZL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="YUFZKZZL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="YUFZKZZL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="LXBZBS_DY" aggregationType="sum"/>
+      <viewAttribute id="LXBZBS_LJ" aggregationType="sum"/>
+      <viewAttribute id="LXBZBS_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="LXBZBS_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="LXBZBS_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="LDBL_DY" aggregationType="sum"/>
+      <viewAttribute id="LDBL_LJ" aggregationType="sum"/>
+      <viewAttribute id="LDBL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="LDBL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="LDBL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="XJBL_DY" aggregationType="sum"/>
+      <viewAttribute id="XJBL_LJ" aggregationType="sum"/>
+      <viewAttribute id="XJBL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="XJBL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="XJBL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="SDBL_DY" aggregationType="sum"/>
+      <viewAttribute id="SDBL_LJ" aggregationType="sum"/>
+      <viewAttribute id="SDBL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="SDBL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="SDBL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="CQBL_DY" aggregationType="sum"/>
+      <viewAttribute id="CQBL_LJ" aggregationType="sum"/>
+      <viewAttribute id="CQBL_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="CQBL_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="CQBL_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="YYSR_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="YYSR_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="YYSR_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="JLR_DY_TB" aggregationType="sum"/>
+      <viewAttribute id="JLR_DY_HB" aggregationType="sum"/>
+      <viewAttribute id="JLR_LJ_TB" aggregationType="sum"/>
+      <viewAttribute id="JLR_DY_JE" aggregationType="sum"/>
+      <viewAttribute id="JLR_LJ_JE" aggregationType="sum"/>
+      <viewAttribute id="MONTH_AVG_EXRATE" aggregationType="sum"/>
+      <viewAttribute id="YEAR_AVG_EXRATE" aggregationType="sum"/>
+      <viewAttribute hidden="true" id="JOIN$WAERS$FCURR"/>
+      <viewAttribute hidden="true" id="JOIN$GJAHR$YEAR"/>
+      <viewAttribute hidden="true" id="JOIN$POPER$MONTH"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_YYSR_LJ_JE" datatype="DECIMAL" length="23" scale="2" expressionLanguage="SQL">
+        <formula>CASE WHEN &quot;WAERS&quot; = 'CNY' THEN  &quot;YYSR_LJ_JE&quot; 
+      ELSE &quot;YYSR_LJ_JE&quot; * &quot;YEAR_AVG_EXRATE&quot;
+END</formula>
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="CC_YYSR_DY_JE" datatype="DECIMAL" length="23" scale="2" expressionLanguage="SQL">
+    
+        <formula>CASE WHEN &quot;WAERS&quot; = 'CNY' THEN  &quot;YYSR_DY_JE&quot; 
+      ELSE &quot;YYSR_DY_JE&quot; * &quot;MONTH_AVG_EXRATE&quot;
+END</formula>
+    
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_YYML_DY" datatype="DECIMAL" length="23" scale="2" expressionLanguage="SQL">
+        <formula>CASE WHEN &quot;WAERS&quot; = 'CNY' THEN &quot;YYML_DY&quot; ELSE &quot;YYML_DY&quot;*&quot;MONTH_AVG_EXRATE&quot; END </formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_YYML_LJ" datatype="DECIMAL" length="23" scale="2" expressionLanguage="SQL">
+        <formula>CASE WHEN &quot;WAERS&quot; = 'CNY' THEN &quot;YYML_LJ&quot; ELSE &quot;YYML_LJ&quot;*&quot;YEAR_AVG_EXRATE&quot; END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_JLR_DY_JE" datatype="DECIMAL" length="23" scale="2" expressionLanguage="SQL">
+        <formula>CASE WHEN &quot;WAERS&quot; = 'CNY' THEN &quot;JLR_DY_JE&quot; ELSE &quot;JLR_DY_JE&quot;*&quot;MONTH_AVG_EXRATE&quot; END </formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_JLR_LJ_JE" datatype="DECIMAL" length="23" scale="2" expressionLanguage="SQL">
+        <formula>CASE WHEN &quot;WAERS&quot; = 'CNY' THEN &quot;JLR_LJ_JE&quot; ELSE &quot;JLR_LJ_JE&quot;*&quot;YEAR_AVG_EXRATE&quot; END </formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="getCompany">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUTXT" source="BUTXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POPER" source="POPER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME" source="TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JZCSYL_DY" source="JZCSYL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JZCSYL_LJ" source="JZCSYL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JZCSYL_DY_TB" source="JZCSYL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JZCSYL_DY_HB" source="JZCSYL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JZCSYL_LJ_TB" source="JZCSYL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZZCSYL_DY" source="ZZCSYL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZZCSYL_LJ" source="ZZCSYL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZZCSYL_DY_TB" source="ZZCSYL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZZCSYL_DY_HB" source="ZZCSYL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZZCSYL_LJ_TB" source="ZZCSYL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLRL_DY" source="JLRL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLRL_LJ" source="JLRL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLRL_DY_TB" source="JLRL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLRL_LJ_TB" source="JLRL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLRL_DY_HB" source="JLRL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZCFZL_DY" source="ZCFZL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZCFZL_LJ" source="ZCFZL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZCFZL_DY_TB" source="ZCFZL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZCFZL_DY_HB" source="ZCFZL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZCFZL_LJ_TB" source="ZCFZL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZCZZL_DY" source="ZCZZL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZCZZL_LJ" source="ZCZZL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZCZZL_DY_TB" source="ZCZZL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZCZZL_DY_HB" source="ZCZZL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZCZZL_LJ_TB" source="ZCZZL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QYCS_DY" source="QYCS_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QYCS_LJ" source="QYCS_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QYCS_DY_TB" source="QYCS_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QYCS_LJ_TB" source="QYCS_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QYCS_DY_HB" source="QYCS_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YYML_DY" source="YYML_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YYML_LJ" source="YYML_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YYML_DY_TB" source="YYML_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YYML_DY_HB" source="YYML_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YYML_LJ_TB" source="YYML_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MLL_DY" source="MLL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MLL_LJ" source="MLL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MLL_DY_TB" source="MLL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MLL_DY_HB" source="MLL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MLL_LJ_TB" source="MLL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YFZKZZL_DY" source="YFZKZZL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YFZKZZL_LJ" source="YFZKZZL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YFZKZZL_DY_TB" source="YFZKZZL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YFZKZZL_DY_HB" source="YFZKZZL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YFZKZZL_LJ_TB" source="YFZKZZL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YYSR_LJ_JE" source="YYSR_LJ_JE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YYSR_DY_JE" source="YYSR_DY_JE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YSZKZZL_DY" source="YSZKZZL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YSZKZZL_LJ" source="YSZKZZL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YSZKZZL_DY_TB" source="YSZKZZL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YSZKZZL_DY_HB" source="YSZKZZL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YSZKZZL_LJ_TB" source="YSZKZZL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHZZL_DY" source="CHZZL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHZZL_LJ" source="CHZZL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHZZL_DY_TB" source="CHZZL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHZZL_DY_HB" source="CHZZL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHZZL_LJ_TB" source="CHZZL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YUFZKZZL_DY" source="YUFZKZZL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YUFZKZZL_LJ" source="YUFZKZZL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YUFZKZZL_DY_TB" source="YUFZKZZL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YUFZKZZL_DY_HB" source="YUFZKZZL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YUFZKZZL_LJ_TB" source="YUFZKZZL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LXBZBS_DY" source="LXBZBS_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LXBZBS_LJ" source="LXBZBS_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LXBZBS_DY_TB" source="LXBZBS_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LXBZBS_DY_HB" source="LXBZBS_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LXBZBS_LJ_TB" source="LXBZBS_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LDBL_DY" source="LDBL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LDBL_LJ" source="LDBL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LDBL_DY_TB" source="LDBL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LDBL_DY_HB" source="LDBL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LDBL_LJ_TB" source="LDBL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="XJBL_DY" source="XJBL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="XJBL_LJ" source="XJBL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="XJBL_DY_HB" source="XJBL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="XJBL_DY_TB" source="XJBL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="XJBL_LJ_TB" source="XJBL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SDBL_DY" source="SDBL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SDBL_LJ" source="SDBL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SDBL_DY_TB" source="SDBL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SDBL_DY_HB" source="SDBL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SDBL_LJ_TB" source="SDBL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CQBL_DY" source="CQBL_DY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CQBL_LJ" source="CQBL_LJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CQBL_DY_TB" source="CQBL_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CQBL_DY_HB" source="CQBL_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CQBL_LJ_TB" source="CQBL_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YYSR_DY_TB" source="YYSR_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YYSR_DY_HB" source="YYSR_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YYSR_LJ_TB" source="YYSR_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLR_DY_TB" source="JLR_DY_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLR_DY_HB" source="JLR_DY_HB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLR_LJ_TB" source="JLR_LJ_TB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLR_DY_JE" source="JLR_DY_JE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JLR_LJ_JE" source="JLR_LJ_JE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$WAERS$FCURR" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$GJAHR$YEAR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$POPER$MONTH" source="POPER"/>
+    </input>
+    <input node="ExchangeRate">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONTH_AVG_EXRATE" source="MONTH_AVG_EXRATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="YEAR_AVG_EXRATE" source="YEAR_AVG_EXRATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$WAERS$FCURR" source="FCURR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$GJAHR$YEAR" source="YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$POPER$MONTH" source="MONTH"/>
+    </input>
+    <joinAttribute name="JOIN$WAERS$FCURR"/>
+    <joinAttribute name="JOIN$GJAHR$YEAR"/>
+    <joinAttribute name="JOIN$POPER$MONTH"/>
+  </calculationView>
 </calculationViews>
 
-<logicalModel id="Projection_3">
+<logicalModel id="GetExchangeRate">
   <attributes>
     <attribute id="BUTXT" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="公司名称"/>
-      <keyMapping columnObjectName="Projection_3" columnName="BUTXT"/>
+      <keyMapping columnObjectName="GetExchangeRate" columnName="BUTXT"/>
     </attribute>
     <attribute id="BUKRS" order="2" descriptionColumnName="BUTXT" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="公司代码"/>
-      <keyMapping columnObjectName="Projection_3" columnName="BUKRS"/>
+      <keyMapping columnObjectName="GetExchangeRate" columnName="BUKRS"/>
     </attribute>
     <attribute id="GJAHR" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="会计年度"/>
-      <keyMapping columnObjectName="Projection_3" columnName="GJAHR"/>
+      <keyMapping columnObjectName="GetExchangeRate" columnName="GJAHR"/>
     </attribute>
     <attribute id="POPER" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="会计期间"/>
-      <keyMapping columnObjectName="Projection_3" columnName="POPER"/>
+      <keyMapping columnObjectName="GetExchangeRate" columnName="POPER"/>
     </attribute>
     <attribute id="TIME" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TIME"/>
-      <keyMapping columnObjectName="Projection_3" columnName="TIME"/>
+      <keyMapping columnObjectName="GetExchangeRate" columnName="TIME"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
     <measure id="JZCSYL_DY" order="6" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="净资产收益率(ROE)-当月"/>
-      <measureMapping columnObjectName="Projection_3" columnName="JZCSYL_DY"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="JZCSYL_DY"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="JZCSYL_LJ" order="7" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="净资产收益率(ROE)-累计"/>
-      <measureMapping columnObjectName="Projection_3" columnName="JZCSYL_LJ"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="JZCSYL_LJ"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="JZCSYL_DY_TB" order="8" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="净资产收益率(ROE)-当月-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="JZCSYL_DY_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="JZCSYL_DY_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="JZCSYL_DY_HB" order="9" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="净资产收益率(ROE)-当月-环比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="JZCSYL_DY_HB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="JZCSYL_DY_HB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="JZCSYL_LJ_TB" order="10" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="净资产收益率(ROE)-累计-环比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="JZCSYL_LJ_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="JZCSYL_LJ_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZZCSYL_DY" order="11" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="总资产收益率(ROA)-当月"/>
-      <measureMapping columnObjectName="Projection_3" columnName="ZZCSYL_DY"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="ZZCSYL_DY"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZZCSYL_LJ" order="12" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="总资产收益率(ROA)-累计"/>
-      <measureMapping columnObjectName="Projection_3" columnName="ZZCSYL_LJ"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="ZZCSYL_LJ"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZZCSYL_DY_TB" order="13" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="总资产收益率(ROA)-当月-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="ZZCSYL_DY_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="ZZCSYL_DY_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZZCSYL_DY_HB" order="14" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="总资产收益率(ROA)-当月-环比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="ZZCSYL_DY_HB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="ZZCSYL_DY_HB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZZCSYL_LJ_TB" order="15" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="总资产收益率(ROA)-累计-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="ZZCSYL_LJ_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="ZZCSYL_LJ_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="JLRL_DY" order="16" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="净利润率-当月"/>
-      <measureMapping columnObjectName="Projection_3" columnName="JLRL_DY"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="JLRL_DY"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="JLRL_LJ" order="17" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="净利润率-累计"/>
-      <measureMapping columnObjectName="Projection_3" columnName="JLRL_LJ"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="JLRL_LJ"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="JLRL_DY_TB" order="18" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="净利润率-当月-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="JLRL_DY_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="JLRL_DY_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="JLRL_LJ_TB" order="19" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="净利润率-累计-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="JLRL_LJ_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="JLRL_LJ_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="JLRL_DY_HB" order="20" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="净利润率-当月-环比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="JLRL_DY_HB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="JLRL_DY_HB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZCFZL_DY" order="21" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="资产负债率-当月"/>
-      <measureMapping columnObjectName="Projection_3" columnName="ZCFZL_DY"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="ZCFZL_DY"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZCFZL_LJ" order="22" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="资产负债率-累计"/>
-      <measureMapping columnObjectName="Projection_3" columnName="ZCFZL_LJ"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="ZCFZL_LJ"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZCFZL_DY_TB" order="23" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="资产负债率-当月-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="ZCFZL_DY_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="ZCFZL_DY_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZCFZL_DY_HB" order="24" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="资产负债率-当月-环比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="ZCFZL_DY_HB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="ZCFZL_DY_HB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZCFZL_LJ_TB" order="25" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="资产负债率-累计-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="ZCFZL_LJ_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="ZCFZL_LJ_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZCZZL_DY" order="26" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="资产周转率-当月"/>
-      <measureMapping columnObjectName="Projection_3" columnName="ZCZZL_DY"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="ZCZZL_DY"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZCZZL_LJ" order="27" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="资产周转率-累计"/>
-      <measureMapping columnObjectName="Projection_3" columnName="ZCZZL_LJ"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="ZCZZL_LJ"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZCZZL_DY_TB" order="28" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="资产周转率-当月-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="ZCZZL_DY_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="ZCZZL_DY_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZCZZL_DY_HB" order="29" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="资产周转率-当月-环比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="ZCZZL_DY_HB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="ZCZZL_DY_HB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="ZCZZL_LJ_TB" order="30" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="资产周转率-累计-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="ZCZZL_LJ_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="ZCZZL_LJ_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="QYCS_DY" order="31" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="权益乘数-当月"/>
-      <measureMapping columnObjectName="Projection_3" columnName="QYCS_DY"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="QYCS_DY"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="QYCS_LJ" order="32" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="权益乘数-累计"/>
-      <measureMapping columnObjectName="Projection_3" columnName="QYCS_LJ"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="QYCS_LJ"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="QYCS_DY_TB" order="33" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="权益乘数-当月-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="QYCS_DY_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="QYCS_DY_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="QYCS_LJ_TB" order="34" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="权益乘数-累计-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="QYCS_LJ_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="QYCS_LJ_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="QYCS_DY_HB" order="35" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="权益乘数-当月-环比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="QYCS_DY_HB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="QYCS_DY_HB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="YYML_DY" order="36" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="营业毛利-当月"/>
-      <measureMapping columnObjectName="Projection_3" columnName="YYML_DY"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="CC_YYML_DY"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="YYML_LJ" order="37" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="营业毛利-累计"/>
-      <measureMapping columnObjectName="Projection_3" columnName="YYML_LJ"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="CC_YYML_LJ"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="YYML_DY_TB" order="38" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="营业毛利-当月-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="YYML_DY_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="YYML_DY_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="YYML_DY_HB" order="39" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="营业毛利-当月-环比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="YYML_DY_HB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="YYML_DY_HB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="YYML_LJ_TB" order="40" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="营业毛利-累计-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="YYML_LJ_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="YYML_LJ_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="MLL_DY" order="41" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="毛利率-当月"/>
-      <measureMapping columnObjectName="Projection_3" columnName="MLL_DY"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="MLL_DY"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="MLL_LJ" order="42" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="毛利率-累计"/>
-      <measureMapping columnObjectName="Projection_3" columnName="MLL_LJ"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="MLL_LJ"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="MLL_DY_TB" order="43" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="毛利率-当月-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="MLL_DY_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="MLL_DY_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="MLL_DY_HB" order="44" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="毛利率-当月-环比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="MLL_DY_HB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="MLL_DY_HB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="MLL_LJ_TB" order="45" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="毛利率-累计-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="MLL_LJ_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="MLL_LJ_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="YFZKZZL_DY" order="46" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="应付账款周转率-当月"/>
-      <measureMapping columnObjectName="Projection_3" columnName="YFZKZZL_DY"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="YFZKZZL_DY"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="YFZKZZL_LJ" order="47" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="应付账款周转率-累计"/>
-      <measureMapping columnObjectName="Projection_3" columnName="YFZKZZL_LJ"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="YFZKZZL_LJ"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="YFZKZZL_DY_TB" order="48" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="应付账款周转率-当月-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="YFZKZZL_DY_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="YFZKZZL_DY_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="YFZKZZL_DY_HB" order="49" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="应付账款周转率-当月-环比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="YFZKZZL_DY_HB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="YFZKZZL_DY_HB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="YFZKZZL_LJ_TB" order="50" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="应付账款周转率-累计-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="YFZKZZL_LJ_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="YFZKZZL_LJ_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="YYSR_LJ_JE" order="51" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="营业收入-累计"/>
-      <measureMapping columnObjectName="Projection_3" columnName="YYSR_LJ_JE"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="CC_YYSR_LJ_JE"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="YYSR_DY_JE" order="52" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="营业收入-当月"/>
-      <measureMapping columnObjectName="Projection_3" columnName="YYSR_DY_JE"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="CC_YYSR_DY_JE"/>
       <exceptionAggregationMetadata/>
     </measure>
   
     <measure id="YSZKZZL_DY" order="53" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="应收账款周转率-当月"/>
-      <measureMapping columnObjectName="Projection_3" columnName="YSZKZZL_DY"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="YSZKZZL_DY"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="YSZKZZL_LJ" order="54" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="应收账款周转率-累计"/>
-      <measureMapping columnObjectName="Projection_3" columnName="YSZKZZL_LJ"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="YSZKZZL_LJ"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="YSZKZZL_DY_TB" order="55" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="应收账款周转率-当月-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="YSZKZZL_DY_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="YSZKZZL_DY_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="YSZKZZL_DY_HB" order="56" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="应收账款周转率-当月-环比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="YSZKZZL_DY_HB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="YSZKZZL_DY_HB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="YSZKZZL_LJ_TB" order="57" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="应收账款周转率-累计-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="YSZKZZL_LJ_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="YSZKZZL_LJ_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="CHZZL_DY" order="58" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="存货周转率-当月"/>
-      <measureMapping columnObjectName="Projection_3" columnName="CHZZL_DY"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="CHZZL_DY"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="CHZZL_LJ" order="59" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="存货周转率-累计"/>
-      <measureMapping columnObjectName="Projection_3" columnName="CHZZL_LJ"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="CHZZL_LJ"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="CHZZL_DY_TB" order="60" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="存货周转率-当月-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="CHZZL_DY_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="CHZZL_DY_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="CHZZL_DY_HB" order="61" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="存货周转率-当月-环比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="CHZZL_DY_HB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="CHZZL_DY_HB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="CHZZL_LJ_TB" order="62" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="存货周转率-累计-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="CHZZL_LJ_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="CHZZL_LJ_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="YUFZKZZL_DY" order="63" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="预付账款周转率-当月"/>
-      <measureMapping columnObjectName="Projection_3" columnName="YUFZKZZL_DY"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="YUFZKZZL_DY"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="YUFZKZZL_LJ" order="64" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="预付账款周转率-累计"/>
-      <measureMapping columnObjectName="Projection_3" columnName="YUFZKZZL_LJ"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="YUFZKZZL_LJ"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="YUFZKZZL_DY_TB" order="65" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="预付账款周转率-当月-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="YUFZKZZL_DY_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="YUFZKZZL_DY_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="YUFZKZZL_DY_HB" order="66" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="预付账款周转率-当月-环比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="YUFZKZZL_DY_HB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="YUFZKZZL_DY_HB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="YUFZKZZL_LJ_TB" order="67" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="预付账款周转率-累计-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="YUFZKZZL_LJ_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="YUFZKZZL_LJ_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="LXBZBS_DY" order="68" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="利息保障倍数-当月"/>
-      <measureMapping columnObjectName="Projection_3" columnName="LXBZBS_DY"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="LXBZBS_DY"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="LXBZBS_LJ" order="69" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="利息保障倍数-累计"/>
-      <measureMapping columnObjectName="Projection_3" columnName="LXBZBS_LJ"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="LXBZBS_LJ"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="LXBZBS_DY_TB" order="70" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="利息保障倍数-当月-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="LXBZBS_DY_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="LXBZBS_DY_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="LXBZBS_DY_HB" order="71" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="利息保障倍数-当月-环比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="LXBZBS_DY_HB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="LXBZBS_DY_HB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="LXBZBS_LJ_TB" order="72" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="利息保障倍数-累计-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="LXBZBS_LJ_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="LXBZBS_LJ_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="LDBL_DY" order="73" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="流动比率-当月"/>
-      <measureMapping columnObjectName="Projection_3" columnName="LDBL_DY"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="LDBL_DY"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="LDBL_LJ" order="74" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="流动比率-累计"/>
-      <measureMapping columnObjectName="Projection_3" columnName="LDBL_LJ"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="LDBL_LJ"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="LDBL_DY_TB" order="75" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="流动比率-当月-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="LDBL_DY_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="LDBL_DY_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="LDBL_DY_HB" order="76" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="流动比率-当月-环比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="LDBL_DY_HB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="LDBL_DY_HB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="LDBL_LJ_TB" order="77" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="流动比率-累计-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="LDBL_LJ_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="LDBL_LJ_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="XJBL_DY" order="78" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="现金比率-当月"/>
-      <measureMapping columnObjectName="Projection_3" columnName="XJBL_DY"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="XJBL_DY"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="XJBL_LJ" order="79" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="现金比率-累计"/>
-      <measureMapping columnObjectName="Projection_3" columnName="XJBL_LJ"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="XJBL_LJ"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="XJBL_DY_TB" order="80" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="现金比率-当月-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="XJBL_DY_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="XJBL_DY_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="XJBL_DY_HB" order="81" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="现金比率-当月-环比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="XJBL_DY_HB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="XJBL_DY_HB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="XJBL_LJ_TB" order="82" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="现金比率-累计-环比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="XJBL_LJ_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="XJBL_LJ_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="SDBL_DY" order="83" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="速动比率-当月"/>
-      <measureMapping columnObjectName="Projection_3" columnName="SDBL_DY"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="SDBL_DY"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="SDBL_LJ" order="84" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="速动比率-累计"/>
-      <measureMapping columnObjectName="Projection_3" columnName="SDBL_LJ"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="SDBL_LJ"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="SDBL_DY_TB" order="85" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="速动比率-当月-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="SDBL_DY_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="SDBL_DY_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="SDBL_DY_HB" order="86" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="速动比率-当月-环比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="SDBL_DY_HB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="SDBL_DY_HB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="SDBL_LJ_TB" order="87" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="速动比率-累计-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="SDBL_LJ_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="SDBL_LJ_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="CQBL_DY" order="88" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="产权比率-当月"/>
-      <measureMapping columnObjectName="Projection_3" columnName="CQBL_DY"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="CQBL_DY"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="CQBL_LJ" order="89" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="产权比率-累计"/>
-      <measureMapping columnObjectName="Projection_3" columnName="CQBL_LJ"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="CQBL_LJ"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="CQBL_DY_TB" order="90" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="产权比率-当月-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="CQBL_DY_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="CQBL_DY_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="CQBL_DY_HB" order="91" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="产权比率-当月-环比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="CQBL_DY_HB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="CQBL_DY_HB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="CQBL_LJ_TB" order="92" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="产权比率-累计-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="CQBL_LJ_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="CQBL_LJ_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
   
     <measure id="YYSR_DY_TB" order="93" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="营业收入-当月-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="YYSR_DY_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="YYSR_DY_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="YYSR_DY_HB" order="94" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="营业收入-当月-环比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="YYSR_DY_HB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="YYSR_DY_HB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="YYSR_LJ_TB" order="95" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="营业收入-累计-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="YYSR_LJ_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="YYSR_LJ_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="JLR_DY_TB" order="96" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="净利润-当月-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="JLR_DY_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="JLR_DY_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="JLR_DY_HB" order="97" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="净利润-当月-环比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="JLR_DY_HB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="JLR_DY_HB"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="JLR_LJ_TB" order="98" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="净利润-累计-同比"/>
-      <measureMapping columnObjectName="Projection_3" columnName="JLR_LJ_TB"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="JLR_LJ_TB"/>
       <exceptionAggregationMetadata/>
     </measure>
   
     <measure id="JLR_DY_JE" order="99" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="净利润-当月"/>
-      <measureMapping columnObjectName="Projection_3" columnName="JLR_DY_JE"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="CC_JLR_DY_JE"/>
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="JLR_LJ_JE" order="100" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
       <descriptions defaultDescription="净利润-累计"/>
-      <measureMapping columnObjectName="Projection_3" columnName="JLR_LJ_JE"/>
+      <measureMapping columnObjectName="GetExchangeRate" columnName="CC_JLR_LJ_JE"/>
       <exceptionAggregationMetadata/>
     </measure>
   </baseMeasures>
@@ -3202,43 +3700,51 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="1084" y="112"/>
+      <upperLeftCorner x="1061.9922065443322" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
     
   
     <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="314" y="1646"/>
+      <upperLeftCorner x="314.4681024757381" y="1946.9999904632568"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="949" y="501"/>
+      <upperLeftCorner x="944.0703037295123" y="801.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="1168" y="1646"/>
+      <upperLeftCorner x="1168.7671500281601" y="1946.9999904632568"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Company" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="849.2571792938095" y="536.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ExchangeRate" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1133.6092694989745" y="376.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="Aggregation_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="558" y="1501"/>
+      <upperLeftCorner x="558.6666660706209" y="1801.9999916553497"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_6" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="287" y="1501"/>
+      <upperLeftCorner x="287.80143580907145" y="1801.9999916553497"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="1352" y="1501"/>
+      <upperLeftCorner x="1352.1004833614934" y="1801.9999916553497"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="1142" y="1501"/>
+      <upperLeftCorner x="1142.1004833614934" y="1801.9999916553497"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_7" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="757" y="1241"/>
+      <upperLeftCorner x="757.9999994039542" y="1541.9999928474426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_6" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
@@ -3250,7 +3756,7 @@
       <rectangleSize width="148"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_8" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="547" y="1241"/>
+      <upperLeftCorner x="547.9999994039542" y="1541.9999928474426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_6" modelObjectNameSpace="Join_8" modelObjectType="JoinNodeInput">
@@ -3262,7 +3768,7 @@
       <rectangleSize width="148"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_9" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="127" y="1241"/>
+      <upperLeftCorner x="127.99999940395423" y="1541.9999928474426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_6" modelObjectNameSpace="Join_9" modelObjectType="JoinNodeInput">
@@ -3274,7 +3780,7 @@
       <rectangleSize width="148"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_11" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="337" y="1241"/>
+      <upperLeftCorner x="337.99999940395423" y="1541.9999928474426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_6" modelObjectNameSpace="Join_11" modelObjectType="JoinNodeInput">
@@ -3287,7 +3793,7 @@
     </shape>
   
     <shape expanded="true" modelObjectName="Join_6" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="1198" y="1241"/>
+      <upperLeftCorner x="1198.999998211861" y="1541.9999928474426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_4" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
@@ -3299,7 +3805,7 @@
       <rectangleSize width="148"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_12" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="1618" y="1241"/>
+      <upperLeftCorner x="1618.999998211861" y="1541.9999928474426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_4" modelObjectNameSpace="Join_12" modelObjectType="JoinNodeInput">
@@ -3311,7 +3817,7 @@
       <rectangleSize width="148"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_13" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="988" y="1241"/>
+      <upperLeftCorner x="988.9999982118613" y="1541.9999928474426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_4" modelObjectNameSpace="Join_13" modelObjectType="JoinNodeInput">
@@ -3323,7 +3829,7 @@
       <rectangleSize width="148"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_14" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="1408" y="1241"/>
+      <upperLeftCorner x="1408.999998211861" y="1541.9999928474426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_4" modelObjectNameSpace="Join_14" modelObjectType="JoinNodeInput">
@@ -3335,36 +3841,36 @@
       <rectangleSize width="148"/>
     </shape>
     <shape expanded="true" modelObjectName="Union_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="337" y="1016"/>
+      <upperLeftCorner x="337.99999940395423" y="1316.9999940395355"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Union_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="1067" y="1016"/>
+      <upperLeftCorner x="1066.6578784937706" y="1316.9999940395355"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_7" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="337" y="891"/>
+      <upperLeftCorner x="337.99999940395423" y="1191.9999940395355"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_8" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="1067" y="891"/>
+      <upperLeftCorner x="1066.6578784937706" y="1191.9999940395355"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Union_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="1040" y="751"/>
+      <upperLeftCorner x="1039.991211827104" y="1051.9999952316284"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_9" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="1040" y="626"/>
+      <upperLeftCorner x="1039.991211827104" y="926.9999952316284"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="Union_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="1159" y="501"/>
+      <upperLeftCorner x="1154.070303729512" y="801.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="1074" y="341"/>
+      <upperLeftCorner x="1059.2571792938093" y="641.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Union_2" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
@@ -3377,8 +3883,33 @@
     </shape>
   
     <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="1074" y="236"/>
+      <upperLeftCorner x="1059.2571792938093" y="536.9999976158142"/>
       <rectangleSize height="30" width="160"/>
-    </shape></shapes>
+    </shape>
+    <shape expanded="true" modelObjectName="getCompany" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="875.9238459604761" y="376.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_3" modelObjectNameSpace="getCompany" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="184"/>
+    </shape>
+    <shape modelObjectName="Company" modelObjectNameSpace="getCompany" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="136"/>
+    </shape>
+    <shape expanded="true" modelObjectName="GetExchangeRate" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1061.9922065443322" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="getCompany" modelObjectNameSpace="GetExchangeRate" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="184"/>
+    </shape>
+    <shape modelObjectName="ExchangeRate" modelObjectNameSpace="GetExchangeRate" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="204"/>
+    </shape>
+  </shapes>
 </layout>
 </Calculation:scenario>

@@ -95,14 +95,26 @@ BEGIN
            LGOBE,
            ZKHZT,
            ZZKZT,
+           ZYCZT,
            ZYCCH,
+           ZYCCH1,
            ZSCSH,
            ZZKSH,
+           ZQTSH,
            ZXSCK,
+           ZGNXS,
+           ZGJXS,
            ZZKOM,
+           ZZKOZ,
+           ZZKMZ,
            ZXSOM,
+           ZXSOZ,
+           ZXSMZ,
+           ZZKFH,
+           ZQTFH,
            ZQT,
-           ZDRCH
+           ZDRCH,
+           ZDRCH1
       FROM :LT_RESULT;
     
   END IF;
