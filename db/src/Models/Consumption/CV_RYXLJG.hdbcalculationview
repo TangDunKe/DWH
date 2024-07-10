@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="BL.Models.Consumption::CV_RYXLJG" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="人员学历结构"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="BL.Models.Consumption::V_RYXLJG">
+    <resourceUri>BL.Models.Consumption::V_RYXLJG</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews/>
+
+<logicalModel id="BL.Models.Consumption::V_RYXLJG">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="客户端"/>
+      <keyMapping columnObjectName="V_RYXLJG" columnName="MANDT"/>
+    </attribute>
+    <attribute id="BTRTL" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="公司代码"/>
+      <keyMapping columnObjectName="V_RYXLJG" columnName="BTRTL"/>
+    </attribute>
+    <attribute id="BTEXT" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="公司名称"/>
+      <keyMapping columnObjectName="V_RYXLJG" columnName="BTEXT"/>
+    </attribute>
+    <attribute id="CALMONTH" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="所属年月"/>
+      <keyMapping columnObjectName="V_RYXLJG" columnName="CALMONTH"/>
+    </attribute>
+    <attribute id="ZJOBG" order="5" descriptionColumnName="ZJOBG_TX" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="岗位序列"/>
+      <keyMapping columnObjectName="V_RYXLJG" columnName="ZJOBG"/>
+    </attribute>
+    <attribute id="ZJOBG_TX" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="岗位序列描述"/>
+      <keyMapping columnObjectName="V_RYXLJG" columnName="ZJOBG_TX"/>
+    </attribute>
+    <attribute id="HIGHESTFULLTIME" order="7" descriptionColumnName="HIGHESTFULLTIME_TX" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="学历"/>
+      <keyMapping columnObjectName="V_RYXLJG" columnName="HIGHESTFULLTIME"/>
+    </attribute>
+    <attribute id="HIGHESTFULLTIME_TX" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="学历描述"/>
+      <keyMapping columnObjectName="V_RYXLJG" columnName="HIGHESTFULLTIME_TX"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="NUM" order="9" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="人数"/>
+      <measureMapping columnObjectName="V_RYXLJG" columnName="NUM"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  </shapes>
+</layout>
+</Calculation:scenario>

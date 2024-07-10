@@ -1,0 +1,4 @@
+SCHEDULER JOB "BL.DI.Schedulers.S4::SchedulerJobFlowGraphHCM"
+  --每天6时执行一次
+  CRON '* * * * 22 0 0' ENABLE PROCEDURE "BL.DI.Procedures.S4::P_DataExtract_FlowGraph_HCM" 
+  --PARAMETERS IV_GJAHR = NULL, IV_POPER = NULL

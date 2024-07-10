@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="BL.Models.Consumption::CV_RGCBZC" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="人工成本支出"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="BL.DI.Tables.S4::T_T001P">
+    <resourceUri>BL.DI.Tables.S4::T_T001P</resourceUri>
+  </DataSource>
+  <DataSource id="BL.DI.Tables.S4::T_ZHRT0013">
+    <resourceUri>BL.DI.Tables.S4::T_ZHRT0013</resourceUri>
+  </DataSource>
+  <DataSource id="BL.DI.Tables.S4::T_ZHRT_PICKLIST">
+    <resourceUri>BL.DI.Tables.S4::T_ZHRT_PICKLIST</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Company" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="BTRTL"/>
+      <viewAttribute id="BTEXT"/>
+      <viewAttribute id="MOLGA"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="BL.DI.Tables.S4::T_T001P"/>
+    <filter>&quot;MOLGA&quot; = '28'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="List">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="PERIOD"/>
+      <viewAttribute id="BTRTL"/>
+      <viewAttribute id="ZGWLX"/>
+      <viewAttribute id="AMOUNT_SALARY"/>
+      <viewAttribute id="AMOUNT_COST"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="BL.DI.Tables.S4::T_ZHRT0013"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="JobType" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="FIELD_NAME"/>
+      <viewAttribute id="FIELD_VALUE"/>
+      <viewAttribute id="DESCRIPTION"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="BL.DI.Tables.S4::T_ZHRT_PICKLIST"/>
+    <filter>&quot;FIELD_NAME&quot; = 'ZGWLX'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="CompanyAgg">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="BTRTL"/>
+      <viewAttribute id="BTEXT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Company"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="GetCompany" cardinality="CN_1" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="PERIOD"/>
+      <viewAttribute id="BTRTL"/>
+      <viewAttribute id="BTEXT"/>
+      <viewAttribute id="ZGWLX"/>
+      <viewAttribute id="AMOUNT_SALARY" aggregationType="sum"/>
+      <viewAttribute id="AMOUNT_COST" aggregationType="sum"/>
+      <viewAttribute hidden="true" id="JOIN$MANDT$MANDT"/>
+      <viewAttribute hidden="true" id="JOIN$BTRTL$BTRTL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="List">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD" source="PERIOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BTRTL" source="BTRTL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZGWLX" source="ZGWLX"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT_SALARY" source="AMOUNT_SALARY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT_COST" source="AMOUNT_COST"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BTRTL$BTRTL" source="BTRTL"/>
+    </input>
+    <input node="CompanyAgg">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BTEXT" source="BTEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BTRTL$BTRTL" source="BTRTL"/>
+    </input>
+    <joinAttribute name="JOIN$MANDT$MANDT"/>
+    <joinAttribute name="JOIN$BTRTL$BTRTL"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="GetJobType" cardinality="CN_1" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="PERIOD"/>
+      <viewAttribute id="BTRTL"/>
+      <viewAttribute id="BTEXT"/>
+      <viewAttribute id="ZGWLX"/>
+      <viewAttribute id="DESCRIPTION"/>
+      <viewAttribute id="AMOUNT_SALARY" aggregationType="sum"/>
+      <viewAttribute id="AMOUNT_COST" aggregationType="sum"/>
+      <viewAttribute hidden="true" id="JOIN$MANDT$MANDT"/>
+      <viewAttribute hidden="true" id="JOIN$ZGWLX$FIELD_VALUE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="GetCompany">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD" source="PERIOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BTRTL" source="BTRTL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BTEXT" source="BTEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZGWLX" source="ZGWLX"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT_SALARY" source="AMOUNT_SALARY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT_COST" source="AMOUNT_COST"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ZGWLX$FIELD_VALUE" source="ZGWLX"/>
+    </input>
+    <input node="JobType">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ZGWLX$FIELD_VALUE" source="FIELD_VALUE"/>
+    </input>
+    <joinAttribute name="JOIN$MANDT$MANDT"/>
+    <joinAttribute name="JOIN$ZGWLX$FIELD_VALUE"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="GetJobType">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="客户端"/>
+      <keyMapping columnObjectName="GetJobType" columnName="MANDT"/>
+    </attribute>
+    <attribute id="PERIOD" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="所属年月"/>
+      <keyMapping columnObjectName="GetJobType" columnName="PERIOD"/>
+    </attribute>
+    <attribute id="BTRTL" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="公司代码"/>
+      <keyMapping columnObjectName="GetJobType" columnName="BTRTL"/>
+    </attribute>
+    <attribute id="BTEXT" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="公司名称"/>
+      <keyMapping columnObjectName="GetJobType" columnName="BTEXT"/>
+    </attribute>
+    <attribute id="ZGWLX" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="岗位类型"/>
+      <keyMapping columnObjectName="GetJobType" columnName="ZGWLX"/>
+    </attribute>
+  
+    <attribute id="DESCRIPTION" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="岗位类型描述"/>
+      <keyMapping columnObjectName="GetJobType" columnName="DESCRIPTION"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="AMOUNT_SALARY" order="7" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="人均工资金额(元）"/>
+      <measureMapping columnObjectName="GetJobType" columnName="AMOUNT_SALARY"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="AMOUNT_COST" order="8" aggregationType="sum" measureType="simple" restrictionExpressionLanguage="SQL">
+      <descriptions defaultDescription="人工成本金额(元）"/>
+      <measureMapping columnObjectName="GetJobType" columnName="AMOUNT_COST"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="337.8268736718046" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Company" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91.99999999999991" y="641.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="List" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="301.9999999999999" y="536.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="JobType" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="405.8649461248091" y="376.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="CompanyAgg" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91.99999999999991" y="536.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="GetCompany" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="118.6666666666666" y="376.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="List" modelObjectNameSpace="GetCompany" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="100"/>
+    </shape>
+    <shape modelObjectName="CompanyAgg" modelObjectNameSpace="GetCompany" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="142"/>
+    </shape>
+    <shape expanded="true" modelObjectName="GetJobType" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="337.8268736718046" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="GetCompany" modelObjectNameSpace="GetJobType" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="182"/>
+    </shape>
+    <shape modelObjectName="JobType" modelObjectNameSpace="GetJobType" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="161"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
