@@ -17,7 +17,7 @@
       <descriptions defaultDescription="客户端"/>
       <keyMapping columnObjectName="V_RYXLJG" columnName="MANDT"/>
     </attribute>
-    <attribute id="BTRTL" order="2" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="BTRTL" order="2" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="BTEXT">
       <descriptions defaultDescription="公司代码"/>
       <keyMapping columnObjectName="V_RYXLJG" columnName="BTRTL"/>
     </attribute>

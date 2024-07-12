@@ -136,7 +136,7 @@
       <descriptions defaultDescription="所属年月"/>
       <keyMapping columnObjectName="GetJobType" columnName="PERIOD"/>
     </attribute>
-    <attribute id="BTRTL" order="3" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="BTRTL" order="3" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="BTEXT">
       <descriptions defaultDescription="公司代码"/>
       <keyMapping columnObjectName="GetJobType" columnName="BTRTL"/>
     </attribute>
@@ -144,14 +144,16 @@
       <descriptions defaultDescription="公司名称"/>
       <keyMapping columnObjectName="GetJobType" columnName="BTEXT"/>
     </attribute>
-    <attribute id="ZGWLX" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ZGWLX" order="5" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="DESCRIPTION">
       <descriptions defaultDescription="岗位类型"/>
       <keyMapping columnObjectName="GetJobType" columnName="ZGWLX"/>
     </attribute>
   
     <attribute id="DESCRIPTION" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="岗位类型描述"/>
+  
       <keyMapping columnObjectName="GetJobType" columnName="DESCRIPTION"/>
+  
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -174,30 +176,30 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="337.8268736718046" y="112"/>
+      <upperLeftCorner x="337" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
     
   
     <shape expanded="true" modelObjectName="Company" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="91.99999999999991" y="641.9999976158142"/>
+      <upperLeftCorner x="91" y="641"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="List" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="301.9999999999999" y="536.9999976158142"/>
+      <upperLeftCorner x="301" y="536"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="JobType" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="405.8649461248091" y="376.9999988079071"/>
+      <upperLeftCorner x="405" y="376"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="CompanyAgg" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="91.99999999999991" y="536.9999976158142"/>
+      <upperLeftCorner x="91" y="536"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="GetCompany" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="118.6666666666666" y="376.9999988079071"/>
+      <upperLeftCorner x="118" y="376"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="List" modelObjectNameSpace="GetCompany" modelObjectType="JoinNodeInput">
@@ -209,7 +211,7 @@
       <rectangleSize width="142"/>
     </shape>
     <shape expanded="true" modelObjectName="GetJobType" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="337.8268736718046" y="217"/>
+      <upperLeftCorner x="337" y="217"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="GetCompany" modelObjectNameSpace="GetJobType" modelObjectType="JoinNodeInput">
