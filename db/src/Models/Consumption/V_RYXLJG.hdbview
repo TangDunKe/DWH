@@ -3,7 +3,8 @@ AS
 
 WITH SECTION AS (
 SELECT CALMONTH,
-       TO_DATS(LEAST(END_DATE_MONTH, CURR_DATE)) AS END_DATE_MONTH
+       --TO_DATS(LEAST(END_DATE_MONTH, CURR_DATE)) AS END_DATE_MONTH
+       TO_DATS(END_DATE_MONTH) AS END_DATE_MONTH
   FROM (
          SELECT YEAR, 
                 MONTH,
@@ -53,23 +54,33 @@ SELECT PA0001.MANDT,
 ),
 
 PA0002 AS (
-SELECT PA0002.MANDT,
-       PA0002.PERNR,
-       SECTION.CALMONTH,
-       MAP(PA0002.HIGHESTFULLTIME, 'M', '1', 'D', '1', 'B', '2', 'HS', '3', 'MS', '3', 'PS', '3', 'PSC', '3', 'SSS', '3', '') AS HIGHESTFULLTIME,
-       MAP(PA0002.HIGHESTFULLTIME, 'M', '硕士及以上',
-                                   'D', '硕士及以上',
-                                   'B', '本科',
-                                   'HS', '大专及以下',
-                                   'MS', '大专及以下',
-                                   'PS', '大专及以下',
-                                   'PSC', '大专及以下',
-                                   'SSS', '大专及以下',
-                                   ''
-          ) AS HIGHESTFULLTIME_TX
-  FROM "BL.DI.Tables.S4::T_PA0002" AS PA0002
- INNER JOIN SECTION
-    ON SECTION.END_DATE_MONTH BETWEEN PA0002.BEGDA AND PA0002.ENDDA
+SELECT MANDT,
+       PERNR,
+       CALMONTH,
+       MAP(LEAST(HIGHESTFULLTIME, HIGHESTNONFULLTIME), '1', '1', '2', '2', '3', '3', '') AS HIGHESTFULLTIME,
+       MAP(LEAST(HIGHESTFULLTIME, HIGHESTNONFULLTIME), '1', '硕士及以上', '2', '本科', '3', '大专及以下', '') AS HIGHESTFULLTIME_TX
+  FROM (
+         SELECT PA0002.MANDT,
+                PA0002.PERNR,
+                SECTION.CALMONTH,
+                MAP(PA0002.HIGHESTFULLTIME, 'M', '1', 'D', '1', 'B', '2', 'HS', '3', 'MS', '3', 'PS', '3', 'PSC', '3', 'SSS', '3', '', 4) AS HIGHESTFULLTIME,
+                MAP(PA0002.HIGHESTNONFULLTIME, 'M', '1', 'D', '1', 'B', '2', 'HS', '3', 'MS', '3', 'PS', '3', 'PSC', '3', 'SSS', '3', '', 4) AS HIGHESTNONFULLTIME
+                /*
+                MAP(PA0002.HIGHESTFULLTIME, 'M', '硕士及以上',
+                                            'D', '硕士及以上',
+                                            'B', '本科',
+                                            'HS', '大专及以下',
+                                            'MS', '大专及以下',
+                                            'PS', '大专及以下',
+                                            'PSC', '大专及以下',
+                                            'SSS', '大专及以下',
+                                            ''
+                   ) AS HIGHESTFULLTIME_TX
+                */
+           FROM "BL.DI.Tables.S4::T_PA0002" AS PA0002
+          INNER JOIN SECTION
+             ON SECTION.END_DATE_MONTH BETWEEN PA0002.BEGDA AND PA0002.ENDDA
+	     )
 )
 
 SELECT PA0001.MANDT,
