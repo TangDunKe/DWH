@@ -92,6 +92,7 @@ BEGIN
       
       CALL "BL.DI.VirtualProcedure::V_ZFM_SAC_FII001"( IR_BUKRS => :LT_COMP_LIST,
                                                        IV_BBLX => 'Z20',
+                                                       IV_BUKRS => '',
                                                        IV_GJAHR => :V_GJAHR,
                                                        IV_HK => 'N',
                                                        IV_POPER => LPAD(:V_POPER, 3, '0'),

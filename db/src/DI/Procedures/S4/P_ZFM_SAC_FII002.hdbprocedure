@@ -91,6 +91,7 @@ BEGIN
       V_POPER := :LT_SECTION_LIST.MONTH[:V_INDEX];
       
       CALL "BL.DI.VirtualProcedure::V_ZFM_SAC_FII002"( IR_BUKRS => :LT_COMP_LIST,
+                                                       IV_BUKRS => '',
                                                        IV_CBZX => 'N',
                                                        IV_GJAHR => :V_GJAHR,
                                                        IV_GNFW => 'Y',
